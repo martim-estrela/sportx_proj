@@ -1,0 +1,364 @@
+
+
+body {
+    font-family: 'Nunito Sans', sans-serif;
+    background: #D1D1D1;
+    margin: 0;
+    padding: 0;
+}
+
+/*--------------------------------------------------------------------Cabeçalho-------------------------------------------------------------------------------*/
+header {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    width: auto;
+
+}
+
+header div {
+    display: flex;
+    gap: 40px;
+    /* Espaçamento entre os elementos */
+}
+
+header div:last-child {
+    justify-content: right;
+    display: flex;
+    align-items: right;
+    gap: 20px;
+    /* Espaçamento entre os elementos */
+}
+
+header strong {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    color: #000;
+    font-family: "Passion One";
+    font-size: 30px;
+    /* Tamanho do texto */
+}
+
+header a {
+    display: inline-flex;
+    /* Garante que os elementos estejam na mesma linha */
+    align-items: center;
+    /* Alinha verticalmente */
+    text-decoration: none;
+    /* Remove o sublinhado do texto */
+    color: black;
+    /* Cor do texto */
+    font-size: 16px;
+    /* Tamanho do texto */
+    margin: 0 10px;
+    /* Espaçamento entre os elementos */
+}
+
+header a:hover {
+    color: #218A38;
+    /* Destaque ao passar o rato */
+}
+
+/* Popup Styles */
+.popup {
+    display: none; /* Inicialmente oculto */
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    border: 2px solid #4CAF50; /* Aqui estamos adicionando uma borda verde */
+    border-radius: 8px; /* Bordas arredondadas */
+    padding: 15px;
+    width: 200px;
+    z-index: 1000;
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.popup-content a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+}
+
+.popup-content a:hover {
+    color: #218A38;
+}
+
+/* Popup Styles profile */
+.popup {
+    display: none; /* Inicialmente oculto */
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    border: 2px solid #4CAF50; /* Aqui estamos adicionando uma borda verde */
+    border-radius: 8px; /* Bordas arredondadas */
+    padding: 15px;
+    width: 200px;
+    z-index: 1000;
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.popup-content a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+}
+
+.popup-content a:hover {
+    color: #218A38;
+}
+
+/* Popup Styles search */
+/* Modal styles */
+.modal {
+    display: none; /* Initially hidden */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: transparent; 
+    padding-top: -200px;
+}
+
+.modal-content {
+    background-color: transparent;
+    margin: -1.5% 35%;
+    padding: 20px;
+    width: 80%; 
+    max-width: 400px; 
+}
+
+.close:hover,
+.close:focus {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+input[type="text"] {
+    width: 80%;
+    padding: 10px;
+    margin: 20px 0;
+    background-color: #FFF;
+}
+
+/*--------------------------------------------------------------------MAIN-------------------------------------------------------------------------------*/
+main{
+    padding: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.chat {
+    display: flex;
+    flex-direction: column;
+    height: 600px;
+    width: 440px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.chat-header{
+    background-color: #222;
+    color:white;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+}
+
+.chat-header img{
+    max-width: 40px;
+}
+
+.chat-header-text{
+    position: relative;
+    left: -20px
+}
+
+.chat-header-text h3, p{
+    margin: 4px;
+}
+
+.chat-header-buttons button {
+    all: unset;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.chat-header-buttons button:first-child {
+    margin-right: 25px; /* Removes the margin from the last button */
+}
+
+.messages{
+    background-color: #DDD;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.support-message, .user-message{
+    width: 60%;
+    margin:20px;
+    font-size: 14px;
+    padding: 15px;
+    
+}
+
+.support-message{
+    background-color: #AAA;
+    border-radius: 16px 16px 16px 0px;
+}
+
+.user-message{
+    background-color: #218A38;
+    color: white;
+    border-radius: 16px 16px 0px 16px;
+    align-self: flex-end;
+}
+
+
+.messages-input {
+    background-color: #DDD;
+    color: black;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: relative;
+    bottom: 0;
+    border-top: #888 solid 2px;
+}
+
+.messages-input input{
+    background-color: #DDD;
+    border: none;
+    margin: 0 20px;
+}
+
+.messages-input input:focus{
+    outline: none;
+    border: none;
+}
+
+
+
+.attach {
+    max-width: 13px;
+}
+
+.send{
+    max-width: 20px;
+}
+
+.messages-input button{
+    all: unset;
+    cursor: pointer;
+}
+
+
+
+
+
+/*--------------------------------------------------------------------FOOTER-------------------------------------------------------------------------------*/
+
+footer {
+    display: flex;
+    /* Habilita Flexbox para organizar os elementos no rodapé */
+    justify-content: space-between;
+    /* Coloca os elementos nos cantos */
+    align-items: flex-start;
+    /* Alinha os itens no topo do rodapé */
+    padding: 20px;
+    /* Espaçamento interno */
+    margin-top: auto;
+    /* Garante que o rodapé fique no final da página */
+}
+
+/*Fonte e margem do titulo "Support"*/
+.support h2 {
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+/*mudança na lista*/
+.support ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+/*margem entre os elementos da lista*/
+.support ul li {
+    margin: 10px 0;
+}
+
+/* Elementos da lista */
+.support ul li a {
+    text-decoration: none;
+    color: #000000;
+    font-size: 14px;
+}
+
+/*Quando se passa rato por cima sublinhar*/
+.support ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos da secção de inscrição */
+
+/*Fonte e margem do titulo "Subscribe"*/
+.subscribe h2 {
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+/*Estilo do formulario*/
+.subscribe form {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+
+.subscribe input {
+    background-color: #D1D1D1;
+    margin-bottom: 30px;
+    font-size: 15px;
+    border: 0.1px solid #cccccc;
+}
+
+/* Retirar borda ao clicar para inserir */
+.subscribe input:focus {
+    outline: none;
+}
+
+/*Botao subcrever*/
+.subscribe button {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    color: #D1D1D1;
+    background: #222325;
+    border: none;
+    cursor: pointer;
+}

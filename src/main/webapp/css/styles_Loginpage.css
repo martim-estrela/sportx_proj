@@ -1,0 +1,197 @@
+* {
+    background: #D1D1D1;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos gerais do corpo */
+body{
+    font-family: 'Nunito Sans', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Estilos do cabeçalho */
+header {
+    position: absolute; 
+    top: 10px; 
+    left: 10px; 
+    display: flex;
+    color: #000;
+    font-family: "Passion One";
+}
+
+/* Estilos do contêiner do formulário */
+.login-container {
+    background-color: #D1D1D1;
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+}
+
+/* Estilos do título */
+.login-container h1 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+/* Estilos da descrição */
+.login-container p {
+    text-align: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+/* Estilos do formulário */
+.login-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilos dos rótulos */
+.login-container form label {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+/* Estilos dos campos de entrada */
+.login-container form input {
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    border: 1px solid #000000;
+
+}
+
+/* Retirar borda ao clicar para inserir */
+.login-container form input:focus {
+    outline: none;
+}
+
+/* Estilos do link de "Esqueceu sua senha?" */
+.login-container form label:last-child {
+    font-size: 14px;
+    color: #000000;
+    text-decoration: none;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+/* Estilos do botão de envio */
+.login-container button {
+    padding: 10px;
+    font-size: 9px;
+    color: #fff;
+    background-color: #000000;
+    border: none;
+    cursor: pointer;
+}
+
+/* Estilos da mensagem de "Não tem uma conta?" */
+.login-container p:last-child {
+    text-align: center;
+    font-size: 14px;
+}
+
+/* Estilos da mensagem de "Não tem uma conta?" */
+.login-container p:last-child {
+    text-align: center;
+    font-size: 14px;
+    padding-top: 10px;
+}
+
+/* Estilos da mensagem de "Create account"*/
+.login-container p:last-child a {
+    color: #000000;
+    text-decoration: none;
+}
+
+/* Estilos da mensagem de "Create account(quando se passa o rato por cima)"*/
+.login-container p:last-child a:hover {
+    text-decoration: underline;
+}
+    
+/* Estilos da seção de suporte */
+.support {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+}
+
+/*Fonte e margem do titulo "Support"*/
+.support h2{
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+/*mudança na lista*/
+.support ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+/*margem entre os elementos da lista*/
+.support ul li {
+    margin: 10px 0;
+}
+
+/* Elementos da lista */
+.support ul li a {
+    text-decoration: none;
+    color: #000000;
+    font-size: 14px;
+}
+
+/*Quando se passa rato por cima sublinhar*/
+.support ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos da secção de inscrição */
+.subscribe {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 350px;
+}
+
+/*Fonte e margem do titulo "Subscribe"*/
+.subscribe h2 {
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+/*Estilo do formulario*/
+.subscribe form {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+
+.subscribe input {
+    margin-bottom: 30px;
+    font-size: 15px;
+    border: 0.1px solid #cccccc;
+}
+
+/* Retirar borda ao clicar para inserir */
+.subscribe input:focus {
+    outline: none;
+}
+
+/*Botao subcrever*/
+.subscribe button {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    color: #D1D1D1;
+    background: #222325;
+    border: none;
+    cursor: pointer;
+}

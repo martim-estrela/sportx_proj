@@ -1,0 +1,413 @@
+* {
+    background: #D1D1D1;
+}
+
+body {
+    font-family: 'Nunito Sans', sans-serif;
+    background: #D1D1D1;
+    margin: 0;
+    padding: 0;
+}
+
+/*--------------------------------------------------------------------Cabeçalho-------------------------------------------------------------------------------*/
+header {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    width: auto;
+
+}
+
+header div {
+    display: flex;
+    gap: 40px;
+    /* Espaçamento entre os elementos */
+}
+
+header div:last-child {
+    justify-content: right;
+    display: flex;
+    align-items: right;
+    gap: 20px;
+    /* Espaçamento entre os elementos */
+}
+
+header strong {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    color: #000;
+    font-family: "Passion One";
+    font-size: 30px;
+    /* Tamanho do texto */
+}
+
+header a {
+    display: inline-flex;
+    /* Garante que os elementos estejam na mesma linha */
+    align-items: center;
+    /* Alinha verticalmente */
+    text-decoration: none;
+    /* Remove o sublinhado do texto */
+    color: black;
+    /* Cor do texto */
+    font-size: 16px;
+    /* Tamanho do texto */
+    margin: 0 10px;
+    /* Espaçamento entre os elementos */
+}
+
+header a:hover {
+    color: #218A38;
+    /* Destaque ao passar o rato */
+}
+
+/* Popup Styles */
+.popup {
+    display: none; /* Inicialmente oculto */
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    border: 2px solid #4CAF50; /* Aqui estamos adicionando uma borda verde */
+    border-radius: 8px; /* Bordas arredondadas */
+    padding: 15px;
+    width: 200px;
+    z-index: 1000;
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.popup-content a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+}
+
+.popup-content a:hover {
+    color: #218A38;
+}
+
+/* Popup Styles profile */
+.popup {
+    display: none; /* Inicialmente oculto */
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    border: 2px solid #4CAF50; /* Aqui estamos adicionando uma borda verde */
+    border-radius: 8px; /* Bordas arredondadas */
+    padding: 15px;
+    width: 200px;
+    z-index: 1000;
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.popup-content a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+}
+
+.popup-content a:hover {
+    color: #218A38;
+}
+
+/* Popup Styles search */
+/* Modal styles */
+.modal {
+    display: none; /* Initially hidden */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: transparent; 
+    padding-top: -200px;
+}
+
+.modal-content {
+    background-color: transparent;
+    margin: -1.5% 35%;
+    padding: 20px;
+    width: 80%; 
+    max-width: 400px; 
+}
+
+.close:hover,
+.close:focus {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+input[type="text"] {
+    width: 80%;
+    padding: 10px;
+    margin: 20px 0;
+    background-color: #FFF;
+}
+
+/*--------------------------------------------------------------------MAIN-------------------------------------------------------------------------------*/
+.main-div
+ {
+    display: flex;
+    flex-direction: row;
+    gap: 60px;
+    margin: 40px 6vw;
+}
+
+.img-div {
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 600px;
+    width: 900px;
+    background: white;
+}
+
+.img-div img {
+    width: 90%;
+    height: 90%;
+    object-fit: cover;
+}
+
+.prices {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.prices h3:first-child {
+    text-decoration: line-through;
+    color: #555;
+}
+
+.product-details span, label {
+    font-weight: bold;
+}
+
+select{
+    width: 100%;
+    height: 50px;
+    margin-top: 10px;
+    background-color: white;
+    border-radius: 0;
+}
+option {
+    display: block;
+    padding: 10px;
+    background-color: white;
+    color: black;
+}
+
+button{
+    width: 100%;
+    height: 60px;
+    margin-top: 40px;
+    text-align: center;
+    background-color:#218A38;
+    color: white;
+    border: none;
+    font-weight: bold;
+    font-size: large;
+    cursor: pointer;
+
+}
+
+.product-section {
+    position: relative;
+    /* Para que o link "View all" seja posicionado em relação a essa secção */
+    padding-top: 50px;
+    margin: 20px;
+}
+
+
+.product-section h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-left: 100px;
+}
+
+.view-all {
+    position: absolute;
+    top: 100px;
+    /* Distância do topo */
+    right: 100px;
+    /* Distância da direita */
+    font-size: 14px;
+    color: #000000;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.product-grid {
+    margin-left: 100px;
+    margin-right: 100px;
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.product-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    /* Centraliza o conteúdo dentro do card */
+    flex: 1 1 calc(25% - 20px);
+    box-sizing: border-box;
+    position: relative;
+}
+
+.product-body {
+    margin-top: 15px;
+    /* Espaço para o título do produto e preço não se sobreporem */
+}
+
+.product-card img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    background-color: white;
+}
+
+.product-card p.Top-Left-text {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    margin: 0;
+    font-size: 14px;
+}
+
+.product-card p.Top-Left-text2 {
+    position: absolute;
+    top: 30px;
+    /* Ajuste conforme necessário */
+    left: 10px;
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.product-card p {
+    margin: 5px 0;
+    top: 10px;
+    /* Posição no topo */
+    left: 10px;
+    /* Posição no lado esquerdo */
+    background-color: rgba(255, 255, 255, 0.8);
+    /* Fundo branco semi-transparente */
+    padding: 5px 10px;
+}
+
+.specifications{
+    margin: 40px 17vh;
+}
+
+.specifications h2, .more{
+    text-align: center;
+}
+
+.specifications img {
+    display: block;
+    margin: 0 auto;
+    width: 10px;
+}
+
+
+/*--------------------------------------------------------------------FOOTER-------------------------------------------------------------------------------*/
+
+footer {
+    display: flex;
+    /* Habilita Flexbox para organizar os elementos no rodapé */
+    justify-content: space-between;
+    /* Coloca os elementos nos cantos */
+    align-items: flex-start;
+    /* Alinha os itens no topo do rodapé */
+    padding: 20px;
+    /* Espaçamento interno */
+    margin-top: auto;
+    /* Garante que o rodapé fique no final da página */
+}
+
+/*Fonte e margem do titulo "Support"*/
+.support h2 {
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+/*mudança na lista*/
+.support ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+/*margem entre os elementos da lista*/
+.support ul li {
+    margin: 10px 0;
+}
+
+/* Elementos da lista */
+.support ul li a {
+    text-decoration: none;
+    color: #000000;
+    font-size: 14px;
+}
+
+/*Quando se passa rato por cima sublinhar*/
+.support ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos da secção de inscrição */
+
+/*Fonte e margem do titulo "Subscribe"*/
+.subscribe h2 {
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+/*Estilo do formulario*/
+.subscribe form {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+
+.subscribe input {
+    background-color: #D1D1D1;
+    margin-bottom: 30px;
+    font-size: 15px;
+    border: 0.1px solid #cccccc;
+}
+
+/* Retirar borda ao clicar para inserir */
+.subscribe input:focus {
+    outline: none;
+}
+
+/*Botao subcrever*/
+.subscribe button {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    color: #D1D1D1;
+    background: #222325;
+    border: none;
+    cursor: pointer;
+}

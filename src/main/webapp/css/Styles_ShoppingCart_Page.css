@@ -1,0 +1,382 @@
+* {
+    background: #D1D1D1;
+}
+
+/* Estilos gerais do corpo */
+body {
+    font-family: 'Nunito Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/*--------------------------------------------------------------------Cabeçalho-------------------------------------------------------------------------------*/
+header {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    width: auto;
+}
+
+header div {
+    display: flex;
+    gap: 40px;
+    /* Espaçamento entre os elementos */
+}
+
+header div:last-child {
+    justify-content: right;
+    display: flex;
+    align-items: right;
+    gap: 20px;
+    /* Espaçamento entre os elementos */
+}
+
+header strong {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    color: #000;
+    font-family: "Passion One";
+    font-size: 30px;
+    /* Tamanho do texto */
+}
+
+header a {
+    display: inline-flex;
+    /* Garante que os elementos estejam na mesma linha */
+    align-items: center;
+    /* Alinha verticalmente */
+    text-decoration: none;
+    /* Remove o sublinhado do texto */
+    color: black;
+    /* Cor do texto */
+    font-size: 16px;
+    /* Tamanho do texto */
+    margin: 0 10px;
+    /* Espaçamento entre os elementos */
+}
+
+header a:hover {
+    color: #218A38;
+    /* Destaque ao passar o rato */
+}
+
+/* Popup Styles */
+.popup {
+    display: none; /* Inicialmente oculto */
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    border: 2px solid #4CAF50; /* Aqui estamos adicionando uma borda verde */
+    border-radius: 8px; /* Bordas arredondadas */
+    padding: 15px;
+    width: 200px;
+    z-index: 1000;
+}
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.popup-content a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+}
+
+.popup-content a:hover {
+    color: #218A38;
+}
+
+/* Popup Styles profile */
+.popup {
+    display: none; /* Inicialmente oculto */
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    border: 2px solid #4CAF50; /* Aqui estamos adicionando uma borda verde */
+    border-radius: 8px; /* Bordas arredondadas */
+    padding: 15px;
+    width: 200px;
+    z-index: 1000;
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.popup-content a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+}
+
+.popup-content a:hover {
+    color: #218A38;
+}
+
+/* Popup Styles search */
+/* Modal styles */
+.modal {
+    display: none; /* Initially hidden */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: transparent; 
+    padding-top: -200px;
+}
+
+.modal-content {
+    background-color: transparent;
+    margin: -1.5% 35%;
+    padding: 20px;
+    width: 80%; 
+    max-width: 400px; 
+}
+
+.close:hover,
+.close:focus {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+input[type="text"] {
+    width: 80%;
+    padding: 10px;
+    margin: 20px 0;
+}
+/*--------------------------------------------------------------------Main-------------------------------------------------------------------------------*/
+
+h1 {
+    padding: 1rem 7rem;
+    font-size: 20px
+}
+
+div.table1 {
+    padding: 1rem 7rem;
+    background: #D1D1D1;
+    display: flex;
+    gap: 20px;
+
+}
+
+div.table1 table {
+    width: 50%
+}
+
+table {
+    border-collapse: collapse;
+}
+
+
+td {
+    padding: 10px 10px;
+    text-align: center;
+    text-align: -webkit-center;
+}
+
+td.product_info {
+    text-align: left;
+}
+
+div.table1 td {
+    border-bottom: 1px solid #4A4A4A;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+div.imgStyle {
+    border-radius: 5px;
+    background-color: #ffffff;
+    width: 100px;
+    height: 100px;
+    align-content: center;
+
+}
+
+div.imgStyle img {
+    margin: 10px;
+    margin-left: 15px;
+    margin-bottom: 12px;
+    width: 70px;
+    height: 90px;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.quantity-controls button {
+    /*padding: 3px 8px;*/
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    background-color: #6A6A6A;
+    color: black;
+    border: none;
+    border-radius: 5px;
+}
+
+.quantity-controls button:hover {
+    background-color: #45a049;
+}
+
+.quantity-controls input {
+    width: 30px;
+    text-align: center;
+    font-size: 14px;
+    border: 1px solid #D1D1D1;
+    border-radius: 3px;
+}
+
+/* Remove as setas do input */
+.quantity-controls input[type=number]::-webkit-inner-spin-button,
+.quantity-controls input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.cart-totals {
+    height: fit-content;
+    width: 30%;
+    /* Largura da seção de totais */
+    padding: 20px;
+    background-color: #D9D9D9;
+}
+
+.cart-totals span {
+    background-color: #D9D9D9;
+
+}
+
+.totals-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    background-color: #D9D9D9;
+    /* Fundo branco para as zonas de texto */
+    padding: 5px 0;
+}
+
+.line {
+    border-top: 1.5px solid #000000;
+    margin: 10px 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+.checkout-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    /* Fundo verde */
+    color: white;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.checkout-btn:hover {
+    background-color: #45a049;
+}
+
+/*--------------------------------------------------------------------Rodapé-------------------------------------------------------------------------------*/
+
+footer {
+    display: flex;
+    /* Habilita Flexbox para organizar os elementos no rodapé */
+    justify-content: space-between;
+    /* Coloca os elementos nos cantos */
+    align-items: flex-start;
+    /* Alinha os itens no topo do rodapé */
+    padding: 20px;
+    /* Espaçamento interno */
+    margin-top: auto;
+    /* Garante que o rodapé fique no final da página */
+}
+
+/*Fonte e margem do titulo "Support"*/
+.support h2 {
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+/*mudança na lista*/
+.support ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+/*margem entre os elementos da lista*/
+.support ul li {
+    margin: 10px 0;
+}
+
+/* Elementos da lista */
+.support ul li a {
+    text-decoration: none;
+    color: #000000;
+    font-size: 14px;
+}
+
+/*Quando se passa rato por cima sublinhar*/
+.support ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos da secção de inscrição */
+
+/*Fonte e margem do titulo "Subscribe"*/
+.subscribe h2 {
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+/*Estilo do formulario*/
+.subscribe form {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+
+.subscribe input {
+    background-color: #D1D1D1;
+    margin-bottom: 30px;
+    font-size: 15px;
+    border: 0.1px solid #cccccc;
+}
+
+/* Retirar borda ao clicar para inserir */
+.subscribe input:focus {
+    outline: none;
+}
+
+/*Botao subcrever*/
+.subscribe button {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    color: #D1D1D1;
+    background: #222325;
+    border: none;
+    cursor: pointer;
+}

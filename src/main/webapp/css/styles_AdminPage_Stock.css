@@ -1,0 +1,402 @@
+* {
+    background: #D1D1D1;
+}
+
+/* Estilos gerais do corpo */
+body {
+    font-family: 'Nunito Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/*--------------------------------------------------------------------HEADER-------------------------------------------------------------------------------*/
+header {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    width: auto;
+
+}
+
+header div {
+    display: flex;
+    gap: 40px;
+    /* Espaçamento entre os elementos */
+}
+
+header div:last-child {
+    justify-content: right;
+    display: flex;
+    align-items: right;
+    gap: 20px;
+    /* Espaçamento entre os elementos */
+}
+
+header strong {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    color: #000;
+    font-family: "Passion One";
+    font-size: 30px;
+    /* Tamanho do texto */
+}
+
+header a {
+    display: inline-flex;
+    /* Garante que os elementos estejam na mesma linha */
+    align-items: center;
+    /* Alinha verticalmente */
+    text-decoration: none;
+    /* Remove o sublinhado do texto */
+    color: black;
+    /* Cor do texto */
+    font-size: 16px;
+    /* Tamanho do texto */
+    margin: 0 10px;
+    /* Espaçamento entre os elementos */
+}
+
+header a:hover {
+    color: #218A38;
+    /* Destaque ao passar o rato */
+}
+
+/* Popup Styles */
+.popup {
+    display: none;
+    /* Inicialmente oculto */
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    border: 2px solid #4CAF50;
+    /* Aqui estamos adicionando uma borda verde */
+    border-radius: 8px;
+    /* Bordas arredondadas */
+    padding: 15px;
+    width: 200px;
+    z-index: 1000;
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.popup-content a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+}
+
+.popup-content a:hover {
+    color: #218A38;
+}
+
+/*--------------------------------------------------------------------MAIN-------------------------------------------------------------------------------*/
+
+.select-container {
+    height: fit-content;
+    padding: 20px;
+    margin-left: 10%;
+}
+
+.select-container select {
+    width: 13%;
+    padding: 10px;
+    border: #D1D1D1;
+    background-color: #d9d9d9;
+}
+
+.search-bar input {
+    width: 11.9%;
+    padding: 10px;
+    border: #D1D1D1;
+    background-color: #d9d9d9;
+}
+
+.row1 {
+    display: flex;
+    background-color: #d9d9d9;
+    margin-bottom: 10px;
+
+
+}
+
+.table-container {
+    padding: 10px;
+    margin: 20px 10% 50px 10%;
+    background-color: #D1D1D1;
+}
+
+.column {
+    flex: 50%;
+    background-color: #d9d9d9;
+    text-align: center;
+}
+
+.column-edit-icon {
+    flex: 30%;
+    background-color: #d9d9d9;
+    text-align: right;
+
+}
+
+.column-delete-icon {
+    flex: 30%;
+    background-color: #d9d9d9;
+    text-align: center;
+
+}
+
+.column-img {
+    flex: 22%;
+    background-color: #d9d9d9;
+    text-align: center;
+
+}
+
+.column-description {
+    padding-top: 20px;
+    padding-left: 10px;
+    flex: 50%;
+    background-color: #d9d9d9;
+}
+
+.column-description label {
+    background-color: #d9d9d9;
+}
+
+
+button.btn-edit {
+    border: #d9d9d9;
+    background-color: #d9d9d9;
+    margin-top: 33px;
+    padding: 0%;
+}
+
+
+
+button.btn-update-stock {
+    padding: 20px;
+    border: #D1D1D1;
+    background-color: #ffffff;
+    margin-top: 22px;
+    width: 60%;
+
+
+}
+
+.report-links {
+    margin: 0px 10% 0px 10%;
+    text-align: end;
+    padding-right: 10px;
+
+}
+
+
+/* Modal container */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    /* Oculto por padrão */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Mostrar modal quando ativado */
+.modal.active {
+    display: flex;
+    /* Exibe o modal */
+}
+
+/* Conteúdo do modal */
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: auto;
+    text-align: center;
+
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    background: #ffffff;
+}
+
+.input-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* Define duas colunas */
+    gap: 10px;
+    /* Espaçamento entre os campos */
+    background: #ffffff;
+}
+
+.input-container {
+    margin: 15px 0;
+    background: #ffffff;
+}
+
+.input-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    background: #ffffff;
+}
+
+.input-field {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+}
+
+/* Botão para fechar */
+.close-modal-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.close-modal-btn:hover {
+    background-color: #a71d2a;
+}
+
+.add-modal-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #45a049;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.add-modal-btn:hover {
+    background-color: #296c2b;
+}
+
+/* Pagination */
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    margin: 0 10px;
+    font-size: 16px;
+    color: #000000;
+    text-decoration: none;
+}
+
+.pagination a:hover {
+    color: #218A38;
+}
+
+/* Estilo do número ativo com borda */
+.pagination a.active {
+    padding: 5px 8px;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    background-color: #D1D1D1;
+    font-weight: bold;
+    color: #000000;
+}
+
+.pagination span {
+    font-size: 16px;
+}
+
+/*--------------------------------------------------------------------FOOTER-------------------------------------------------------------------------------*/
+
+footer {
+    display: flex;
+    /* Habilita Flexbox para organizar os elementos no rodapé */
+    justify-content: space-between;
+    /* Coloca os elementos nos cantos */
+    align-items: flex-start;
+    /* Alinha os itens no topo do rodapé */
+    padding: 20px;
+    /* Espaçamento interno */
+    margin-top: auto;
+    /* Garante que o rodapé fique no final da página */
+}
+
+/*Fonte e margem do titulo "Support"*/
+.support h2 {
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+/*mudança na lista*/
+.support ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+/*margem entre os elementos da lista*/
+.support ul li {
+    margin: 10px 0;
+}
+
+/* Elementos da lista */
+.support ul li a {
+    text-decoration: none;
+    color: #000000;
+    font-size: 14px;
+}
+
+/*Quando se passa rato por cima sublinhar*/
+.support ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos da secção de inscrição */
+
+/*Fonte e margem do titulo "Subscribe"*/
+.subscribe h2 {
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+/*Estilo do formulario*/
+.subscribe form {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+
+.subscribe input {
+    background-color: #D1D1D1;
+    margin-bottom: 30px;
+    font-size: 15px;
+    border: 0.1px solid #cccccc;
+}
+
+/* Retirar borda ao clicar para inserir */
+.subscribe input:focus {
+    outline: none;
+}
+
+/*Botao subcrever*/
+.subscribe button {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    color: #D1D1D1;
+    background: #222325;
+    border: none;
+    cursor: pointer;
+}

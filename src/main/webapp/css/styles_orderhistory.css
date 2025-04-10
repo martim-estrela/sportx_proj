@@ -1,0 +1,347 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos gerais do corpo */
+body {
+    font-family: 'Nunito Sans', sans-serif;
+    background-color: #D1D1D1;
+}
+
+/*--------------------------------------------------------------------Cabeçalho-------------------------------------------------------------------------------*/
+header {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    width: auto;
+}
+
+header div {
+    display: flex;
+    gap: 40px;/* Espaçamento entre os elementos */
+}
+
+header div:last-child {
+    justify-content: right;
+    display: flex;
+    align-items: right;
+    gap: 20px;
+    /* Espaçamento entre os elementos */
+}
+
+header strong {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    color: #000;
+    font-family: "Passion One";
+    font-size: 30px;
+    /* Tamanho do texto */
+}
+
+header a {
+    display: inline-flex;
+    /* Garante que os elementos estejam na mesma linha */
+    align-items: center;
+    /* Alinha verticalmente */
+    text-decoration: none;
+    /* Remove o sublinhado do texto */
+    color: black;
+    /* Cor do texto */
+    font-size: 16px;
+    /* Tamanho do texto */
+    margin: 0 10px;
+    /* Espaçamento entre os elementos */
+}
+
+header a:hover {
+    color: #218A38;
+    /* Destaque ao passar o rato */
+}
+
+/* Popup Styles */
+.popup {
+    display: none; /* Inicialmente oculto */
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    border: 2px solid #4CAF50; /* Aqui estamos adicionando uma borda verde */
+    border-radius: 8px; /* Bordas arredondadas */
+    padding: 15px;
+    width: 200px;
+    z-index: 1000;
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.popup-content a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+}
+
+.popup-content a:hover {
+    color: #218A38;
+}
+
+/* Popup Styles profile */
+.popup {
+    display: none; /* Inicialmente oculto */
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    border: 2px solid #4CAF50; /* Aqui estamos adicionando uma borda verde */
+    border-radius: 8px; /* Bordas arredondadas */
+    padding: 15px;
+    width: 200px;
+    z-index: 1000;
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.popup-content a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+}
+
+.popup-content a:hover {
+    color: #218A38;
+}
+
+/* Popup Styles search */
+/* Modal styles */
+.modal {
+    background-color: #D1D1D1;
+    display: none; /* Initially hidden */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: transparent; 
+    padding-top: -200px;
+}
+
+.modal-content {
+    background-color: transparent;
+    margin: -1.5% 36%;
+    padding: 20px;
+    width: 80%; 
+    max-width: 400px; 
+}
+
+.close:hover,
+.close:focus {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+input[type="text"] {
+    background-color: #D1D1D1;
+    width: 80%;
+    padding: 10px;
+    margin: 20px 0;
+}
+/*----------------------------------------------------------------------------- PRINCIPAL------------------------------------------------------------------------- */
+/* Order History Section */
+.order-history {
+    padding: 30px;
+    background-color: #D1D1D1;
+    border-radius: 8px;
+    max-width: 1000px;
+    margin: 30px auto;
+}
+
+.order-history h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.order-history h2 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #717171;
+}
+
+.order-history p {
+    font-size: 17px;
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+/* Order Card */
+.order-card {
+    background-color: #fff; /* Fundo branco */
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.order-details {
+    display: flex;
+    gap: 20px;
+}
+
+.order-info {
+    display: flex;
+    gap: 20px;
+}
+
+.order-info img {
+    max-width: 100px;
+    border-radius: 8px;
+}
+
+/* Ajuste do resumo do pedido */
+.order-summary {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+    padding-top: 10px;
+}
+
+.order-summary-item {
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.order-summary a {
+    color: #000000;
+}
+
+/* Pagination */
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    margin: 0 10px;
+    font-size: 16px;
+    color: #000000;
+    text-decoration: none;
+}
+
+.pagination a:hover {
+    color: #218A38;
+}
+
+/* Estilo do número ativo com borda */
+.pagination a.active {
+    padding: 5px 8px;
+    border: 2px solid #000000; 
+    border-radius: 5px; 
+    background-color: #D1D1D1; 
+    font-weight: bold;
+    color: #000000; 
+}
+
+.pagination span {
+    font-size: 16px;
+}
+/*--------------------------------------------------------------------Rodapé-------------------------------------------------------------------------------*/
+footer {
+    display: flex;
+    /* Habilita Flexbox para organizar os elementos no rodapé */
+    justify-content: space-between;
+    /* Coloca os elementos nos cantos */
+    align-items: flex-start;
+    /* Alinha os itens no topo do rodapé */
+    padding: 20px;
+    /* Espaçamento interno */
+    margin-top: auto;
+    /* Garante que o rodapé fique no final da página */
+}
+
+/*Fonte e margem do titulo "Support"*/
+.support h2 {
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+/*mudança na lista*/
+.support ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+/*margem entre os elementos da lista*/
+.support ul li {
+    margin: 10px 0;
+}
+
+/* Elementos da lista */
+.support ul li a {
+    text-decoration: none;
+    color: #000000;
+    font-size: 14px;
+}
+
+/*Quando se passa rato por cima sublinhar*/
+.support ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos da secção de inscrição */
+
+/*Fonte e margem do titulo "Subscribe"*/
+.subscribe h2 {
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+/*Estilo do formulario*/
+.subscribe form {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+
+.subscribe input {
+    margin-bottom: 30px;
+    font-size: 15px;
+    background-color: #D1D1D1;
+    border: 0.1px solid #cccccc;
+}
+
+/* Retirar borda ao clicar para inserir */
+.subscribe input:focus {
+    outline: none;
+}
+
+/*Botao subcrever*/
+.subscribe button {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    color: #D1D1D1;
+    background: #222325;
+    border: none;
+    cursor: pointer;
+}

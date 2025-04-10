@@ -1,0 +1,398 @@
+
+/* Estilos gerais do corpo */
+body {
+    font-family: 'Nunito Sans', sans-serif;
+    background: #D1D1D1;
+    margin: 0;
+    padding: 0;
+}
+
+/*--------------------------------------------------------------------Cabeçalho-------------------------------------------------------------------------------*/
+header {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    width: auto;
+
+}
+
+header div {
+    display: flex;
+    gap: 40px;
+    /* Espaçamento entre os elementos */
+}
+
+header div:last-child {
+    justify-content: right;
+    display: flex;
+    align-items: right;
+    gap: 20px;
+    /* Espaçamento entre os elementos */
+}
+
+header strong {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    color: #000;
+    font-family: "Passion One";
+    font-size: 30px;
+    /* Tamanho do texto */
+}
+
+header a {
+    display: inline-flex;
+    /* Garante que os elementos estejam na mesma linha */
+    align-items: center;
+    /* Alinha verticalmente */
+    text-decoration: none;
+    /* Remove o sublinhado do texto */
+    color: black;
+    /* Cor do texto */
+    font-size: 16px;
+    /* Tamanho do texto */
+    margin: 0 10px;
+    /* Espaçamento entre os elementos */
+}
+
+header a:hover {
+    color: #218A38;
+    /* Destaque ao passar o rato */
+}
+
+/* Popup Styles */
+.popup {
+    display: none; /* Inicialmente oculto */
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    border: 2px solid #4CAF50; /* Aqui estamos adicionando uma borda verde */
+    border-radius: 8px; /* Bordas arredondadas */
+    padding: 15px;
+    width: 200px;
+    z-index: 1000;
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.popup-content a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+}
+
+.popup-content a:hover {
+    color: #218A38;
+}
+
+/* Popup Styles profile */
+.popup {
+    display: none; /* Inicialmente oculto */
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    border: 2px solid #4CAF50; /* Aqui estamos adicionando uma borda verde */
+    border-radius: 8px; /* Bordas arredondadas */
+    padding: 15px;
+    width: 200px;
+    z-index: 1000;
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.popup-content a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+}
+
+.popup-content a:hover {
+    color: #218A38;
+}
+
+/* Popup Styles search */
+/* Modal styles */
+.modal {
+    display: none; /* Initially hidden */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: transparent; 
+    padding-top: -200px;
+}
+
+.modal-content {
+    background-color: transparent;
+    margin: -1.5% 35%;
+    padding: 20px;
+    width: 80%; 
+    max-width: 400px; 
+}
+
+.close:hover,
+.close:focus {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+input[type="text"] {
+    width: 80%;
+    padding: 10px;
+    margin: 20px 0;
+}
+/*--------------------------------------------------------------------PRINCIPAL-------------------------------------------------------------------------------*/
+.contact-us-titulo h1{
+    font-size: 32px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.contact-us-titulo h2{
+    font-size: 16px;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #717171;
+}
+
+.contact-us {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+    margin: 50px auto;
+    max-width: 1200px;
+    background-color: #fff;
+    
+}
+
+.contact-info {
+    width: 45%;
+    padding: 20px;
+    margin-left: -1.9%;
+    margin-top: -1.9%;
+    margin-bottom: -1.9%;
+    background-color: #222325;
+    color: white;
+}
+
+.contact-info h1 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.contact-info h2 {
+    font-size: 16px;
+    margin-bottom: 110px;
+}
+
+.contact-info p {
+    font-size: 16px;
+    margin-bottom: 100px;
+    display: flex;
+    align-items: center;
+}
+
+.contact-info .icon {
+    margin-right: 10px;
+}
+
+/* Ícones específicos */
+.contact-info .phone {
+    width: 24px;
+    height: 24px;
+    background-image: url('/img/bxs_phone-call.jpg');
+    background-size: cover;
+}
+
+.contact-info .email {
+    background-image: url('/img/email.jpg');
+    background-size: cover;
+    width: 24px;
+    height: 24px;
+}
+
+.contact-info .address {
+    width: 20px;
+    height: 30px;
+    background-image: url('/img/carbon_location-filled.jpg');
+    background-size: cover;
+}
+
+/* Estilo para o formulário de contato */
+.contact-form {
+    width: 60%; /* Ajuste para dar mais espaço ao formulário */
+    padding: 20px;
+    background-color: #fff;
+}
+
+.contact-form h1 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+/* Estilo para campos em linha */
+.inline {
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.inline-item1{
+    width: 48%;
+    font-weight: bold;
+}
+
+.inline-item2 {
+    width: 45%;
+    font-weight: bold;
+}
+
+/* Estilo para labels */
+.form-group label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    display: block;
+    font-weight: bold;
+}
+
+/* Estilo para campos de entrada */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: none; 
+    border-bottom: 2px solid #000; 
+    outline: none; 
+}
+
+/* Estilo para as opções de radio */
+.subject-options {
+    display: flex;
+    gap: 120px; 
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.subject-options label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 20px;
+}
+/* Estilo do botão de envio */
+button {
+    padding: 12px 30px; /* Menor padding para diminuir o tamanho */
+    background-color: #218A38;
+    color: white;
+    border: none;
+    font-size: 14px; 
+    cursor: pointer;
+    width: auto; 
+    margin-top: 30px;
+    margin-left: auto; 
+    margin-right: 30px;
+    display: block; 
+}
+
+button:hover {
+    background-color: #1e7e32;
+}
+
+/*--------------------------------------------------------------------Rodapé-------------------------------------------------------------------------------*/
+footer {
+    display: flex;
+    /* Habilita Flexbox para organizar os elementos no rodapé */
+    justify-content: space-between;
+    /* Coloca os elementos nos cantos */
+    align-items: flex-start;
+    /* Alinha os itens no topo do rodapé */
+    padding: 20px;
+    /* Espaçamento interno */
+    margin-top: auto;
+    /* Garante que o rodapé fique no final da página */
+}
+
+/*Fonte e margem do titulo "Support"*/
+.support h2 {
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+/*mudança na lista*/
+.support ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+/*margem entre os elementos da lista*/
+.support ul li {
+    margin: 10px 0;
+}
+
+/* Elementos da lista */
+.support ul li a {
+    text-decoration: none;
+    color: #000000;
+    font-size: 14px;
+}
+
+/*Quando se passa rato por cima sublinhar*/
+.support ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos da secção de inscrição */
+
+/*Fonte e margem do titulo "Subscribe"*/
+.subscribe h2 {
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+/*Estilo do formulario*/
+.subscribe form {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+
+.subscribe input {
+    margin-bottom: 30px;
+    font-size: 15px;
+    background-color: #D1D1D1;
+    border: 0.1px solid #cccccc;
+}
+
+/* Retirar borda ao clicar para inserir */
+.subscribe input:focus {
+    outline: none;
+}
+
+/*Botao subcrever*/
+.subscribe button {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    color: #D1D1D1;
+    background: #222325;
+    border: none;
+    cursor: pointer;
+}
