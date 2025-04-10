@@ -131,7 +131,7 @@ input[type="text"] {
 /*--------------------------------------------------------------------ImagemHomePage-----------------------------------------------------------------------*/
 .hero-section {
     position: relative;
-    background-image: url('/img/Image_HomePage.png');
+    background-image: url('../img/Image_HomePage.png');
     background-size: cover;
     background-position: center;
     text-align: left;
