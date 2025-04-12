@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SPORTX</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/styles_Loginpage.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles_Loginpage.css">
 </head>
 
 <body>
@@ -32,7 +32,7 @@
 
                 <button type="submit">Sign In</button>
             </form>
-            <p>Don't have an account? <a href="/html/Sign_up_Page.html">Create Account</a></p>
+            <p>Don't have an account? <a href="${pageContext.request.contextPath}/Sign_up_Page.jsp">Create Account</a></p>
         </section>
 
         <section class="support">
