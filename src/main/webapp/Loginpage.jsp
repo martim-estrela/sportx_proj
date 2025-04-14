@@ -28,8 +28,6 @@
                 <label for="password">Password</label>
                 <input type="password" name="password" required />
 
-                <label>Forgot your password?</label>
-
                 <button type="submit">Sign In</button>
             </form>
             <p>Don't have an account? <a href="${pageContext.request.contextPath}/Sign_up_Page.jsp">Create Account</a></p>

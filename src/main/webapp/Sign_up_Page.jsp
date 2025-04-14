@@ -21,7 +21,7 @@
         <section class="SignUp-container">
             <h1>Sign Up</h1>
             <p>Please Complete all required fields.</p>
-            <form action="Loginpage.jsp" method="GET">
+            <form action="${pageContext.request.contextPath}Loginpage.jsp" method="GET">
                 <label for="username">Enter Username</label>
                 <input type="username" name="username" required />
 
@@ -36,7 +36,7 @@
 
                 <button type="submit">Sign Up</button>
             </form>
-            <p>Already have an Account? <a href="/html/Loginpage.html">Login</a></p>
+            <p>Already have an Account? <a href="${pageContext.request.contextPath}/Loginpage.jsp">Login</a></p>
         </section>
 
         <section class="support">
