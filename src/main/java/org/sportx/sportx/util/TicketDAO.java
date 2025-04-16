@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TicketDAO {
-    private Connection conn;
+    private final Connection conn;
 
     public TicketDAO(Connection conn) {
         this.conn = conn;

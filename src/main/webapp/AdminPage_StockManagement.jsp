@@ -1,12 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SportX|StockManagemtent</title>
-    <link rel="stylesheet" href="../assets/css/styles_AdminPage_Stock.css">
+    <title>SportX|StockManagement</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles_AdminPage_Stock.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -14,16 +18,16 @@
 <body>
     <header>
         <div>
-            <a href="/html/index.html"><strong>SPORTX</strong></a>
+            <a href="${pageContext.request.contextPath}/index.jsp"><strong>SPORTX</strong></a>
         </div>
         <div>
-            <a href="/html/SearchBrowse.html">Products</a>
-            <a href="/html/SearchBrowse.html">Sale</a>
+            <a href="${pageContext.request.contextPath}/SearchBrowse.jsp">Products</a>
+            <a href="${pageContext.request.contextPath}/SearchBrowse.jsp">Sale</a>
             <a href="#" id="searchButton">Search</a>
         </div>
         <div>
-            <a href="ShoppingCart_Page.jsp"><img src="../assets/img/shopping-cart.jpg"></a>
-            <a href="#" id="profileButton"><img src="../assets/img/account_circle.jpg" alt="Profile"></a>
+            <a href="${pageContext.request.contextPath}/ShoppingCart_Page.jsp"><img src="${pageContext.request.contextPath}/img/shopping-cart.jpg"></a>
+            <a href="#" id="profileButton"><img src="${pageContext.request.contextPath}/img/account_circle.jpg" alt="Profile"></a>
         </div>
     </header>
 
@@ -32,7 +36,7 @@
         <div class="popup-content">
             <a href="ProfilePage.jsp"> Profile</a>
             <a href="Orderhistory.jsp">Order History</a>
-            <a href="AdminPage_StockManagement.html">Stock Management</a>
+            <a href="AdminPage_StockManagement.jsp">Stock Management</a>
             <a href="AdminPage_UserManagement.jsp">User Management</a>
             <a href="Loginpage.jsp">Log Out</a>
         </div>
@@ -70,186 +74,68 @@
             <a href="#"><strong style="color: black; text-decoration: underline;">Add product...</strong></a>
         </div>
         <div class=" table-container">
-            <div class="row1">
-                <div class="column-img"><img src="../assets/img/jordan.jpg" style="width: 104px; height: 104px;" alt="">
-                </div>
-                <div class="column-description">
-                    <label>Nike Air Jordan 1 Mid</label><br><br>
-                    <label>Color: Taxi</label>
-                </div>
-                <div class="column">
-                    <button class="btn-update-stock" onclick="openModal()" style="font-size: 18px;">Update
-                        Stock...</button>
-                </div>
-                <div class="column-edit-icon">
-                    <button class="btn-edit"><i class="material-icons"
-                            style="background-color: #d9d9d9d9; font-size:40px">edit_square</i></button>
-                </div>
-                <div class="column-delete-icon">
-                    <button class="btn-edit"><i class="material-icons"
-                            style="color: red; background-color: #d9d9d9d9; font-size:40px">close</i></button>
-                </div>
-            </div>
+            <%-- Exemplo com lista de produtos --%>
+                <c:forEach var="product" items="${products}" varStatus="status">
+                    <c:if test="${status.index % 8 == 0}">
+                        <div class="page" style="${status.index == 0 ? '' : 'display:none;'}">
+                    </c:if>
 
-            <div class="row1">
-                <div class="column-img"><img src="/img/jordan.jpg" style="width: 104px; height: 104px;" alt="">
-                </div>
-                <div class="column-description">
-                    <label>Nike Air Jordan 1 Mid</label><br><br>
-                    <label >Color: Taxi</label>
-                </div>
-                <div class="column">
-                    <button class="btn-update-stock" onclick="openModal()" style="font-size: 18px;">Update
-                        Stock...</button>
-                </div>
-                <div class="column-edit-icon">
-                    <button class="btn-edit"><i class="material-icons"
-                            style="background-color: #d9d9d9d9; font-size:40px">edit_square</i></button>
-                </div>
-                <div class="column-delete-icon">
-                    <button class="btn-edit"><i class="material-icons"
-                            style="color: red; background-color: #d9d9d9d9; font-size:40px">close</i></button>
-                </div>
-            </div>
-
-            <div class="row1">
-                <div class="column-img"><img src="/img/jordan.jpg" style="width: 104px; height: 104px;" alt="">
-                </div>
-                <div class="column-description">
-                    <label>Nike Air Jordan 1 Mid</label><br><br>
-                    <label>Color: Taxi</label>
-                </div>
-                <div class="column">
-                    <button class="btn-update-stock" onclick="openModal()" style="font-size: 18px;">Update
-                        Stock...</button>
-                </div>
-                <div class="column-edit-icon">
-                    <button class="btn-edit"><i class="material-icons"
-                            style="background-color: #d9d9d9d9; font-size:40px">edit_square</i></button>
-                </div>
-                <div class="column-delete-icon">
-                    <button class="btn-edit"><i class="material-icons"
-                            style="color: red; background-color: #d9d9d9d9; font-size:40px">close</i></button>
-                </div>
-            </div>
-
-            <div class="row1">
-                <div class="column-img"><img src="/img/jordan.jpg" style="width: 104px; height: 104px;" alt="">
-                </div>
-                <div class="column-description">
-                    <label>Nike Air Jordan 1 Mid</label><br><br>
-                    <label>Color: Taxi</label>
-                </div>
-                <div class="column">
-                    <button class="btn-update-stock" onclick="openModal()" style="font-size: 18px;">Update
-                        Stock...</button>
-                </div>
-                <div class="column-edit-icon">
-                    <button class="btn-edit"><i class="material-icons"
-                            style="background-color: #d9d9d9d9; font-size:40px">edit_square</i></button>
-                </div>
-                <div class="column-delete-icon">
-                    <button class="btn-edit"><i class="material-icons"
-                            style="color: red; background-color: #d9d9d9d9; font-size:40px">close</i></button>
-                </div>
-            </div>
-
-            <div class="row1">
-                <div class="column-img"><img src="/img/jordan.jpg" style="width: 104px; height: 104px;" alt="">
-                </div>
-                <div class="column-description">
-                    <label>Nike Air Jordan 1 Mid</label><br><br>
-                    <label>Color: Taxi</label>
-                </div>
-                <div class="column">
-                    <button class="btn-update-stock" onclick="openModal()" style="font-size: 18px;">Update
-                        Stock...</button>
-                </div>
-                <div class="column-edit-icon">
-                    <button class="btn-edit"><i class="material-icons"
-                            style="background-color: #d9d9d9d9; font-size:40px">edit_square</i></button>
-                </div>
-                <div class="column-delete-icon">
-                    <button class="btn-edit"><i class="material-icons"
-                            style="color: red; background-color: #d9d9d9d9; font-size:40px">close</i></button>
-                </div>
-            </div>
-
-            <div class="row1">
-                <div class="column-img"><img src="/img/jordan.jpg" style="width: 104px; height: 104px;" alt="">
-                </div>
-                <div class="column-description">
-                    <label>Nike Air Jordan 1 Mid</label><br><br>
-                    <label>Color: Taxi</label>
-                </div>
-                <div class="column">
-                    <button class="btn-update-stock" onclick="openModal()" style="font-size: 18px;">Update
-                        Stock...</button>
-                </div>
-                <div class="column-edit-icon">
-                    <button class="btn-edit"><i class="material-icons"
-                            style="background-color: #d9d9d9d9; font-size:40px">edit_square</i></button>
-                </div>
-                <div class="column-delete-icon">
-                    <button class="btn-edit"><i class="material-icons"
-                            style="color: red; background-color: #d9d9d9d9; font-size:40px">close</i></button>
-                </div>
-            </div>
-
-            <!--Modal-->
-            <div class="modal" id="stockModal">
-                <div class="modal-content">
-                    <h3>Update Stock</h3>
-                    <div class="input-grid">
-                        <div class="input-container">
-                            <label class="input-label">Size 36:</label>
-                            <input type="number" class="input-field" placeholder="Enter stock for size 38">
+                    <div class="row1">
+                        <div class="column-img">
+                            <img src="${product.product_image}" style="width: 104px; height: 104px;" alt="">
                         </div>
-                        <div class="input-container">
-                            <label class="input-label">Size 37:</label>
-                            <input type="number" class="input-field" placeholder="Enter stock for size 38">
+                        <div class="column-description">
+                            <label><strong>${product.name}</strong></label><br><br>
+                            <c:forEach var="item" items="${product.items}">
+                                <label>Color: ${item.color}, Size: ${item.size}, Stock: ${item.qtyInStock}</label><br>
+                            </c:forEach>
                         </div>
-                        <div class="input-container">
-                            <label class="input-label">Size 38:</label>
-                            <input type="number" class="input-field" placeholder="Enter stock for size 38">
+                        <div class="column">
+                            <button
+                                    class="btn-update-stock"
+                                    type="button"
+                                    onclick="openStockModal('${product.id}', ${product.items})">
+                                Update
+                            </button>
                         </div>
-                        <div class="input-container">
-                            <label class="input-label">Size 39:</label>
-                            <input type="number" class="input-field" placeholder="Enter stock for size 39">
+                        <div class="column-edit-icon">
+                            <button class="btn-edit"><i class="material-icons" style="background-color: #d9d9d9d9; font-size:40px">edit_square</i></button>
                         </div>
-                        <div class="input-container">
-                            <label class="input-label">Size 40:</label>
-                            <input type="number" class="input-field" placeholder="Enter stock for size 40">
-                        </div>
-                        <div class="input-container">
-                            <label class="input-label">Size 41:</label>
-                            <input type="number" class="input-field" placeholder="Enter stock for size 41">
-                        </div>
-                        <div class="input-container">
-                            <label class="input-label">Size 42:</label>
-                            <input type="number" class="input-field" placeholder="Enter stock for size 42">
-                        </div>
-                        <div class="input-container">
-                            <label class="input-label">Size 43:</label>
-                            <input type="number" class="input-field" placeholder="Enter stock for size 43">
-                        </div>
-                        <div class="input-container">
-                            <label class="input-label">Size 44:</label>
-                            <input type="number" class="input-field" placeholder="Enter stock for size 44">
-                        </div>
-                        <div class="input-container">
-                            <label class="input-label">Size 45:</label>
-                            <input type="number" class="input-field" placeholder="Enter stock for size 45">
+                        <div class="column-delete-icon">
+                            <form method="post" action="manageStock">
+                                <input type="hidden" name="action" value="DeleteProductServlet" />
+                                <input type="hidden" name="productId" value="${product.id}" />
+                                <button class="btn-edit" type="submit">
+                                    <i class="material-icons" style="color: red; background-color: #d9d9d9d9; font-size:40px">close</i>
+                                </button>
+                            </form>
                         </div>
                     </div>
+
+                    <c:if test="${(status.index + 1) % 8 == 0 || status.last}">
+                        </div> <!-- fecha .page -->
+                    </c:if>
+                </c:forEach>
+        </div>
+
+            <!--Modal-->
+        <div class="modal" id="stockModal">
+            <div class="modal-content">
+                <h3>Update Stock</h3>
+                <form method="post" action="manageStock">
+                    <input type="hidden" name="action" value="UpdateStockServlet">
+                    <div id="stockInputs" class="input-grid">
+                        <!-- Inputs dinâmicos inseridos via JavaScript -->
+                    </div>
                     <br>
-                    <a href="#" class="add-modal-btn" onclick="closeModal()">Add Stock</a>
+                    <button class="add-modal-btn" type="submit">Save</button>
                     <a href="#" class="close-modal-btn" onclick="closeModal()">Cancel</a>
-                </div>
+                </form>
             </div>
+        </div>
 
 
-            <script src="/js/PopupStock.js">
+            <script src="${pageContext.request.contextPath}/js/PopupStock.js">
             </script>
             <!-- Paginação -->
             <div class="pagination">
@@ -284,7 +170,7 @@
             </form>
         </section>
     </footer>
-    <script src="/js/PopupProfile.js"></script>
+    <script src="${pageContext.request.contextPath}js/PopupProfile.js"></script>
 </body>
 
 </html>

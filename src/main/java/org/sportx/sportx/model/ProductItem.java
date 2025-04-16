@@ -4,12 +4,14 @@ public class ProductItem {
     private int productItemId;
     private int qtyInStock;
     private String SKU;
+    private String imageUrl;
 
     // Getters, Setters, Construtor
-    public ProductItem(int productItemId, int qtyInStock, String SKU) {
+    public ProductItem(int productItemId, int qtyInStock, String SKU, String imageUrl) {
         this.productItemId = productItemId;
         this.qtyInStock = qtyInStock;
         this.SKU = SKU;
+        this.imageUrl = imageUrl;
     }
 
     public int getProductItemId() {
@@ -44,5 +46,9 @@ public class ProductItem {
         if (qtyInStock >= quantity) {
             qtyInStock -= quantity;
         }
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 }
