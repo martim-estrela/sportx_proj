@@ -29,6 +29,14 @@ public class ProductItemDTO {
     public int getQtyInStock() { return qtyInStock; }
     public String getProductImage() { return productImage; }
     public Map<String, String> getVariations() { return variations; }
+    public String getColor() {
+        return variations.getOrDefault("color", "");
+    }
+
+    public String getSize() {
+        return variations.getOrDefault("size", "");
+    }
+
 
 }
 

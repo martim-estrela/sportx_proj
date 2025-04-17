@@ -43,38 +43,47 @@
     </div>
 
     <main>
-        <div class="select-container">
-            <div>
-                <h3 style="text-decoration: underline;">Category:</h3>
-                <select name="category" id="category">
-                    <option value="shoes">Shoes</option>
-                    <option value="pants">Pants</option>
-                    <option value="hoodies">Hoodies & Sweatshirts</option>
-                    <option value="tops">Tops & T-Shirts</option>
-                </select>
+        <form method="get" action="filterStock">
+            <div class="select-container">
+                <div>
+                    <label for="category">Category:</label>
+                    <select name="category" id="category">
+                        <option value="">Selecione...</option>
+                        <c:forEach var="category" items="${categories}">
+                            <option value="${category.id}">${category.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div>
+                    <label for="sub-category">Sub-category:</label>
+                    <select name="sub-category" id="sub-category">
+                        <option value="">Selecione...</option>
+                        <c:forEach var="subcategory" items="${subcategories}">
+                            <option value="${subcategory.id}">${subcategory.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="search-bar">
+                    <h3 style="text-decoration: underline;">Product Name:</h3>
+                    <input type="text" placeholder="Search.." name="search">
+                </div>
+                <div>
+                    <button type="submit">Filtrar</button>
+                </div>
             </div>
-            <div>
-                <h3 style="text-decoration: underline;">Sub-category:</h3>
-                <select name="sub-category" id="sub-category">
-                    <option value="basketball">Basketball</option>
-                    <option value="tennis">Tennis</option>
-                    <option value="football">Football</option>
-                    <option value="rugby">Rugby</option>
-                </select>
-            </div>
-            <div class="search-bar">
-                <h3 style="text-decoration: underline;">Product Name:</h3>
-                <input type="text" placeholder="Search.." name="search">
-            </div>
-        </div>
+        </form>
 
         <div class="report-links">
             <a href="#"><strong style="color: black; text-decoration: underline;">Generate stock
                     report...</strong></a><br>
             <a href="#"><strong style="color: black; text-decoration: underline;">Add product...</strong></a>
         </div>
-        <div class=" table-container">
-            <%-- Exemplo com lista de produtos --%>
+
+
+        <!--  Tabela de Produtos -->
+        <form method="get" action="manageStock">
+            <div class=" table-container">
+                <%-- lista de produtos --%>
                 <c:forEach var="product" items="${products}" varStatus="status">
                     <c:if test="${status.index % 8 == 0}">
                         <div class="page" style="${status.index == 0 ? '' : 'display:none;'}">
@@ -116,7 +125,9 @@
                         </div> <!-- fecha .page -->
                     </c:if>
                 </c:forEach>
-        </div>
+            </div>
+        </form>
+
 
             <!--Modal-->
         <div class="modal" id="stockModal">

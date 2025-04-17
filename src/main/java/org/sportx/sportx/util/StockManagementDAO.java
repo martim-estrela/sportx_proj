@@ -3,9 +3,7 @@ package org.sportx.sportx.util;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.sportx.sportx.DTO.ProductDTO;
-import org.sportx.sportx.DTO.ProductItemDTO;
-import org.sportx.sportx.DTO.StockManagementDTO;
+import org.sportx.sportx.DTO.*;
 import org.sportx.sportx.model.Product;
 import org.sportx.sportx.model.ProductItem;
 import org.sportx.sportx.model.Variation;
@@ -111,5 +109,98 @@ public class StockManagementDAO {
 
         return products;
     }
+
+
+    public List<ProductDTO> filterProducts(String category, String subcategory, String productName) throws SQLException {
+        List<ProductDTO> products = new ArrayList<>();
+        String query = "SELECT p.product_id, p.name, p.description, c.category_name AS category, " +
+                "s.sub_category_name AS subcategory, pi.qty_in_stock, pi.price, pi.product_image FROM product p" +
+        "JOIN product_item pi ON p.product_id = pi.product_id" +
+        "JOIN product_category_child s ON p.sub_category_id = s.sub_category_id" +
+        "JOIN product_category_parent c ON s.category_id = c.category_id" +
+        "WHERE (? = '' OR c.name LIKE ?)" +
+        "AND (? = '' OR s.name LIKE ?)" +
+        "AND (? = '' OR p.name LIKE ?)";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, "%" + category + "%");
+            stmt.setString(2, category);
+            stmt.setString(3, "%" + subcategory + "%");
+            stmt.setString(4, subcategory);
+            stmt.setString(5, "%" + productName + "%");
+            stmt.setString(6, productName);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    // Criar o objeto ProductDTO e adicionar à lista
+                    int productId = rs.getInt("product_id");
+
+                    ProductDTO product;
+
+                    String name = rs.getString("name");
+                    String description = rs.getString("description");
+
+
+                    product = new ProductDTO(productId, name, description);
+                    product.setCategory(category);
+                    product.setSubcategory(subcategory);
+                    product.setItems(new ArrayList<>());
+
+                   //ProductItemDTO
+                    int productItemId = rs.getInt("product_item_id");
+                    int stock = rs.getInt("qty_in_stock");
+                    double price = rs.getDouble("price");
+                    String image = rs.getString("product_image");
+
+                    ProductItemDTO item = new ProductItemDTO(productItemId, price, stock, image);
+                    product.getItems().add(item);
+                }
+            }
+        }
+
+        return products;
+    }
+
+    // Buscar todas as categorias
+    public List<CategoryDTO> getAllCategories() throws SQLException {
+        List<CategoryDTO> categories = new ArrayList<>();
+
+        String sql = "SELECT category_id, category_name FROM product_category_parent";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+
+                CategoryDTO category = new CategoryDTO(id, name);
+                categories.add(category);
+            }
+        }
+
+        return categories;
+    }
+
+    // Buscar todas as subcategorias
+    public List<SubcategoryDTO> getAllSubcategories() throws SQLException {
+        List<SubcategoryDTO> subcategories = new ArrayList<>();
+
+        String sql = "SELECT sub_category_id, sub_category_name, category_id FROM prouct_category_child";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                int categoryId = rs.getInt("category_id");
+
+                SubcategoryDTO subcategory = new SubcategoryDTO(id, name, categoryId);
+                subcategories.add(subcategory);
+            }
+        }
+
+        return subcategories;
+    }
+
 
 }

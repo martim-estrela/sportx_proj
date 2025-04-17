@@ -51,8 +51,6 @@ public class StockManagementServlet extends HttpServlet {
         }
     }
 
-
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Connection conn = null;
         try {
@@ -79,6 +77,8 @@ public class StockManagementServlet extends HttpServlet {
             }
         }
     }
+
+
 }
 
 

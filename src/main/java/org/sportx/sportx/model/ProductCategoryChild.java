@@ -25,4 +25,6 @@ public class ProductCategoryChild {
     public void setName(String name) {
         this.name = name;
     }
+
+
 }

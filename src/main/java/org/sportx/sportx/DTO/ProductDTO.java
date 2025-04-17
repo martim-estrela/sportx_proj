@@ -7,6 +7,8 @@ public class ProductDTO {
     private int productId;
     private String name;
     private String description;
+    private String category;
+    private String subcategory;
     private List<ProductItemDTO> items;
 
     public ProductDTO(int productId, String name, String description) {
@@ -33,6 +35,10 @@ public class ProductDTO {
     public int getProductId() { return productId; }
     public String getName() { return name; }
     public String getDescription() { return description; }
+    public String getCategory() { return category; }
+    public String getSubcategory() { return subcategory; }
+    public void setCategory(String category) {this.category = category;}
+    public void setSubcategory(String subcategory) {this.subcategory = subcategory;}
     public List<ProductItemDTO> getItems() { return items; }
     public void setItems(List<ProductItemDTO> items) { this.items = items; }
 }
