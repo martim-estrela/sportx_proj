@@ -12,8 +12,7 @@ public class User {
     private LocalDate registerDate;
 
     // Construtor
-    public User(int userId, String email, String password, String phoneNumber, String name, String userType, LocalDate registerDate) {
-        this.userId = userId;
+    public User(String email, String password, String phoneNumber, String name, String userType, LocalDate registerDate) {
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
