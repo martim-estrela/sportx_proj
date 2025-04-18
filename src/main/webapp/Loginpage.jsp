@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,44 +12,50 @@
 </head>
 
 <body>
-    <header>
-        <section class="headerSportx">
-            <h1>SPORTX</h1>
-        </section>
-    </header>
+<header>
+    <section class="headerSportx">
+        <h1>SPORTX</h1>
+    </section>
+</header>
 
-    <main>
-        <section class="login-container">
-            <h1>Login</h1>
-            <p>Please login using account details below.</p>
-            <form action="/html/index.html" method="GET">
-                <label for="email">Email Address</label>
-                <input type="email" name="email" required />
+<main>
+    <section class="login-container">
+        <h1>Login</h1>
+        <p>Please login using account details below.</p>
 
-                <label for="password">Password</label>
-                <input type="password" name="password" required />
+        <!-- Exibir mensagem de erro se login falhar -->
+        <c:if test="${param.error == 'true'}">
+            <div style="color: #218A38; font-weight: bold;">Invalid email or password. Please try again.</div>
+        </c:if>
 
-                <button type="submit">Sign In</button>
-            </form>
-            <p>Don't have an account? <a href="${pageContext.request.contextPath}/Sign_up_Page.jsp">Create Account</a></p>
-        </section>
+        <form action="${pageContext.request.contextPath}/LoginServlet" method="POST">
+            <label >Email Address</label>
+            <input type="email" name="email" required />
 
-        <section class="support">
-            <h2>Support</h2>
-            <ul>
-                <li><a href="ContactUs.jsp">Contact us</a></li>
-                <li><a href="FAQ.jsp">FAQ</a></li>
-            </ul>
-        </section>
+            <label>Password</label>
+            <input type="password" name="password" required />
 
-        <section class="subscribe">
-            <h2>Subscribe for latest updates</h2>
-            <form action="/subscribe">
-                <input type="email" name="email" placeholder="Enter your email" required />
-                <button type="submit">Subscribe</button>
-            </form>
-        </section>
-    </main>
+            <button type="submit">Sign In</button>
+        </form>
+        <p>Don't have an account? <a href="${pageContext.request.contextPath}/Sign_up_Page.jsp">Create Account</a></p>
+    </section>
+
+    <section class="support">
+        <h2>Support</h2>
+        <ul>
+            <li><a href="ContactUs.jsp">Contact us</a></li>
+            <li><a href="FAQ.jsp">FAQ</a></li>
+        </ul>
+    </section>
+
+    <section class="subscribe">
+        <h2>Subscribe for latest updates</h2>
+        <form action="/subscribe">
+            <input type="email" name="email" placeholder="Enter your email" required />
+            <button type="submit">Subscribe</button>
+        </form>
+    </section>
+</main>
 </body>
 
 </html>

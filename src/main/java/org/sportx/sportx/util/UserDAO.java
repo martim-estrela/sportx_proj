@@ -46,4 +46,36 @@ public class UserDAO {
         }
         return false; // Se a inserção falhou
     }
+
+    // Método para buscar o usuário pelo email e senha
+    public User getUserByEmailAndPassword(String email, String password) {
+        String query = "SELECT * FROM user WHERE email = ? AND password = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setString(1, email);
+            ps.setString(2, password);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                // Se o usuário for encontrado, cria e retorna um objeto User
+                User user = new User(
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("phone_number"),
+                        rs.getString("name"),
+                        rs.getString("user_type"),
+                        rs.getDate("register_date").toLocalDate()
+                );
+                return user;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;  // Se o usuário não for encontrado, retorna null
+    }
 }

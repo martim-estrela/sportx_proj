@@ -9,7 +9,6 @@ import java.io.IOException;
 import org.sportx.sportx.util.UserDAO;
 import org.sportx.sportx.model.User;
 
-import java.io.IOException;
 import java.time.LocalDate;
 
 @WebServlet("/SignUpServlet")
