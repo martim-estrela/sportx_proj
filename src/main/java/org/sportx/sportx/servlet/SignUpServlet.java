@@ -6,9 +6,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import org.sportx.sportx.util.DBConnection;
 import org.sportx.sportx.util.UserDAO;
 import org.sportx.sportx.model.User;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 @WebServlet("/SignUpServlet")
@@ -30,14 +34,18 @@ public class SignUpServlet extends HttpServlet {
         User newUser = new User(email, password, phoneNumber, name, userType, registerDate);
 
         // Cria o DAO e salva o utilizador
-        UserDAO userDAO = new UserDAO();
-        boolean isSaved = userDAO.saveUser(newUser);
+        try (Connection conn = DBConnection.getConnection()) {
+            UserDAO userDAO = new UserDAO(conn);
+            boolean isSaved = userDAO.saveUser(newUser);
 
-        // Verifica se o utilizador foi guardado com sucesso
-        if (isSaved) {
-            response.sendRedirect("Loginpage.jsp");  // Redireciona para o login após cadastro bem-sucedido
-        } else {
-            response.sendRedirect("Sign_up_Page.jsp?error=true");  // Redireciona com erro caso o cadastro falhe
+            // Verifica se o utilizador foi guardado com sucesso
+            if (isSaved) {
+                response.sendRedirect("Loginpage.jsp");  // Redireciona para o login após cadastro bem-sucedido
+            } else {
+                response.sendRedirect("Sign_up_Page.jsp?error=true");  // Redireciona com erro caso o cadastro falhe
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

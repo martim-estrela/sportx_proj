@@ -3,12 +3,7 @@ package org.sportx.sportx.servlet;
 import jakarta.servlet.RequestDispatcher;
 import org.sportx.sportx.DTO.ProductDTO;
 import org.sportx.sportx.DTO.StockManagementDTO;
-import org.sportx.sportx.model.Product;
-import org.sportx.sportx.model.ProductItem;
-import org.sportx.sportx.model.Variation;
-import org.sportx.sportx.model.VariationOption;
 import org.sportx.sportx.util.DBConnection;
-
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,7 +13,7 @@ import org.sportx.sportx.util.StockManagementDAO;
 import java.io.IOException;
 import java.sql.*;
 import java.util.List;
-import java.util.ArrayList;
+
 
 @WebServlet("/manageStock")
 public class StockManagementServlet extends HttpServlet {
