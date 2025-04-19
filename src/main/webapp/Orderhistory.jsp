@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SportX|Orderhistory</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/styles_orderhistory.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles_orderhistory.css">
     
 </head>
 
