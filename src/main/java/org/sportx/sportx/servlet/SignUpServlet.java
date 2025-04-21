@@ -31,7 +31,7 @@ public class SignUpServlet extends HttpServlet {
         LocalDate registerDate = LocalDate.now();  // Data atual de registo
 
         // Cria o objeto User
-        User newUser = new User(email, password, phoneNumber, name, userType, registerDate);
+        User newUser = new User(0, email, password, phoneNumber, name, userType, registerDate);
 
         // Cria o DAO e salva o utilizador
         try (Connection conn = DBConnection.getConnection()) {

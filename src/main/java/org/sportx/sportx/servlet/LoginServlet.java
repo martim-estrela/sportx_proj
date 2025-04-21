@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.sportx.sportx.model.AddressInfo;
 import org.sportx.sportx.util.DBConnection;
 import org.sportx.sportx.util.UserDAO;
 import org.sportx.sportx.model.User;
@@ -31,9 +32,14 @@ public class LoginServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user); // Armazena o usuário na sessão
 
+                // Agora, busque o endereço do usuário e armazene na sessão
+                AddressInfo addressInfo = userDAO.getUserAddress(user.getUserId());  // Método para buscar o endereço
+                session.setAttribute("userAddress", addressInfo); // Armazena o endereço na sessão
+
                 // Redireciona para o painel principal (dashboard)
                 response.sendRedirect("index.jsp");  // O utilizador vai para a home page
-            } else {
+            }
+            else {
                 // Se as credenciais forem inválidas, redireciona de volta para o login com erro
                 response.sendRedirect("Loginpage.jsp?error=true");  // Parâmetro error=true para indicar falha de login
             }
