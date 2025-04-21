@@ -167,7 +167,7 @@
             </form>
         </section>
     </footer>
-    <script src="/js/PopupProfile.js"></script>
+    <script src="${pageContext.request.contextPath}/js/PopupProfile.js"></script>
 </body>
 
 </html>

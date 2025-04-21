@@ -9,21 +9,21 @@ Este ficheiro contém a lista de tarefas pendentes para o desenvolvimento comple
 ---
 
 ##  1. Model – Completar as Classes
-- [ ] Verificar se todas as classes do domínio estão criadas:
-    - [ ] User.java
-    - [ ] Product.java
-    - [ ] ProductCategoryChild.java
-    - [ ] ProductCategoryParent.java
-    - [ ] ProductItem.java
-    - [ ] OrderStatus.java
-    - [ ] Order.java
-    - [ ] PaymentInfo.java
-    - [ ] PaymentType.java
-    - [ ] Promotion.java
+- [x] Verificar se todas as classes do domínio estão criadas:
+    - [x] User.java
+    - [x] Product.java
+    - [x] ProductCategoryChild.java
+    - [x] ProductCategoryParent.java
+    - [x] ProductItem.java
+    - [] OrderStatus.java
+    - [] Order.java
+    - [] PaymentInfo.java
+    - [] PaymentType.java
+    - [] Promotion.java
     - [ ] ShippingMethod.java
-    - [ ] Variation.java
-    - [ ] VariationOption.java
-    - [ ] Ticket.java
+    - [x] Variation.java
+    - [x] VariationOption.java
+    - [x] Ticket.java
   
 - [ ] Implementar os métodos essenciais:
     - [ ] Getters e Setters
@@ -35,14 +35,14 @@ Este ficheiro contém a lista de tarefas pendentes para o desenvolvimento comple
 ##  2. DAO – Criar Classes de Acesso a Dados
 Para cada classe de domínio:
 - [ ] Criar os DAOs:
-    - [ ] UserDAO.java
-    - [ ] ProductDAO.java
+    - [x] UserDAO.java
+    - [x] ProductDAO.java
     - [ ] PaymentDAO.java
     - [ ] Address.java
     - [ ] OrderDAO.java
     - [ ] TicketDAO.java
   
-- [ ] Implementar métodos:
+- [x] Implementar métodos:
     - [ ] inserir(...)
     - [ ] atualizar(...)
     - [ ] eliminar(...)
@@ -54,8 +54,8 @@ Para cada classe de domínio:
 ##  3. Controller – Criar Servlets
 Para cada entidade principal:
 - [ ] Criar os Servlets:
-    - [ ] UserServlet.java
-    - [ ] ProductServlet.java
+    - [x] UserServlet.java
+    - [x] ProductServlet.java
     - [ ] PaymentServlet.java
     - [ ] AddressServlet.java
     - [ ] OrderServlet.java
@@ -70,29 +70,39 @@ Para cada entidade principal:
 ---
 
 ##  4. View – Integração com JSP
-- [ ] Criar páginas JSP para cada função:
-    - [ ] Loginpage.jsp
-    - [ ] AdminPage_StockManagement.jsp
-    - [ ] AdminPage_UserManagement
-    - [ ] Chat_Page.jsp
-    - [ ] CheckoutPage.jsp
-    - [ ] ContactUs.jsp
-    - [ ] FAQ.jsp
-    - [ ] index.jsp
-    - [ ] index_userpage.jsp
-    - [ ] Orderhistory.jsp
-    - [ ] ProductPage.jsp
-    - [ ] ProfilePage.jsp
-    - [ ] SearchBrowse.jsp
-    - [ ] ShoppingCart_Page.jsp
-    - [ ] Sign_up_Page.jsp
+- [X] Criar páginas JSP para cada função:
+    - [x] Loginpage.jsp
+    - [x] AdminPage_StockManagement.jsp
+    - [x] AdminPage_UserManagement
+    - [x] Chat_Page.jsp
+    - [x] CheckoutPage.jsp
+    - [x] ContactUs.jsp
+    - [x] FAQ.jsp
+    - [x] index.jsp
+    - [x] index_userpage.jsp
+    - [x] Orderhistory.jsp
+    - [x] ProductPage.jsp
+    - [x] ProfilePage.jsp
+    - [x] SearchBrowse.jsp
+    - [x] ShoppingCart_Page.jsp
+    - [x] Sign_up_Page.jsp
    
 - [ ] Integrar JSP com servlets usando JSTL/EL:
-  ```jsp
-  <c:forEach var="produto" items="${listaProdutos}">
-      <tr>
-          <td>${produto.nome}</td>
-          <td>${produto.preco}</td>
-      </tr>
-  </c:forEach>
+  - [ ] Admin_StockManagement.jsp
+    - [ ] Listar Produtos
+    - [ ] Filtrar Produtos
+    - [ ] Gerar pdf com relatório de stock
+    - [ ] Desenvolver funcionaliadade para adição de produtos
+  - [ ] Admin_UserManagement.jsp
+    - [ ] Listar Users
+    - [ ] Filtar Users
+    - [ ] Gerar pdf com relatorio de users
+    - [ ] Desenvolver funcionaliadade para adição de users
+      ```jsp
+      <c:forEach var="produto" items="${listaProdutos}">
+          <tr>
+              <td>${produto.nome}</td>
+              <td>${produto.preco}</td>
+          </tr>
+      </c:forEach>
 

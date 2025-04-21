@@ -13,16 +13,16 @@
 <body>
     <header>
         <div>
-            <a href="/html/index.html"><strong>SPORTX</strong></a>
+            <a href="${pageContext.request.contextPath}/index.jsp"><strong>SPORTX</strong></a>
         </div>
         <div>
-            <a href="/html/SearchBrowse.html">Products</a>
-            <a href="/html/SearchBrowse.html">Sale</a>
+            <a href="${pageContext.request.contextPath}/SearchBrowse.jsp">Products</a>
+            <a href="${pageContext.request.contextPath}/SearchBrowse.jsp">Sale</a>
             <a href="#" id="searchButton">Search</a>
         </div>
         <div>
-            <a href="ShoppingCart_Page.jsp"><img src="/img/shopping-cart.jpg"></a>
-            <a href="#" id="profileButton"><img src="/img/account_circle.jpg" alt="Profile"></a>
+            <a href="ShoppingCart_Page.jsp"><img src="${pageContext.request.contextPath}/img/shopping-cart.jpg"></a>
+            <a href="#" id="profileButton"><img src="${pageContext.request.contextPath}/img/account_circle.jpg" alt="Profile"></a>
         </div>
     </header>
 
@@ -108,7 +108,7 @@
             </form>
         </section>
     </footer>
-    <script src="/js/PopupSearch.js"></script>
-    <script src="/js/PopupProfile.js"></script>
-    <script src="/js/FAQVisibility.js"></script>
+    <script src="${pageContext.request.contextPath}/js/PopupSearch.js"></script>
+    <script src="${pageContext.request.contextPath}/js/PopupProfile.js"></script>
+    <script src="${pageContext.request.contextPath}/js/FAQVisibility.js"></script>
 </body>

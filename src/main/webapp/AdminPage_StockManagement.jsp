@@ -46,7 +46,7 @@
         <form method="get" action="filterStock">
             <div class="select-container">
                 <div>
-                    <label for="category">Category:</label>
+                    <h3 style="text-decoration: underline;">Category:</h3>
                     <select name="category" id="category">
                         <option value="">Selecione...</option>
                         <c:forEach var="category" items="${categories}">
@@ -55,7 +55,7 @@
                     </select>
                 </div>
                 <div>
-                    <label for="sub-category">Sub-category:</label>
+                    <h3 style="text-decoration: underline;">Sub-Category:</h3>
                     <select name="sub-category" id="sub-category">
                         <option value="">Selecione...</option>
                         <c:forEach var="subcategory" items="${subcategories}">
@@ -181,7 +181,7 @@
             </form>
         </section>
     </footer>
-    <script src="${pageContext.request.contextPath}js/PopupProfile.js"></script>
+    <script src="${pageContext.request.contextPath}/js/PopupProfile.js"></script>
 </body>
 
 </html>
