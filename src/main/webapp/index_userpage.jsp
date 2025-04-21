@@ -7,22 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SportX|HomePage</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/Styles_HomePage.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Styles_HomePage.css">
 </head>
 
 <body>
     <header>
         <div>
-            <a href="/html/index.html"><strong>SPORTX</strong></a>
+            <a href="${pageContext.request.contextPath}/index.jsp"><strong>SPORTX</strong></a>
         </div>
         <div>
-            <a href="/html/SearchBrowse.html">Products</a>
-            <a href="/html/SearchBrowse.html">Sale</a>
+            <a href="${pageContext.request.contextPath}/SearchBrowse.jsp">Products</a>
+            <a href="${pageContext.request.contextPath}/SearchBrowse.jsp">Sale</a>
             <a href="#" id="searchButton">Search</a>
         </div>
         <div>
-            <a href="ShoppingCart_Page.jsp"><img src="/img/shopping-cart.jpg"></a>
-            <a href="#" id="profileButton"><img src="/img/account_circle.jpg" alt="Profile"></a>
+            <a href="ShoppingCart_Page.jsp"><img src="${pageContext.request.contextPath}/img/shopping-cart.jpg"></a>
+            <a href="#" id="profileButton"><img src="${pageContext.request.contextPath}/img/account_circle.jpg" alt="Profile"></a>
         </div>
     </header>
 
@@ -51,25 +51,25 @@
     <main>
         <section class="product-section">
             <h2>Hiking shoes</h2>
-            <a href="/html/SearchBrowse.html" class="view-all">View all products</a>
+            <a href="${pageContext.request.contextPath}/SearchBrowse.jsp" class="view-all">View all products</a>
             <div class="product-grid">
                 <div class="product-card">
-                    <img src="/img/MerrelMoab3.jpg" alt="Merrel MOAB 3">
+                    <img src="${pageContext.request.contextPath}/img/MerrelMoab3.jpg" alt="Merrel MOAB 3">
                     <p class="Top-Left-text">MERREL MOAB 3</p>
                     <p class="Top-Left-text2">149,00€</p>
                 </div>
                 <div class="product-card">
-                    <img src="/img/SalomonXUltra4.jpg" alt="Salomon X Ultra 4">
+                    <img src="${pageContext.request.contextPath}/img/SalomonXUltra4.jpg" alt="Salomon X Ultra 4">
                     <p class="Top-Left-text">SALOMON X ULTRA 4</p>
                     <p class="Top-Left-text2">175,00€</p>
                 </div>
                 <div class="product-card">
-                    <img src="/img/DannerTrail2650.jpg" alt="Danner Trail 2650">
+                    <img src="${pageContext.request.contextPath}/img/DannerTrail2650.jpg" alt="Danner Trail 2650">
                     <p class="Top-Left-text">DANNER TRAIL 2650</p>
                     <p class="Top-Left-text2">169,00€</p>
                 </div>
                 <div class="product-card">
-                    <img src="/img/TimberlandMtMaddsen.jpg" alt="Timberland Mt. Maddsen">
+                    <img src="${pageContext.request.contextPath}/img/TimberlandMtMaddsen.jpg" alt="Timberland Mt. Maddsen">
                     <p class="Top-Left-text">TIMBERLAND MT. MADDSEN</p>
                     <p class="Top-Left-text2">120,00€</p>
                 </div>
@@ -78,25 +78,25 @@
 
         <section class="product-section">
             <h2>Best-sellers</h2>
-            <a href="/html/SearchBrowse.html" class="view-all">View all</a>
+            <a href="${pageContext.request.contextPath}/SearchBrowse.jsp" class="view-all">View all</a>
             <div class="product-grid">
                 <div class="product-card">
-                    <img src="/img/SalomonXUltra4.jpg" alt="Salomon X Ultra 4">
+                    <img src="${pageContext.request.contextPath}/img/SalomonXUltra4.jpg" alt="Salomon X Ultra 4">
                     <p class="Top-Left-text">SALOMON X ULTRA 4</p>
                     <p class="Top-Left-text2">175,00€</p>
                 </div>
                 <div class="product-card">
-                    <a href = "ProductPage.jsp"><img src="/img/GarminForerunner55.jpg" alt="Garmin Forerunner 55"></a>
+                    <a href = "ProductPage.jsp"><img src="${pageContext.request.contextPath}/img/GarminForerunner55.jpg" alt="Garmin Forerunner 55"></a>
                     <p class="Top-Left-text">GARMIN FORERUNNER 55</p>
                     <p class="Top-Left-text2">139,00€</p>
                 </div>
                 <div class="product-card">
-                    <img src="/img/VitufitSetPump.jpg" alt="Viturit Set Pump">
+                    <img src="${pageContext.request.contextPath}/img/VitufitSetPump.jpg" alt="Viturit Set Pump">
                     <p class="Top-Left-text">VITUFIT SET PUMP</p>
                     <p class="Top-Left-text2">45,00€</p>
                 </div>
                 <div class="product-card">
-                    <img src="/img/Padlle.jpg" alt="PrecisionMax Paddle">
+                    <img src="${pageContext.request.contextPath}/img/Padlle.jpg" alt="PrecisionMax Paddle">
                     <p class="Top-Left-text">PRECISIONMAX PADDLE</p>
                     <p class="Top-Left-text2">248,00€</p>
                 </div>
@@ -105,25 +105,25 @@
 
         <section class="product-section">
             <h2>On Sale</h2>
-            <a href="/html/SearchBrowse.html" class="view-all">View all</a>
+            <a href="${pageContext.request.contextPath}/SearchBrowse.jsp" class="view-all">View all</a>
             <div class="product-grid">
                 <div class="product-card">
-                    <img src="/img/QuechuaNH50.jpg" alt="Quechua NH50">
+                    <img src="${pageContext.request.contextPath}/img/QuechuaNH50.jpg" alt="Quechua NH50">
                     <p class="Top-Left-text">QUECHUA NH50</p>
                     <p class="Top-Left-text2"><del>18,00€</del> 9,00€</p>
                 </div>
                 <div class="product-card">
-                    <img src="/img/KipstaTraximEdge.jpg" alt="Kipsta Traxum Edge">
+                    <img src="${pageContext.request.contextPath}/img/KipstaTraximEdge.jpg" alt="Kipsta Traxum Edge">
                     <p class="Top-Left-text">KIPSTA TRAXUM EDGE</p>
                     <p class="Top-Left-text2"><del>69,00€</del> 39,00€</p>
                 </div>
                 <div class="product-card">
-                    <img src="/img/Riverside500.jpg" alt="Riverside 500">
+                    <img src="${pageContext.request.contextPath}/img/Riverside500.jpg" alt="Riverside 500">
                     <p class="Top-Left-text">RIVERSIDE 500</p>
                     <p class="Top-Left-text2"><del>329,00€</del> 229,00€</p>
                 </div>
                 <div class="product-card">
-                    <img src="/img/Judo.jpg" alt="Adidas Judo">
+                    <img src="${pageContext.request.contextPath}/img/Judo.jpg" alt="Adidas Judo">
                     <p class="Top-Left-text">ADIDAS JUDO</p>
                     <p class="Top-Left-text2"><del>154,00€</del> 154,00€</p>
                 </div>
@@ -147,8 +147,8 @@
             </form>
         </section>
     </footer>
-    <script src="/js/PopupSearch.js"></script>
-    <script src="/js/PopupProfile.js"></script>
+    <script src="${pageContext.request.contextPath}/js/PopupSearch.js"></script>
+    <script src="${pageContext.request.contextPath}/js/PopupProfile.js"></script>
 </body>
 
 </html>

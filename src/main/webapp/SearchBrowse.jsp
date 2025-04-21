@@ -13,16 +13,16 @@
 <body>
     <header>
         <div>
-            <a href="/html/index.html"><strong>SPORTX</strong></a>
+            <a href="${pageContext.request.contextPath}/index.jsp"><strong>SPORTX</strong></a>
         </div>
         <div>
-            <a href="/html/SearchBrowse.html">Products</a>
-            <a href="/html/SearchBrowse.html">Sale</a>
+            <a href="${pageContext.request.contextPath}/SearchBrowse.jsp">Products</a>
+            <a href="${pageContext.request.contextPath}/SearchBrows.jsp">Sale</a>
             <a href="#" id="searchButton">Search</a>
         </div>
         <div>
-            <a href="ShoppingCart_Page.jsp"><img src="/img/shopping-cart.jpg"></a>
-            <a href="#" id="profileButton"><img src="/img/account_circle.jpg" alt="Profile"></a>
+            <a href="ShoppingCart_Page.jsp"><img src="${pageContext.request.contextPath}/img/shopping-cart.jpg"></a>
+            <a href="#" id="profileButton"><img src="${pageContext.request.contextPath}/img/account_circle.jpg" alt="Profile"></a>
         </div>
     </header>
 
@@ -89,47 +89,47 @@
                 </div>
                 <div class="product-grid">
                     <div class="product-card">
-                        <img src="../img/MerrelMoab3.jpg" alt="Merrel Moab 3">
+                        <img src="${pageContext.request.contextPath}/img/MerrelMoab3.jpg" alt="Merrel Moab 3">
                         <h3>MERREL MOAB 3</h3>
                         <p>149,00€</p>
                     </div>
                     <div class="product-card">
-                        <img src="../img/SalomonXUltra4.jpg" alt="Salomon X Ultra 4">
+                        <img src="${pageContext.request.contextPath}/img/SalomonXUltra4.jpg" alt="Salomon X Ultra 4">
                         <h3>SALOMON X ULTRA 4</h3>
                         <p>175,00€</p>
                     </div>
                     <div class="product-card">
-                        <img src="../img/DannerTrail2650.jpg" alt="Danner Trail 2650">
+                        <img src="${pageContext.request.contextPath}/img/DannerTrail2650.jpg" alt="Danner Trail 2650">
                         <h3>DANNER TRAIL 2650</h3>
                         <p>169,00€</p>
                     </div>
                     <div class="product-card">
-                        <img src="../img/MerrelMoab3.jpg" alt="Merrel Moab 3">
+                        <img src="${pageContext.request.contextPath}/img/MerrelMoab3.jpg" alt="Merrel Moab 3">
                         <h3>MERREL MOAB 3</h3>
                         <p>149,00€</p>
                     </div>
                     <div class="product-card">
-                        <img src="../img/SalomonXUltra4.jpg" alt="Salomon X Ultra 4">
+                        <img src="${pageContext.request.contextPath}/img/SalomonXUltra4.jpg" alt="Salomon X Ultra 4">
                         <h3>SALOMON X ULTRA 4</h3>
                         <p>175,00€</p>
                     </div>
                     <div class="product-card">
-                        <img src="../img/DannerTrail2650.jpg" alt="Danner Trail 2650">
+                        <img src="${pageContext.request.contextPath}/img/DannerTrail2650.jpg" alt="Danner Trail 2650">
                         <h3>DANNER TRAIL 2650</h3>
                         <p>169,00€</p>
                     </div>
                     <div class="product-card">
-                        <img src="../img/MerrelMoab3.jpg" alt="Merrel Moab 3">
+                        <img src="${pageContext.request.contextPath}/img/MerrelMoab3.jpg" alt="Merrel Moab 3">
                         <h3>MERREL MOAB 3</h3>
                         <p>149,00€</p>
                     </div>
                     <div class="product-card">
-                        <img src="../img/SalomonXUltra4.jpg" alt="Salomon X Ultra 4">
+                        <img src="${pageContext.request.contextPath}/img/SalomonXUltra4.jpg" alt="Salomon X Ultra 4">
                         <h3>SALOMON X ULTRA 4</h3>
                         <p>175,00€</p>
                     </div>
                     <div class="product-card">
-                        <img src="../img/DannerTrail2650.jpg" alt="Danner Trail 2650">
+                        <img src="${pageContext.request.contextPath}/img/DannerTrail2650.jpg" alt="Danner Trail 2650">
                         <h3>DANNER TRAIL 2650</h3>
                         <p>169,00€</p>
                     </div>
@@ -167,6 +167,6 @@
             </form>
         </section>
     </footer>
-    <script src="/js/PopupSearch.js"></script>
-    <script src="/js/PopupProfile.js"></script>
+    <script src="${pageContext.request.contextPath}/js/PopupSearch.js"></script>
+    <script src="${pageContext.request.contextPath}/js/PopupProfile.js"></script>
 </body>

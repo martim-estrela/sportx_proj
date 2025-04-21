@@ -7,22 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SportX|Product Page</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles_ProductPage.css
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles_ProductPage.css">
 </head>
 
 <body>
     <header>
         <div>
-            <a href="/html/index.html"><strong>SPORTX</strong></a>
+            <a href="${pageContext.request.contextPath}/index.jsp"><strong>SPORTX</strong></a>
         </div>
         <div>
-            <a href="/html/SearchBrowse.html">Products</a>
-            <a href="/html/SearchBrowse.html">Sale</a>
+            <a href="${pageContext.request.contextPath}/SearchBrowse.jsp">Products</a>
+            <a href="${pageContext.request.contextPath}/SearchBrowse.jsp">Sale</a>
             <a href="#" id="searchButton">Search</a>
         </div>
         <div>
-            <a href="ShoppingCart_Page.jsp"><img src="/img/shopping-cart.jpg"></a>
-            <a href="#" id="profileButton"><img src="/img/account_circle.jpg" alt="Profile"></a>
+            <a href="ShoppingCart_Page.jsp"><img src="${pageContext.request.contextPath}/img/shopping-cart.jpg"></a>
+            <a href="#" id="profileButton"><img src="${pageContext.request.contextPath}/img/account_circle.jpg" alt="Profile"></a>
         </div>
     </header>
 
@@ -47,7 +47,7 @@
     <main>
         <div class="main-div">
             <div class="img-div">
-                <img src="/img/GarminForerunner55.jpg">
+                <img src="${pageContext.request.contextPath}/img/GarminForerunner55.jpg">
             </div>
             
             <div class="product-details">
@@ -73,22 +73,22 @@
             <a href="#" class="view-all">View all products</a>
             <div class="product-grid">
                 <div class="product-card">
-                    <img src="/img/MerrelMoab3.jpg" alt="Merrel MOAB 3">
+                    <img src="${pageContext.request.contextPath}/img/MerrelMoab3.jpg" alt="Merrel MOAB 3">
                     <p class="Top-Left-text">MERREL MOAB 3</p>
                     <p class="Top-Left-text2">149,00€</p>
                 </div>
                 <div class="product-card">
-                    <img src="/img/SalomonXUltra4.jpg" alt="Salomon X Ultra 4">
+                    <img src="${pageContext.request.contextPath}/img/SalomonXUltra4.jpg" alt="Salomon X Ultra 4">
                     <p class="Top-Left-text">SALOMON X ULTRA 4</p>
                     <p class="Top-Left-text2">175,00€</p>
                 </div>
                 <div class="product-card">
-                    <img src="/img/DannerTrail2650.jpg" alt="Danner Trail 2650">
+                    <img src="${pageContext.request.contextPath}/img/DannerTrail2650.jpg" alt="Danner Trail 2650">
                     <p class="Top-Left-text">DANNER TRAIL 2650</p>
                     <p class="Top-Left-text2">169,00€</p>
                 </div>
                 <div class="product-card">
-                    <img src="/img/TimberlandMtMaddsen.jpg" alt="Timberland Mt. Maddsen">
+                    <img src="${pageContext.request.contextPath}/img/TimberlandMtMaddsen.jpg" alt="Timberland Mt. Maddsen">
                     <p class="Top-Left-text">TIMBERLAND MT. MADDSEN</p>
                     <p class="Top-Left-text2">120,00€</p>
                 </div>
@@ -102,7 +102,7 @@
             <p>The redesigned satellite chip with dual-frequency mode ensures GPS data accuracy, even in major cities like Paris or New York.</p>
             <h3>LIGHT AND DICREET</h3>
             <p class="more">More</p>
-            <img src="../img/arrow.png">
+            <img src="${pageContext.request.contextPath}/img/arrow.png">
         </section>
     </main>
 
@@ -125,6 +125,8 @@
             </form>
         </section>
     </footer>
-    <script src="/js/PopupSearch.js"></script>
-    <script src="/js/PopupProfile.js"></script>
+    <script src="${pageContext.request.contextPath}/js/PopupSearch.js"></script>
+    <script src="${pageContext.request.contextPath}/js/PopupProfile.js"></script>
 </body>
+
+</html>

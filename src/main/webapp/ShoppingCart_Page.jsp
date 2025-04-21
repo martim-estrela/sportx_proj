@@ -14,27 +14,27 @@
 <body>
     <header>
         <div>
-            <a href="/html/index.html"><strong>SPORTX</strong></a>
+            <a href="${pageContext.request.contextPath}/index.jsp"><strong>SPORTX</strong></a>
         </div>
         <div>
-            <a href="/html/SearchBrowse.html">Products</a>
-            <a href="/html/SearchBrowse.html">Sale</a>
+            <a href="${pageContext.request.contextPath}/SearchBrowse.jsp">Products</a>
+            <a href="${pageContext.request.contextPath}/SearchBrowse.jsp">Sale</a>
             <a href="#" id="searchButton">Search</a>
         </div>
         <div>
-            <a href="ShoppingCart_Page.jsp"><img src="/img/shopping-cart.jpg"></a>
-            <a href="#" id="profileButton"><img src="/img/account_circle.jpg" alt="Profile"></a>
+            <a href="ShoppingCart_Page.jsp"><img src="${pageContext.request.contextPath}/img/shopping-cart.jpg"></a>
+            <a href="#" id="profileButton"><img src="${pageContext.request.contextPath}/img/account_circle.jpg" alt="Profile"></a>
         </div>
     </header>
 
     <!-- Popup Menu -->
     <div id="profilePopup" class="popup">
         <div class="popup-content">
-            <a href="ProfilePage.jsp"> Profile</a>
-            <a href="Orderhistory.jsp">Order History</a>
-            <a href="AdminPage_StockManagement.jsp">Stock Management</a>
-            <a href="AdminPage_UserManagement.jsp">User Management</a>
-            <a href="Loginpage.jsp">Log Out</a>
+            <a href="${pageContext.request.contextPath}/ProfilePage.jsp"> Profile</a>
+            <a href="${pageContext.request.contextPath}/Orderhistory.jsp">Order History</a>
+            <a href="${pageContext.request.contextPath}/AdminPage_StockManagement.jsp">Stock Management</a>
+            <a href="${pageContext.request.contextPath}/AdminPage_UserManagement.jsp">User Management</a>
+            <a href="${pageContext.request.contextPath}/Loginpage.jsp">Log Out</a>
         </div>
     </div>
 
@@ -62,7 +62,7 @@
                     <tr>
                         <td>
                             <div class="imgStyle">
-                                <img src="/img/GarminForerunner55.jpg" alt="Product Image" class="product-img">
+                                <img src="${pageContext.request.contextPath}/img/GarminForerunner55.jpg" alt="Product Image" class="product-img">
                             </div>
 
                         </td>
@@ -86,7 +86,7 @@
                     <tr>
                         <td>
                             <div class="imgStyle">
-                                <img src="/img/GarminForerunner55.jpg" alt="Product Image" class="product-img">
+                                <img src="${pageContext.request.contextPath}/img/GarminForerunner55.jpg" alt="Product Image" class="product-img">
                             </div>
 
                         </td>
@@ -110,7 +110,7 @@
                     <tr>
                         <td>
                             <div class="imgStyle">
-                                <img src="/img/GarminForerunner55.jpg" alt="Product Image" class="product-img">
+                                <img src="${pageContext.request.contextPath}/img/GarminForerunner55.jpg" alt="Product Image" class="product-img">
                             </div>
 
                         </td>
@@ -134,7 +134,7 @@
                     <tr>
                         <td>
                             <div class="imgStyle">
-                                <img src="/img/GarminForerunner55.jpg" alt="Product Image" class="product-img">
+                                <img src="${pageContext.request.contextPath}/img/GarminForerunner55.jpg" alt="Product Image" class="product-img">
                             </div>
 
                         </td>
@@ -158,7 +158,7 @@
                     <tr>
                         <td>
                             <div class="imgStyle">
-                                <img src="/img/GarminForerunner55.jpg" alt="Product Image" class="product-img">
+                                <img src="${pageContext.request.contextPath}/img/GarminForerunner55.jpg" alt="Product Image" class="product-img">
                             </div>
 
                         </td>
@@ -222,8 +222,8 @@
             </form>
         </section>
     </footer>
-    <script src="/js/PopupSearch.js"></script>
-    <script src="/js/PopupProfile.js"></script>
+    <script src="${pageContext.request.contextPath}/js/PopupSearch.js"></script>
+    <script src="${pageContext.request.contextPath}/js/PopupProfile.js"></script>
 </body>
 
 </html>
