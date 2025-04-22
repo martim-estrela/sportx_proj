@@ -39,22 +39,6 @@
         </form>
         <p>Don't have an account? <a href="${pageContext.request.contextPath}/Sign_up_Page.jsp">Create Account</a></p>
     </section>
-
-    <section class="support">
-        <h2>Support</h2>
-        <ul>
-            <li><a href="ContactUs.jsp">Contact us</a></li>
-            <li><a href="FAQ.jsp">FAQ</a></li>
-        </ul>
-    </section>
-
-    <section class="subscribe">
-        <h2>Subscribe for latest updates</h2>
-        <form action="/subscribe">
-            <input type="email" name="email" placeholder="Enter your email" required />
-            <button type="submit">Subscribe</button>
-        </form>
-    </section>
 </main>
 </body>
 
