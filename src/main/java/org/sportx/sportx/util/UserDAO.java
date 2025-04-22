@@ -264,8 +264,9 @@ public class UserDAO {
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
+
     }
 
 }

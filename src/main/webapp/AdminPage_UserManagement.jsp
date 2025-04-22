@@ -100,58 +100,46 @@
 </main>
 <script src="${pageContext.request.contextPath}/js/PopupProfile.js"></script>
 <script>
-    // Atualizar status do usuário
-    document.querySelectorAll('.btn-update-status').forEach(select => {
-        select.addEventListener('change', function() {
-            const userId = this.closest('.row1').querySelector('.column-description label').textContent;
-            const newStatus = this.value;
-
-            fetch('${pageContext.request.contextPath}/UserManagementServlet', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `action=updateStatus&userId=${userId}&status=${newStatus}`
-            })
-                .then(response => response.text())
-                .then(result => {
-                    if (result === 'success') {
-                        alert('Status atualizado com sucesso!');
-                    } else {
-                        alert('Erro ao atualizar status.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Erro:', error);
-                    alert('Erro ao atualizar status.');
-                });
-        });
-    });
-
     // Deletar usuário
     document.querySelectorAll('.column .btn-edit i.material-icons[style*="color: red"]').forEach(button => {
         button.addEventListener('click', function() {
-            const userId = this.closest('.row1').querySelector('.column-description label').textContent;
+            const row = this.closest('.row1');
+            const userIdElement = row.querySelector('.column-description label');
+            const userId = userIdElement ? userIdElement.textContent.trim() : null;
+
+            console.log('User ID capturado:', userId); // Depuração
+            console.log('Elemento HTML:', userIdElement); // Depuração
+
+            if (!userId || userId === '') {
+                alert('Erro: ID do usuário não encontrado ou vazio.');
+                return;
+            }
+
             if (confirm('Tem certeza que deseja deletar este usuário?')) {
-                fetch('${pageContext.request.contextPath}/UserManagementServlet', {
+                fetch('${pageContext.request.contextPath}/manageUser', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
                     body: `action=deleteUser&userId=${userId}`
                 })
-                    .then(response => response.text())
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        return response.text();
+                    })
                     .then(result => {
                         if (result === 'success') {
                             alert('Usuário deletado com sucesso!');
-                            location.reload(); // Recarregar a página
+                            location.reload();
                         } else {
-                            alert('Erro ao deletar usuário.');
+                            alert('Erro ao deletar usuário: Resposta do servidor: ' + result);
                         }
                     })
                     .catch(error => {
                         console.error('Erro:', error);
-                        alert('Erro ao deletar usuário.');
+                        alert('Erro ao deletar usuário: ' + error.message);
                     });
             }
         });
