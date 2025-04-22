@@ -22,7 +22,7 @@ public class UserDAO {
     // Método para guardar o utilizador na base de dados
     public boolean saveUser(User user) {
         // Primeira query para inserir o usuário na tabela 'user'
-        String query = "INSERT INTO user (email, password, phone_number, name, user_type, register_date) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO user (email, password, phone_number, name, status, user_type, register_date) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -32,8 +32,9 @@ public class UserDAO {
             ps.setString(2, user.getPassword());
             ps.setString(3, user.getPhoneNumber());
             ps.setString(4, user.getName());
-            ps.setString(5, user.getUserType());
-            ps.setDate(6, java.sql.Date.valueOf(user.getRegisterDate()));
+            ps.setString(5, "Active");
+            ps.setString(6, user.getUserType());
+            ps.setDate(7, java.sql.Date.valueOf(user.getRegisterDate()));
 
             // Executando a inserção e verificando se as linhas foram afetadas
             int rowsAffected = ps.executeUpdate();
@@ -52,7 +53,7 @@ public class UserDAO {
                 // Agora, inserindo na tabela address_info, associando o novo user_id
                 String insertAddressQuery = "INSERT INTO address_info (street, country, city, postal_code, user_id) VALUES (?, ?, ?, ?, ?)";
                 try (PreparedStatement psAddress = conn.prepareStatement(insertAddressQuery)) {
-                    // Inserindo o endereço associado ao novo usuário
+                    // Inserindo o endereço associado ao novo utilizador
                     psAddress.setString(1, null);  // Defina como null ou qualquer valor desejado
                     psAddress.setString(2, null);  // Defina como null ou qualquer valor desejado
                     psAddress.setString(3, null);  // Defina como null ou qualquer valor desejado
@@ -93,6 +94,7 @@ public class UserDAO {
                         rs.getString("phone_number"),
                         rs.getString("name"),
                         rs.getString("user_type"),
+                        rs.getString("Status"),
                         rs.getDate("register_date").toLocalDate()
                 );
                 return user;
@@ -196,6 +198,7 @@ public class UserDAO {
                         rs.getString("phone_number"),
                         rs.getString("name"),
                         rs.getString("user_type"), // Aqui você terá "user" ou "admin"
+                        rs.getString("Status"),
                         rs.getDate("register_date").toLocalDate()
                 );
                 users.add(user);

@@ -29,9 +29,10 @@ public class SignUpServlet extends HttpServlet {
         String name = request.getParameter("username");
         String userType = "user";  // Por padrão, o tipo de utilizador é "user"
         LocalDate registerDate = LocalDate.now();  // Data atual de registo
+        String Status = "Active";
 
         // Cria o objeto User
-        User newUser = new User(0, email, password, phoneNumber, name, userType, registerDate);
+        User newUser = new User(0, email, password, phoneNumber, name, userType, Status, registerDate);
 
         // Cria o DAO e salva o utilizador
         try (Connection conn = DBConnection.getConnection()) {

@@ -9,15 +9,17 @@ public class User {
     private String phoneNumber;
     private String name;
     private String userType;
+    private String status;
     private LocalDate registerDate;
 
     // Construtor
-    public User(int userId,String email, String password, String phoneNumber, String name, String userType, LocalDate registerDate) {
+    public User(int userId,String email, String password, String phoneNumber, String name, String userType, String Status, LocalDate registerDate) {
         this.userId = userId;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.name = name;
+        this.status = Status;
         this.userType = userType;
         this.registerDate = registerDate;
     }
@@ -65,6 +67,15 @@ public class User {
 
     public String getUserType() {
         return userType;
+    }
+
+    // Getters e Setters
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setUserType(String userType) {
