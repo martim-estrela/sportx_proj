@@ -41,11 +41,7 @@
                 <h3 style="text-decoration: underline;">Role:</h3>
                 <select name="role" id="role">
                     <option value="">Todos</option>
-<<<<<<< Updated upstream
-                    <c:forEach var="role" items="${allRoles}">
-=======
                     <c:forEach var="role" items="${allroles}">
->>>>>>> Stashed changes
                         <option value="${role}" ${param.role == role ? 'selected' : ''}>${role}</option>
                     </c:forEach>
                 </select>
