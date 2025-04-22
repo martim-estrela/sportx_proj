@@ -18,7 +18,21 @@
     <div>
         <a href="${pageContext.request.contextPath}/index.jsp"><strong>SPORTX</strong></a>
     </div>
+    <div>
+        <a href="#" id="profileButton"><img src="${pageContext.request.contextPath}/img/account_circle.jpg" alt="Profile"></a>
+    </div>
 </header>
+
+<!-- Popup Menu -->
+<div id="profilePopup" class="popup">
+    <div class="popup-content">
+        <a href="ProfilePage.jsp"> Profile</a>
+        <a href="Orderhistory.jsp">Order History</a>
+        <a href="AdminPage_StockManagement.jsp">Stock Management</a>
+        <a href="AdminPage_UserManagement.jsp">User Management</a>
+        <a href="Loginpage.jsp">Log Out</a>
+    </div>
+</div>
 
 <main>
     <div class="select-container">
@@ -27,7 +41,7 @@
                 <h3 style="text-decoration: underline;">Role:</h3>
                 <select name="role" id="role">
                     <option value="">Todos</option>
-                    <c:forEach var="role" items="${allRoles}">
+                    <c:forEach var="role" items="${roles}">
                         <option value="${role}" ${param.role == role ? 'selected' : ''}>${role}</option>
                     </c:forEach>
                 </select>
@@ -55,7 +69,7 @@
             <div class="column"><label>Delete</label></div>
         </div>
 
-        <c:forEach var="user" items="${filteredUsers}">
+        <c:forEach var="user" items="${users}">
             <div class="row1">
                 <div class="column-description">
                     <label>${user.userId}</label>
@@ -81,6 +95,67 @@
             </div>
         </c:forEach>
     </div>
+
+
 </main>
+<script src="${pageContext.request.contextPath}/js/PopupProfile.js"></script>
+<script>
+    // Atualizar status do usuário
+    document.querySelectorAll('.btn-update-status').forEach(select => {
+        select.addEventListener('change', function() {
+            const userId = this.closest('.row1').querySelector('.column-description label').textContent;
+            const newStatus = this.value;
+
+            fetch('${pageContext.request.contextPath}/UserManagementServlet', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `action=updateStatus&userId=${userId}&status=${newStatus}`
+            })
+                .then(response => response.text())
+                .then(result => {
+                    if (result === 'success') {
+                        alert('Status atualizado com sucesso!');
+                    } else {
+                        alert('Erro ao atualizar status.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert('Erro ao atualizar status.');
+                });
+        });
+    });
+
+    // Deletar usuário
+    document.querySelectorAll('.column .btn-edit i.material-icons[style*="color: red"]').forEach(button => {
+        button.addEventListener('click', function() {
+            const userId = this.closest('.row1').querySelector('.column-description label').textContent;
+            if (confirm('Tem certeza que deseja deletar este usuário?')) {
+                fetch('${pageContext.request.contextPath}/UserManagementServlet', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `action=deleteUser&userId=${userId}`
+                })
+                    .then(response => response.text())
+                    .then(result => {
+                        if (result === 'success') {
+                            alert('Usuário deletado com sucesso!');
+                            location.reload(); // Recarregar a página
+                        } else {
+                            alert('Erro ao deletar usuário.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro:', error);
+                        alert('Erro ao deletar usuário.');
+                    });
+            }
+        });
+    });
+</script>
 </body>
 </html>
