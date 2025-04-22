@@ -12,7 +12,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/manageUser")
 public class UserManagementServlet extends HttpServlet {
 
     @Override
@@ -24,28 +23,25 @@ public class UserManagementServlet extends HttpServlet {
 
             // Obter filtros dos parâmetros da request
             String role = request.getParameter("role");
-            String subRole = request.getParameter("subRole");
             String name = request.getParameter("name");
 
             // Buscar utilizadores com base nos filtros
-            List<User> filteredUsers = userDAO.getUsers(role, subRole, name);
+            List<User> filteredUsers = userDAO.getUsers(role, name);
             request.setAttribute("filteredUsers", filteredUsers);
 
-            // Buscar todas as roles e sub-roles disponíveis
-            List<String> allRoles = userDAO.getAllRoles();
-            List<String> allSubRoles = userDAO.getAllSubRoles();
-
+            // Buscar todas as roles disponíveis (apenas 'user' e 'admin')
+            List<String> allRoles = List.of("user", "admin"); // Apenas 'user' e 'admin'
             request.setAttribute("allRoles", allRoles);
-            request.setAttribute("allSubRoles", allSubRoles);
 
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("error", "Erro ao carregar os dados.");
         }
 
-        request.getRequestDispatcher("/AdminPage_UsersManagement.jsp").forward(request, response);
+        request.getRequestDispatcher("/AdminPage_UserManagement.jsp").forward(request, response);
     }
 
+    // Código para as ações de atualização e deleção (POST)
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String action = request.getParameter("action");

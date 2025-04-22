@@ -3,4 +3,17 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
+
+    <!-- Mapeamento do Servlet -->
+    <servlet>
+        <servlet-name>UserManagementServlet</servlet-name>
+        <servlet-class>org.sportx.sportx.servlet.UserManagementServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UserManagementServlet</servlet-name>
+        <url-pattern>/manageUser</url-pattern>
+    </servlet-mapping>
+
 </web-app>
+

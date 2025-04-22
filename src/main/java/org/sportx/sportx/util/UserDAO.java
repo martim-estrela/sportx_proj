@@ -167,29 +167,21 @@ public class UserDAO {
         return isUserUpdated && isAddressUpdated;
     }
 
-    public List<User> getUsers(String roleFilter, String subRoleFilter, String nameFilter) {
+    public List<User> getUsers(String roleFilter, String nameFilter) {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT * FROM user WHERE 1=1";
+        String sql = "SELECT * FROM user WHERE 1=1"; // Começa com WHERE 1=1 para facilitar adição de filtros
 
         if (roleFilter != null && !roleFilter.isEmpty()) {
             sql += " AND user_type = ?";
-        }
-        if (subRoleFilter != null && !subRoleFilter.isEmpty()) {
-            sql += " AND sub_role = ?";
         }
         if (nameFilter != null && !nameFilter.isEmpty()) {
             sql += " AND name LIKE ?";
         }
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-
             int index = 1;
             if (roleFilter != null && !roleFilter.isEmpty()) {
-                stmt.setString(index++, roleFilter);
-            }
-            if (subRoleFilter != null && !subRoleFilter.isEmpty()) {
-                stmt.setString(index++, subRoleFilter);
+                stmt.setString(index++, roleFilter); // roleFilter é "user" ou "admin"
             }
             if (nameFilter != null && !nameFilter.isEmpty()) {
                 stmt.setString(index++, "%" + nameFilter + "%");
@@ -203,10 +195,9 @@ public class UserDAO {
                         rs.getString("password"),
                         rs.getString("phone_number"),
                         rs.getString("name"),
-                        rs.getString("role"), // ou userType
+                        rs.getString("user_type"), // Aqui você terá "user" ou "admin"
                         rs.getDate("register_date").toLocalDate()
                 );
-                user.setUserId(rs.getInt("user_id"));
                 users.add(user);
             }
         } catch (SQLException e) {
@@ -214,6 +205,39 @@ public class UserDAO {
         }
 
         return users;
+    }
+
+    //Método para obter o numero total de paginas
+    public int getTotalPages(String roleFilter, String nameFilter) {
+        int totalPages = 0;
+        String sql = "SELECT COUNT(*) FROM user WHERE 1=1";
+
+        if (roleFilter != null && !roleFilter.isEmpty()) {
+            sql += " AND user_type = ?";
+        }
+        if (nameFilter != null && !nameFilter.isEmpty()) {
+            sql += " AND name LIKE ?";
+        }
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            int index = 1;
+            if (roleFilter != null && !roleFilter.isEmpty()) {
+                stmt.setString(index++, roleFilter);
+            }
+            if (nameFilter != null && !nameFilter.isEmpty()) {
+                stmt.setString(index++, "%" + nameFilter + "%");
+            }
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                int totalItems = rs.getInt(1);
+                totalPages = (int) Math.ceil((double) totalItems / 10);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return totalPages;
     }
 
     public boolean updateUserStatus(int userId, String newStatus) {
@@ -241,32 +265,5 @@ public class UserDAO {
         return false;
     }
 
-    public List<String> getAllRoles() throws SQLException {
-        List<String> roles = new ArrayList<>();
-        String sql = "SELECT DISTINCT user_type FROM user";
-        try (PreparedStatement stmt = conn.prepareStatement(sql);
-
-             ResultSet rs = stmt.executeQuery()) {
-
-            while (rs.next()) {
-                roles.add(rs.getString("user_type")); // corresponde ao SELECT
-            }
-        }
-        return roles;
-    }
-
-
-    public List<String> getAllSubRoles() throws SQLException {
-        List<String> subRoles = new ArrayList<>();
-        String sql = "SELECT DISTINCT sub_role FROM user";
-        try (PreparedStatement stmt = conn.prepareStatement(sql);
-
-             ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                subRoles.add(rs.getString("sub_role"));
-            }
-        }
-        return subRoles;
-    }
 }
 
