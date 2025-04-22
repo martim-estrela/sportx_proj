@@ -15,39 +15,40 @@ Este ficheiro contém a lista de tarefas pendentes para o desenvolvimento comple
     - [x] ProductCategoryChild.java
     - [x] ProductCategoryParent.java
     - [x] ProductItem.java
-    - [] OrderStatus.java
-    - [] Order.java
-    - [] PaymentInfo.java
-    - [] PaymentType.java
-    - [] Promotion.java
-    - [ ] ShippingMethod.java
+    - [X] OrderStatus.java
+    - [X] Order.java
+    - [X] PaymentInfo.java
+    - [X] PaymentType.java
+    - [X] Promotion.java
+    - [X] ShippingMethod.java
     - [x] Variation.java
     - [x] VariationOption.java
     - [x] Ticket.java
   
-- [ ] Implementar os métodos essenciais:
-    - [ ] Getters e Setters
-    - [ ] Construtores
-    - [ ] Métodos auxiliares, se necessário
+- [X] Implementar os métodos essenciais:
+    - [X] Getters e Setters
+    - [X] Construtores
+    - [X] (alguns) Métodos auxiliares, se necessário
 
 ---
 
 ##  2. DAO – Criar Classes de Acesso a Dados
 Para cada classe de domínio:
-- [ ] Criar os DAOs:
+- [x] Criar os DAOs:
+    - [x] DBConnection
     - [x] UserDAO.java
-    - [x] ProductDAO.java
+    - [X] TicketDAO.java
+    - [X] StockManagementDAO.java
+    - [ ] ProductDAO.java
     - [ ] PaymentDAO.java
-    - [ ] Address.java
     - [ ] OrderDAO.java
-    - [ ] TicketDAO.java
   
 - [x] Implementar métodos:
-    - [ ] inserir(...)
-    - [ ] atualizar(...)
-    - [ ] eliminar(...)
-    - [ ] buscarPorId(...)
-    - [ ] listarTodos(...)
+    - [X] (alguns) inserir(...)
+    - [X] (alguns) atualizar(...)
+    - [X] (alguns) eliminar(...)
+    - [X] (alguns) buscarPorId(...)
+    - [X] (alguns) listarTodos(...)
 
 ---
 
@@ -55,17 +56,23 @@ Para cada classe de domínio:
 Para cada entidade principal:
 - [ ] Criar os Servlets:
     - [x] UserServlet.java
-    - [x] ProductServlet.java
+    - [ ] ProductServlet.java
     - [ ] PaymentServlet.java
-    - [ ] AddressServlet.java
+    - [X] AddressServlet.java
+    - [X] filterServlet.java
+    - [X] LoginServlet.java
+    - [X] SignUpServlet.java
+    - [X] StockManagementeServlet.java
+    - [X] UserPaginationServlet.java
+    - [X] UpdateProfileServlet.java
     - [ ] OrderServlet.java
-    - [ ] TicketServlet.java
-- [ ] Implementar ações com `doGet` / `doPost`:
-    - [ ] Ação `listar`
-    - [ ] Ação `criar` / `inserir`
-    - [ ] Ação `editar` / `atualizar`
-    - [ ] Ação `eliminar`
-- [ ] Enviar dados para a view com `request.setAttribute(...)` e `RequestDispatcher`
+    - [X] TicketServlet.java
+- [X] Implementar ações com `doGet` / `doPost`:
+    - [X] Ação `listar`
+    - [X] Ação `criar` / `inserir`
+    - [X] Ação `editar` / `atualizar`
+    - [X] Ação `eliminar`
+- [X] Enviar dados para a view com `request.setAttribute(...)` e `RequestDispatcher`
 
 ---
 
@@ -79,7 +86,6 @@ Para cada entidade principal:
     - [x] ContactUs.jsp
     - [x] FAQ.jsp
     - [x] index.jsp
-    - [x] index_userpage.jsp
     - [x] Orderhistory.jsp
     - [x] ProductPage.jsp
     - [x] ProfilePage.jsp
@@ -87,7 +93,13 @@ Para cada entidade principal:
     - [x] ShoppingCart_Page.jsp
     - [x] Sign_up_Page.jsp
    
-- [ ] Integrar JSP com servlets usando JSTL/EL:
+
+
+
+## 5. Nao por no power point (prototipo)
+
+  
+- [] Integrar JSP com servlets usando JSTL/EL:
   - [ ] Admin_StockManagement.jsp
     - [ ] Listar Produtos
     - [ ] Filtrar Produtos
