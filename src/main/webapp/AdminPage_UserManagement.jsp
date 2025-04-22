@@ -41,7 +41,7 @@
                 <h3 style="text-decoration: underline;">Role:</h3>
                 <select name="role" id="role">
                     <option value="">Todos</option>
-                    <c:forEach var="role" items="${roles}">
+                    <c:forEach var="role" items="${allRoles}">
                         <option value="${role}" ${param.role == role ? 'selected' : ''}>${role}</option>
                     </c:forEach>
                 </select>
@@ -69,7 +69,7 @@
             <div class="column"><label>Delete</label></div>
         </div>
 
-        <c:forEach var="user" items="${users}">
+        <c:forEach var="user" items="${filteredUsers}">
             <div class="row1">
                 <div class="column-description">
                     <label>${user.userId}</label>
