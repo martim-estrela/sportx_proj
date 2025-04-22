@@ -22,7 +22,7 @@ public class UserDAO {
     // Método para guardar o utilizador na base de dados
     public boolean saveUser(User user) {
         // Primeira query para inserir o usuário na tabela 'user'
-        String query = "INSERT INTO user (email, password, phone_number, name, status, user_type, register_date) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO user (email, password, phone_number, name, status, user_type, register_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -41,7 +41,7 @@ public class UserDAO {
 
             // Se a inserção foi bem-sucedida, obter o user_id gerado
             if (rowsAffected > 0) {
-                // Obter o ID gerado para o usuário
+                // Obter o ID gerado para o utilizador
                 try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         // Recuperando o user_id gerado
