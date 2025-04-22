@@ -38,7 +38,7 @@ public class UserPaginationServlet extends HttpServlet {
             UserDAO userDAO = new UserDAO(conn);
 
             // Buscar todos os usuários
-            List<User> allUsers = userDAO.getUsers(null, null, null);  // Aqui, você pode passar filtros se necessário
+            List<User> allUsers = userDAO.getUsers(null, null);  // Aqui, você pode passar filtros se necessário
             int totalUsers = allUsers.size();
 
             // Calcular a quantidade de páginas

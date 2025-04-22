@@ -167,15 +167,12 @@ public class UserDAO {
         return isUserUpdated && isAddressUpdated;
     }
 
-    public List<User> getUsers(String roleFilter, String subRoleFilter, String nameFilter) {
+    public List<User> getUsers(String roleFilter, String nameFilter) {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM user WHERE 1=1";
 
         if (roleFilter != null && !roleFilter.isEmpty()) {
             sql += " AND user_type = ?";
-        }
-        if (subRoleFilter != null && !subRoleFilter.isEmpty()) {
-            sql += " AND sub_role = ?";
         }
         if (nameFilter != null && !nameFilter.isEmpty()) {
             sql += " AND name LIKE ?";
@@ -183,14 +180,11 @@ public class UserDAO {
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-
             int index = 1;
             if (roleFilter != null && !roleFilter.isEmpty()) {
                 stmt.setString(index++, roleFilter);
             }
-            if (subRoleFilter != null && !subRoleFilter.isEmpty()) {
-                stmt.setString(index++, subRoleFilter);
-            }
+
             if (nameFilter != null && !nameFilter.isEmpty()) {
                 stmt.setString(index++, "%" + nameFilter + "%");
             }
@@ -203,10 +197,9 @@ public class UserDAO {
                         rs.getString("password"),
                         rs.getString("phone_number"),
                         rs.getString("name"),
-                        rs.getString("role"), // ou userType
+                        rs.getString("user_type"), // ou userType
                         rs.getDate("register_date").toLocalDate()
                 );
-                user.setUserId(rs.getInt("user_id"));
                 users.add(user);
             }
         } catch (SQLException e) {

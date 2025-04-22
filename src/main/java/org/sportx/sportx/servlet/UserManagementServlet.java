@@ -12,7 +12,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/manageUser")
+@WebServlet("/UserManagementServlet")
 public class UserManagementServlet extends HttpServlet {
 
     @Override
@@ -23,27 +23,26 @@ public class UserManagementServlet extends HttpServlet {
             UserDAO userDAO = new UserDAO(conn);
 
             // Obter filtros dos parâmetros da request
-            String role = request.getParameter("role");
-            String subRole = request.getParameter("subRole");
-            String name = request.getParameter("name");
+            String roleFilter = request.getParameter("role");
+            String nameFilter = request.getParameter("name");
+
+            // Buscar todas as roles disponíveis
+            List<String> roles = userDAO.getAllRoles();
+            request.setAttribute("roles", roles);
 
             // Buscar utilizadores com base nos filtros
-            List<User> filteredUsers = userDAO.getUsers(role, subRole, name);
-            request.setAttribute("filteredUsers", filteredUsers);
+            List<User> filteredUsers = userDAO.getUsers(roleFilter, nameFilter);
+            request.setAttribute("users", filteredUsers);
+            request.setAttribute("selectedRole", roleFilter);
+            request.setAttribute("selectedName", nameFilter);
 
-            // Buscar todas as roles e sub-roles disponíveis
-            List<String> allRoles = userDAO.getAllRoles();
-            List<String> allSubRoles = userDAO.getAllSubRoles();
-
-            request.setAttribute("allRoles", allRoles);
-            request.setAttribute("allSubRoles", allSubRoles);
 
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("error", "Erro ao carregar os dados.");
         }
 
-        request.getRequestDispatcher("/AdminPage_UsersManagement.jsp").forward(request, response);
+        request.getRequestDispatcher("AdminPage_UsersManagement.jsp").forward(request, response);
     }
 
     @Override

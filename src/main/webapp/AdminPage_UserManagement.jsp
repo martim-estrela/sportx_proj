@@ -42,35 +42,25 @@
 
     <main>
         <div class="select-container">
-            <form method="get" action="manageUser">
+            <form method="get" action="UserManagementServlet">
                 <div>
-                    <h3 style="text-decoration: underline;">Role:</h3>
-                    <select name="role" id="role">
+                    <label for="role">Role:</label>
+                    <select name="role" id="role" onchange="this.form.submit()">
                         <option value="">Todos</option>
-                        <c:forEach var="role" items="${allRoles}">
-                            <option value="${role}">${role}</option>
+                        <c:forEach var="r" items="${roles}">
+                            <option value="${r}" ${r == selectedRole ? "selected" : ""}>${r}</option>
                         </c:forEach>
                     </select>
                 </div>
 
-                <div>
-                    <h3 style="text-decoration: underline;">Sub-category:</h3>
-                    <select name="subRole" id="subRole">
-                        <option value="">Todos</option>
-                        <c:forEach var="subRole" items="${allSubRoles}">
-                            <option value="${subRole}">${subRole}</option>
-                        </c:forEach>
-                    </select>
-                </div>
 
                 <div class="search-bar">
-                    <h3 style="text-decoration: underline;">User Name:</h3>
-                    <input type="text" placeholder="Search.." name="name">
+                    <label for="name">Name:</label>
+                    <input type="text" name="name" id="name" value="${selectedName}" placeholder="Nome do utilizador" />
                 </div>
 
-                <div>
-                    <button type="submit">Filtrar</button>
-                </div>
+                <button type="submit">Filtrar</button>
+
             </form>
         </div>
 
@@ -106,9 +96,6 @@
                     </div>
                     <div class="column-description2">
                         <label>${user.userType}</label>
-                    </div>
-                    <div class="column-description3">
-                        <label>${user.subRole}</label>
                     </div>
                     <div class="column-description4">
                         <label>${user.email}</label>
