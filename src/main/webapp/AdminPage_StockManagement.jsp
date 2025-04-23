@@ -131,7 +131,7 @@
 
             <!--Modal-->
         <div class="modal" id="stockModal">
-            <div class="modal-content">
+            <di class="modal-content">
                 <h3>Update Stock</h3>
                 <form method="post" action="manageStock">
                     <input type="hidden" name="action" value="UpdateStockServlet">
@@ -142,7 +142,7 @@
                     <button class="add-modal-btn" type="submit">Save</button>
                     <a href="#" class="close-modal-btn" onclick="closeModal()">Cancel</a>
                 </form>
-            </div>
+            </di>
         </div>
 
 

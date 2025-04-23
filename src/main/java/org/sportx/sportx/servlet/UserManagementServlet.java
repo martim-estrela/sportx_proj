@@ -45,22 +45,23 @@ public class UserManagementServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String action = request.getParameter("action");
-        try (Connection conn = DBConnection.getConnection()) {
-            UserDAO userDAO = new UserDAO(conn);
-            if ("updateStatus".equals(action)) {
-                int userId = Integer.parseInt(request.getParameter("userId"));
-                String newStatus = request.getParameter("status");
+        String userIdStr = request.getParameter("userId");
 
-                boolean success = userDAO.updateUserStatus(userId, newStatus);
-                response.getWriter().write(success ? "success" : "failure");
-            } else if ("deleteUser".equals(action)) {
-                int userId = Integer.parseInt(request.getParameter("userId"));
+        if ("deleteUser".equals(action)) {
 
+            try (Connection conn = DBConnection.getConnection()) {
+                int userId = Integer.parseInt(userIdStr);
+                UserDAO userDAO = new UserDAO(conn);
                 boolean success = userDAO.deleteUser(userId);
                 response.getWriter().write(success ? "success" : "failure");
+
+            } catch (NumberFormatException e) {
+                response.getWriter().write("erro: ID inválido (não é número)");
+            } catch (SQLException e) {
+                response.getWriter().write("erro: erro de base de dados");
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
+
 }
