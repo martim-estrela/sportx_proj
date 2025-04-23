@@ -41,7 +41,7 @@
                 <h3 style="text-decoration: underline;">Role:</h3>
                 <select name="role" id="role" onchange="this.form.submit();">
                     <option value="">Todos</option>
-                    <c:forEach var="role" items="${allRoles}">
+                    <c:forEach var="role" items="${allroles}">
                         <option value="${role}" ${param.role == role ? 'selected' : ''}>${role}</option>
                     </c:forEach>
                 </select>

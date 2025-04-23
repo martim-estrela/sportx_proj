@@ -169,6 +169,7 @@ public class UserDAO {
         return isUserUpdated && isAddressUpdated;
     }
 
+    //Metodo para mostrar todos os utilizadores
     public List<User> getUsers(String roleFilter, String nameFilter) {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM user WHERE 1=1"; // Começa com WHERE 1=1 para facilitar adição de filtros
@@ -243,6 +244,7 @@ public class UserDAO {
         return totalPages;
     }
 
+    //Alterar status de um utilizador
     public boolean updateUserStatus(int userId, String newStatus) {
         String sql = "UPDATE user SET status = ? WHERE user_id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -256,6 +258,7 @@ public class UserDAO {
         return false;
     }
 
+    //eliminar utilizador
     public boolean deleteUser(int userId) {
         String sql = "DELETE FROM user WHERE user_id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
