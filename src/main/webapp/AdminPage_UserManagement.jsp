@@ -39,7 +39,7 @@
         <form method="get" action="${pageContext.request.contextPath}/manageUser">
             <div>
                 <h3 style="text-decoration: underline;">Role:</h3>
-                <select name="role" id="role">
+                <select name="role" id="role" onchange="this.form.submit();">
                     <option value="">Todos</option>
                     <c:forEach var="role" items="${allRoles}">
                         <option value="${role}" ${param.role == role ? 'selected' : ''}>${role}</option>
@@ -49,12 +49,9 @@
 
             <div class="search-bar">
                 <h3 style="text-decoration: underline;">User Name:</h3>
-                <input type="text" placeholder="Search.." name="name" value="${param.name}">
+                <input type="text" placeholder="Search.." name="name" value="${param.name}" onkeydown="if(event.key === 'Enter'){ this.form.submit(); }">
             </div>
 
-            <div>
-                <button type="submit">Filtrar</button>
-            </div>
         </form>
     </div>
 
@@ -90,60 +87,19 @@
                     <button class="btn-edit"><i class="material-icons" style="background-color: #d9d9d9d9; font-size:40px">edit_square</i></button>
                 </div>
                 <div class="column">
-                    <button class="btn-edit"><i class="material-icons" style="color: red; background-color: #d9d9d9d9; font-size:40px">close</i></button>
+                    <button class="btn-edit delete-user" data-userid="${user.userId}"><i class="material-icons" style="color: red; background-color: #d9d9d9d9; font-size:40px">close</i></button>
                 </div>
             </div>
         </c:forEach>
     </div>
 
 
+
 </main>
 <script src="${pageContext.request.contextPath}/js/PopupProfile.js"></script>
-<script>
-    // Deletar usuário
-    document.querySelectorAll('.column .btn-edit i.material-icons[style*="color: red"]').forEach(button => {
-        button.addEventListener('click', function() {
-            const row = this.closest('.row1');
-            const userIdElement = row.querySelector('.column-description label');
-            const userId = userIdElement ? userIdElement.textContent.trim() : null;
+<script src="${pageContext.request.contextPath}/js/DeleteUser.js"></script>
+<script> var contextPath = "${pageContext.request.contextPath}"; </script>
 
-            console.log('User ID capturado:', userId); // Depuração
-            console.log('Elemento HTML:', userIdElement); // Depuração
 
-            if (!userId || userId === '') {
-                alert('Erro: ID do usuário não encontrado ou vazio.');
-                return;
-            }
-
-            if (confirm('Tem certeza que deseja deletar este usuário?')) {
-                fetch('${pageContext.request.contextPath}/manageUser', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `action=deleteUser&userId=${userId}`
-                })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! Status: ${response.status}`);
-                        }
-                        return response.text();
-                    })
-                    .then(result => {
-                        if (result === 'success') {
-                            alert('Usuário deletado com sucesso!');
-                            location.reload();
-                        } else {
-                            alert('Erro ao deletar usuário: Resposta do servidor: ' + result);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Erro:', error);
-                        alert('Erro ao deletar usuário: ' + error.message);
-                    });
-            }
-        });
-    });
-</script>
 </body>
 </html>
