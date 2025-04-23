@@ -1,6 +1,15 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%
+    // Verificar se os dados já foram carregados pelo servlet
+    if (request.getAttribute("filteredUsers") == null && request.getAttribute("allroles") == null) {
+        // Redirecionar para o servlet de gerenciamento de usuários
+        response.sendRedirect(request.getContextPath() + "/manageUser");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,7 +50,7 @@
                 <h3 style="text-decoration: underline;">Role:</h3>
                 <select name="role" id="role" onchange="this.form.submit();">
                     <option value="">Todos</option>
-                    <c:forEach var="role" items="${allroles}">
+                    <c:forEach var="role" items="${allRoles}">
                         <option value="${role}" ${param.role == role ? 'selected' : ''}>${role}</option>
                     </c:forEach>
                 </select>
@@ -61,7 +70,7 @@
             <div class="column-description1"><label>Name</label></div>
             <div class="column-description2"><label>Role</label></div>
             <div class="column-description3"><label>Email</label></div>
-            <div class="column"><label>Status</label></div>
+            <div class="column-description4"><label>Status</label></div>
             <div class="column-edit-icon"><label>Actions</label></div>
             <div class="column"><label>Delete</label></div>
         </div>
@@ -80,7 +89,7 @@
                 <div class="column-description3">
                     <label>${user.email}</label>
                 </div>
-                <div class="column">
+                <div class="column-description4">
                     <label>${user.status}</label>
                 </div>
                 <div class="column-edit-icon">
@@ -93,6 +102,48 @@
         </c:forEach>
     </div>
 
+    <!-- Navegação de paginação -->
+    <div class="pagination-container">
+        <c:if test="${totalPages > 1}">
+            <div class="pagination">
+                <!-- Botão para primeira página -->
+                <c:if test="${currentPage > 1}">
+                    <a href="${pageContext.request.contextPath}/manageUser?page=1&role=${param.role}&name=${param.name}">&laquo; Primeira</a>
+                </c:if>
+
+                <!-- Botão para página anterior -->
+                <c:if test="${currentPage > 1}">
+                    <a href="${pageContext.request.contextPath}/manageUser?page=${currentPage - 1}&role=${param.role}&name=${param.name}">&lt; Anterior</a>
+                </c:if>
+
+                <!-- Mostrar números de páginas (com limite para não ficar muito grande) -->
+                <c:forEach var="i" begin="${Math.max(1, currentPage - 2)}" end="${Math.min(totalPages, currentPage + 2)}">
+                    <c:choose>
+                        <c:when test="${i == currentPage}">
+                            <span class="current-page">${i}</span>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="${pageContext.request.contextPath}/manageUser?page=${i}&role=${param.role}&name=${param.name}">${i}</a>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+
+                <!-- Botão para próxima página -->
+                <c:if test="${currentPage < totalPages}">
+                    <a href="${pageContext.request.contextPath}/manageUser?page=${currentPage + 1}&role=${param.role}&name=${param.name}">Próxima &gt;</a>
+                </c:if>
+
+                <!-- Botão para última página -->
+                <c:if test="${currentPage < totalPages}">
+                    <a href="${pageContext.request.contextPath}/manageUser?page=${totalPages}&role=${param.role}&name=${param.name}">Última &raquo;</a>
+                </c:if>
+            </div>
+
+            <div class="pagination-info">
+                Mostrando página ${currentPage} de ${totalPages} (Total de ${totalUsers} usuários)
+            </div>
+        </c:if>
+    </div>
 
 
 </main>

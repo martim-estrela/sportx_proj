@@ -170,7 +170,7 @@ public class UserDAO {
     }
 
     //Metodo para mostrar todos os utilizadores
-    public List<User> getUsers(String roleFilter, String nameFilter) {
+    public List<User> getUsers(String roleFilter, String nameFilter , int page, int usersPerPage) {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM user WHERE 1=1"; // Começa com WHERE 1=1 para facilitar adição de filtros
 
@@ -181,6 +181,9 @@ public class UserDAO {
             sql += " AND name LIKE ?";
         }
 
+        // Adicionar ordem e paginação
+        sql += " ORDER BY user_id LIMIT ? OFFSET ?";
+
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             int index = 1;
             if (roleFilter != null && !roleFilter.isEmpty()) {
@@ -189,6 +192,10 @@ public class UserDAO {
             if (nameFilter != null && !nameFilter.isEmpty()) {
                 stmt.setString(index++, "%" + nameFilter + "%");
             }
+
+            // Parâmetros de paginação
+            stmt.setInt(index++, usersPerPage);
+            stmt.setInt(index++, (page - 1) * usersPerPage);
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
