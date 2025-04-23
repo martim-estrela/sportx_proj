@@ -151,6 +151,27 @@
 <script src="${pageContext.request.contextPath}/js/DeleteUser.js"></script>
 <script> var contextPath = "${pageContext.request.contextPath}"; </script>
 
+<!-- Custom Popup para confirmação de eliminação -->
+<div id="confirmDeletePopup" class="custom-popup" style="display: none;">
+    <div class="popup-content">
+        <h3>Confirmação</h3>
+        <p>Tens a certeza que queres eliminar este utilizador?</p>
+        <div class="popup-buttons">
+            <button id="confirmYesBtn" class="btn-confirm">Sim</button>
+            <button id="confirmNoBtn" class="btn-cancel">Não</button>
+        </div>
+    </div>
+</div>
 
+<!-- Custom Popup para mensagens de erro -->
+<div id="errorPopup" class="custom-popup" style="display: none;">
+    <div class="popup-content">
+        <h3>Erro</h3>
+        <p id="errorMessage"></p>
+        <div class="popup-buttons">
+            <button id="errorCloseBtn" class="btn-cancel">Fechar</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>

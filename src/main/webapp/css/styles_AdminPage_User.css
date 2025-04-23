@@ -276,89 +276,91 @@ select.btn-update-status {
 }
 
 
-
-/*--------------------------------------------------------------------FOOTER-------------------------------------------------------------------------------*/
-
-footer {
-    display: flex;
-    /* Habilita Flexbox para organizar os elementos no rodapé */
-    justify-content: space-between;
-    /* Coloca os elementos nos cantos */
-    align-items: flex-start;
-    /* Alinha os itens no topo do rodapé */
-    padding: 20px;
-    /* Espaçamento interno */
-    margin-top: auto;
-    /* Garante que o rodapé fique no final da página */
-}
-
-/*Fonte e margem do titulo "Support"*/
-.support h2 {
-    font-size: 17px;
-    margin-bottom: 10px;
-}
-
-/*mudança na lista*/
-.support ul {
-    list-style-type: none;
-    padding-left: 0;
-}
-
-/*margem entre os elementos da lista*/
-.support ul li {
-    margin: 10px 0;
-}
-
-/* Elementos da lista */
-.support ul li a {
-    text-decoration: none;
-    color: #000000;
-    font-size: 14px;
-}
-
-/*Quando se passa rato por cima sublinhar*/
-.support ul li a:hover {
-    text-decoration: underline;
-}
-
-/* Estilos da secção de inscrição */
-
-/*Fonte e margem do titulo "Subscribe"*/
-.subscribe h2 {
-    font-size: 17px;
-    margin-bottom: 10px;
-}
-
-/*Estilo do formulario*/
-.subscribe form {
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-}
-
-
-.subscribe input {
-    background-color: #D1D1D1;
-    margin-bottom: 30px;
-    font-size: 15px;
-    border: 0.1px solid #cccccc;
-}
-
-/* Retirar borda ao clicar para inserir */
-.subscribe input:focus {
-    outline: none;
-}
-
-/*Botao subcrever*/
-.subscribe button {
+/* Estilos para os pop-ups personalizados */
+.custom-popup {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
     width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    color: #D1D1D1;
-    background: #222325;
-    border: none;
-    cursor: pointer;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
 }
 
+.custom-popup .popup-content {
+    background-color: #000000;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    width: 300px;
+    max-width: 90%;
+    color: white;
+    /* Posicionamento no topo da página */
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+}
 
+.custom-popup h3 {
+    color: white;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: center;
+}
 
+.custom-popup p {
+    margin-bottom: 20px;
+    color: #e0e0e0;
+}
+
+.popup-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-confirm, .btn-cancel {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.btn-confirm {
+    background-color: #000000;
+    color: white;
+    border: 1px solid white;
+}
+
+.btn-cancel {
+    background-color: #000000;
+    color: white;
+    border: 1px solid #cccccc;
+}
+
+.btn-confirm:hover {
+    background-color: #333333;
+}
+
+.btn-cancel:hover {
+    background-color: #333333;
+}
+
+@keyframes slideDown {
+    from {
+        top: -100px;
+        opacity: 0;
+    }
+    to {
+        top: 10px;
+        opacity: 1;
+    }
+}
+
+.custom-popup .popup-content {
+    /* ... outras propriedades ... */
+    animation: slideDown 0.3s ease-out forwards;
+}
