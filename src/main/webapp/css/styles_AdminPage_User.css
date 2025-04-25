@@ -233,7 +233,6 @@ select.btn-update-status {
     padding-right: 10px;
 
 }
-
 /* Estilos para a paginação */
 .pagination-container {
     margin-top: 20px;
@@ -274,6 +273,8 @@ select.btn-update-status {
     margin-top: 10px;
     color: #666;
 }
+
+
 
 
 /* Estilos para os pop-ups personalizados */
@@ -364,3 +365,98 @@ select.btn-update-status {
     /* ... outras propriedades ... */
     animation: slideDown 0.3s ease-out forwards;
 }
+
+
+
+/* Estilos para o botão de adicionar usuário */
+.btn-add-user {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.btn-add-user:hover {
+    background-color: #218838;
+}
+
+/* Estilos específicos para o modal de adição de usuário */
+
+/* Estilos para o modal */
+.user-modal {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    overflow: auto;
+}
+
+.user-modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 5px;
+    width: 50%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.user-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    color: #333;
+}
+
+.user-form-group {
+    margin-bottom: 15px;
+}
+
+.user-form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.user-form-group input, .form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.user-form-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.user-btn-submit {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.user-btn-submit:hover {
+    background-color: #0069d9;
+}
+

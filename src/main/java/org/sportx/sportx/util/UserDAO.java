@@ -72,6 +72,47 @@ public class UserDAO {
         return false;  // Se a inserção do usuário ou do endereço falhou
     }
 
+    // Método para atualizar utilizador
+    public void updateUser(User user) throws SQLException {
+        // Se a senha foi alterada
+        if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+            String sql = "UPDATE users SET name = ?, email = ?, password = ?, phone_number = ?, user_type = ?, status = ?,register_date = ?  WHERE user_id = ?";
+
+            try (Connection conn = DBConnection.getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+                stmt.setString(1, user.getName());
+                stmt.setString(2, user.getEmail());
+                stmt.setString(3, user.getPassword()); // Em produção, usar senha criptografada
+                stmt.setString(4, user.getPhoneNumber());
+                stmt.setString(5, user.getUserType());
+                stmt.setString(6, user.getStatus());
+                stmt.setDate(7, java.sql.Date.valueOf(user.getRegisterDate()));
+                stmt.setInt(8, user.getUserId());
+
+                stmt.executeUpdate();
+            }
+        }
+        // Se a senha não foi alterada
+        else {
+            String sql = "UPDATE users SET name = ?, email = ?, phone_number = ?, user_type = ?, status = ?, register_date = ? WHERE user_id = ?";
+
+            try (Connection conn = DBConnection.getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+                stmt.setString(1, user.getName());
+                stmt.setString(2, user.getEmail());
+                stmt.setString(3, user.getPhoneNumber());
+                stmt.setString(4, user.getUserType());
+                stmt.setString(5, user.getStatus());
+                stmt.setDate(6, java.sql.Date.valueOf(user.getRegisterDate()));
+                stmt.setInt(7, user.getUserId());
+
+                stmt.executeUpdate();
+            }
+        }
+    }
+
 
     // Método para encontrar o utilizador pelo email e senha
     public User getUserByEmailAndPassword(String email, String password) {
@@ -82,6 +123,40 @@ public class UserDAO {
 
             ps.setString(1, email);
             ps.setString(2, password);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                // Se o utilizador for encontrado, cria e retorna um objeto User
+                User user = new User(
+                        rs.getInt("user_id"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("phone_number"),
+                        rs.getString("name"),
+                        rs.getString("user_type"),
+                        rs.getString("Status"),
+                        rs.getDate("register_date").toLocalDate()
+                );
+                return user;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;  // Se o utilizador não for encontrado, retorna null
+    }
+
+    // Método para encontrar o utilizador pelo email e senha
+    public User getUserById(int userId) {
+        String query = "SELECT * FROM user WHERE user_id = ?";
+
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+
+
+            ps.setInt(1, userId);
+
 
             ResultSet rs = ps.executeQuery();
 
