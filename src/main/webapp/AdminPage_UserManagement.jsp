@@ -82,22 +82,22 @@
         <c:forEach var="user" items="${filteredUsers}">
             <div class="row1">
                 <div class="column-description">
-                    <label>${user.userId}</label>
+                    <label class="user-id">${user.userId}</label>
                 </div>
                 <div class="column-description1">
-                    <label>${user.name}</label>
+                    <label class="user-name">${user.name}</label>
                 </div>
                 <div class="column-description2">
-                    <label>${user.userType}</label>
+                    <label class="user-type">${user.userType}</label>
                 </div>
                 <div class="column-description3">
-                    <label>${user.email}</label>
+                    <label class="user-email">${user.email}</label>
                 </div>
                 <div class="column-description4">
-                    <label>${user.status}</label>
+                    <label class="user-status">${user.status}</label>
                 </div>
                 <div class="column-edit-icon">
-                    <button class="btn-edit"><i class="material-icons" style="background-color: #d9d9d9d9; font-size:40px">edit_square</i></button>
+                    <button class="btn-edit edit-user" data-userid="${user.userId}"><i class="material-icons" style="background-color: #d9d9d9d9; font-size:40px">edit_square</i></button>
                 </div>
                 <div class="column">
                     <button class="btn-edit delete-user" data-userid="${user.userId}"><i class="material-icons" style="color: red; background-color: #d9d9d9d9; font-size:40px">close</i></button>
@@ -149,7 +149,7 @@
         </c:if>
     </div>
 
-    <!-- Modal para editar usuário -->
+    <!-- Modal para editar utilizador -->
     <div id="editUserModal" class="user-modal" style="display: none;">
         <div class="user-modal-content">
             <span class="user-modal-close edit-close">&times;</span>
@@ -287,6 +287,7 @@
 <script src="${pageContext.request.contextPath}/js/PopupProfile.js"></script>
 <script src="${pageContext.request.contextPath}/js/DeleteUser.js"></script>
 <script src="${pageContext.request.contextPath}/js/AddUser.js"></script>
+<script src="${pageContext.request.contextPath}/js/UpdateUser.js"></script>
 <script> var contextPath = "${pageContext.request.contextPath}"; </script>
 </body>
 </html>

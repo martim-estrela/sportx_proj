@@ -368,7 +368,7 @@ select.btn-update-status {
 
 
 
-/* Estilos para o botão de adicionar usuário */
+/* Estilos para o botão de adicionar utilizador */
 .btn-add-user {
     background-color: #28a745;
     color: white;
@@ -383,7 +383,7 @@ select.btn-update-status {
     background-color: #218838;
 }
 
-/* Estilos específicos para o modal de adição de usuário */
+/* Estilos específicos para o modal de edição de utilizador */
 
 /* Estilos para o modal */
 .user-modal {

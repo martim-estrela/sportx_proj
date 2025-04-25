@@ -76,7 +76,7 @@ public class UserDAO {
     public void updateUser(User user) throws SQLException {
         // Se a senha foi alterada
         if (user.getPassword() != null && !user.getPassword().isEmpty()) {
-            String sql = "UPDATE users SET name = ?, email = ?, password = ?, phone_number = ?, user_type = ?, status = ?,register_date = ?  WHERE user_id = ?";
+            String sql = "UPDATE user SET name = ?, email = ?, password = ?, phone_number = ?, user_type = ?, status = ?,register_date = ?  WHERE user_id = ?";
 
             try (Connection conn = DBConnection.getConnection();
                  PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -95,7 +95,7 @@ public class UserDAO {
         }
         // Se a senha não foi alterada
         else {
-            String sql = "UPDATE users SET name = ?, email = ?, phone_number = ?, user_type = ?, status = ?, register_date = ? WHERE user_id = ?";
+            String sql = "UPDATE user SET name = ?, email = ?, phone_number = ?, user_type = ?, status = ?, register_date = ? WHERE user_id = ?";
 
             try (Connection conn = DBConnection.getConnection();
                  PreparedStatement stmt = conn.prepareStatement(sql)) {

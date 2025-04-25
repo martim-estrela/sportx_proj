@@ -139,14 +139,14 @@ public class UserManagementServlet extends HttpServlet {
                         status == null || status.trim().isEmpty()) {
 
                     request.setAttribute("errorMessage", "Todos os campos obrigatórios devem ser preenchidos.");
-                    request.getRequestDispatcher("/userManagement.jsp").forward(request, response);
+                    request.getRequestDispatcher("/AdminPage_UserManagement.jsp").forward(request, response);
                     return;
                 }
 
                 // Verificar senha apenas se foi fornecida
                 if (password != null && !password.trim().isEmpty() && password.length() < 8) {
                     request.setAttribute("errorMessage", "A senha deve ter pelo menos 8 caracteres.");
-                    request.getRequestDispatcher("/userManagement.jsp").forward(request, response);
+                    request.getRequestDispatcher("/AdminPage_UserManagement.jsp").forward(request, response);
                     return;
                 }
 
@@ -155,7 +155,7 @@ public class UserManagementServlet extends HttpServlet {
 
                 if (existingUser == null) {
                     request.setAttribute("errorMessage", "Usuário não encontrado.");
-                    request.getRequestDispatcher("/userManagement.jsp").forward(request, response);
+                    request.getRequestDispatcher("/AdminPage_UserManagement.jsp").forward(request, response);
                     return;
                 }
 
@@ -175,7 +175,7 @@ public class UserManagementServlet extends HttpServlet {
                 userDAO.updateUser(existingUser);
 
                 // Redirecionar para a página
-                response.sendRedirect(request.getContextPath() + "/userManagement.jsp");
+                response.sendRedirect(request.getContextPath() + "/AdminPage_UserManagement.jsp");
             }
                 
              else {
