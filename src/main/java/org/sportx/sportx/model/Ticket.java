@@ -10,7 +10,6 @@ public class Ticket {
     private String subject;
     private String message;
 
-    // Getters, Setters, Construtor
     public Ticket(int ticketId, LocalDate submissionDate, String email, String ticketStatus, String subject, String message) {
         this.ticketId = ticketId;
         this.submissionDate = submissionDate;
@@ -20,6 +19,7 @@ public class Ticket {
         this.message = message;
     }
 
+    // Getters and setters
     public int getTicketId() {
         return ticketId;
     }
@@ -66,14 +66,5 @@ public class Ticket {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-
-    public boolean isResolved() {
-        return "resolved".equalsIgnoreCase(ticketStatus);
-    }
-
-    public void markAsResolved() {
-        this.ticketStatus = "resolved";
     }
 }
