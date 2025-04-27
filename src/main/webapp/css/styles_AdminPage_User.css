@@ -129,11 +129,11 @@ header a:hover {
 
 .table-container {
     padding: 10px;
-    margin: 20px 10% 50px 10%;
+    margin: 5px 10% 50px 10%;
     background-color: #D1D1D1;
 }
 
-.column-delete-icon {
+.column {
     flex: 50%;
     background-color: #d9d9d9;
     text-align: center;
@@ -201,13 +201,21 @@ header a:hover {
 .column-description4 {
     padding-top: 0.75%;
     padding-left: 10px;
-    flex: 65%;
+    flex: 40%;
     background-color: #d9d9d9;
-
-
 }
 
 .column-description4 label {
+    background-color: #d9d9d9;
+}
+
+.column-description5 {
+    padding-top: 0.75%;
+    padding-left: 10px;
+    flex: 40%;
+    background-color: #d9d9d9;
+}
+.column-description5 label {
     background-color: #d9d9d9;
 }
 
@@ -370,13 +378,16 @@ select.btn-update-status {
 
 /* Estilos para o botão de adicionar utilizador */
 .btn-add-user {
-    background-color: #28a745;
+    background-color: #000000;
     color: white;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-weight: 500;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
 }
 
 .btn-add-user:hover {

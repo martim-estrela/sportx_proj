@@ -64,18 +64,20 @@
         </form>
     </div>
 
-    <div class="add-user-container" style="margin-bottom: 20px;">
-        <button id="openAddUserModalBtn" class="btn-add-user">Adicionar Novo Usuário</button>
+    <div style="display: flex; justify-content: flex-end; margin-right:10% ">
+        <button id="openAddUserModalBtn" class="btn-add-user">Add new user</button>
     </div>
 
     <div class="table-container">
+
         <div class="row1">
             <div class="column-description"><label>ID</label></div>
             <div class="column-description1"><label>Name</label></div>
             <div class="column-description2"><label>Role</label></div>
             <div class="column-description3"><label>Email</label></div>
             <div class="column-description4"><label>Status</label></div>
-            <div class="column-edit-icon"><label>Actions</label></div>
+            <div class="column-description5"><label>Register Date</label></div>
+            <div class="column-edit-icon"><label>Edit</label></div>
             <div class="column"><label>Delete</label></div>
         </div>
 
@@ -95,6 +97,9 @@
                 </div>
                 <div class="column-description4">
                     <label class="user-status">${user.status}</label>
+                </div>
+                <div class="column-description4">
+                    <label class="user-status">${user.registerDate}</label>
                 </div>
                 <div class="column-edit-icon">
                     <button class="btn-edit edit-user" data-userid="${user.userId}"><i class="material-icons" style="background-color: #d9d9d9d9; font-size:40px">edit_square</i></button>
