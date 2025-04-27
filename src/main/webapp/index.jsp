@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,7 +23,7 @@
             <a href="#" id="searchButton">Search</a>
         </div>
         <div>
-            <a href="ShoppingCart_Page.jsp"><img src="${pageContext.request.contextPath}/img/shopping-cart.jpg"></a>
+            <a href="${pageContext.request.contextPath}/ShoppingCart_Page.jsp"><img src="${pageContext.request.contextPath}/img/shopping-cart.jpg"></a>
             <a href="#" id="profileButton"><img src="${pageContext.request.contextPath}/img/account_circle.jpg" alt="Profile"></a>
         </div>
     </header>
@@ -30,11 +31,26 @@
     <!-- Popup Menu -->
     <div id="profilePopup" class="popup">
         <div class="popup-content">
-            <a href="ProfilePage.jsp"> Profile</a>
-            <a href="Orderhistory.jsp">Order History</a>
-            <a href="AdminPage_StockManagement.jsp">Stock Management</a>
-            <a href="AdminPage_UserManagement.jsp">User Management</a>
-            <a href="Loginpage.jsp">Log Out</a>
+            <!-- Exibe Login e Register se o usuário não estiver logado -->
+            <c:if test="${empty sessionScope.user}">
+                <a href="${pageContext.request.contextPath}/Loginpage.jsp">Login</a>
+                <a href="${pageContext.request.contextPath}/Registerpage.jsp">Register</a>
+            </c:if>
+
+            <!-- Exibe Profile, Order History e opções de admin se o usuário estiver logado -->
+            <c:if test="${not empty sessionScope.user}">
+                <a href="${pageContext.request.contextPath}/ProfilePage.jsp">Profile</a>
+                <a href="${pageContext.request.contextPath}/Orderhistory.jsp">Order History</a>
+
+                <!-- Exibe as opções de admin se o usuário for admin -->
+                <c:if test="${sessionScope.user.userType == 'admin'}">
+                    <a href="${pageContext.request.contextPath}/AdminPage_StockManagement.jsp">Stock Management</a>
+                    <a href="${pageContext.request.contextPath}/AdminPage_UserManagement.jsp">User Management</a>
+                </c:if>
+
+                <!-- Sempre aparece a opção de logout se estiver logado -->
+                <a href="${pageContext.request.contextPath}/LogoutServlet">Log Out</a>
+            </c:if>
         </div>
     </div>
 
