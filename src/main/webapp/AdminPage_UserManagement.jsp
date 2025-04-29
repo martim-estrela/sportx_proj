@@ -35,18 +35,18 @@
 <!-- Popup Menu -->
 <div id="profilePopup" class="popup">
     <div class="popup-content">
-        <!-- Exibe Login e Register se o usuário não estiver logado -->
+        <!-- Exibe Login e Register se o utilizador não estiver logado -->
         <c:if test="${empty sessionScope.user}">
             <a href="${pageContext.request.contextPath}/Loginpage.jsp">Login</a>
             <a href="${pageContext.request.contextPath}/Registerpage.jsp">Register</a>
         </c:if>
 
-        <!-- Exibe Profile, Order History e opções de admin se o usuário estiver logado -->
+        <!-- Exibe Profile, Order History e opções de admin se o utilizador estiver logado -->
         <c:if test="${not empty sessionScope.user}">
             <a href="${pageContext.request.contextPath}/ProfilePage.jsp">Profile</a>
             <a href="${pageContext.request.contextPath}/Orderhistory.jsp">Order History</a>
 
-            <!-- Exibe as opções de admin se o usuário for admin -->
+            <!-- Exibe as opções de admin se o utilizador for admin -->
             <c:if test="${sessionScope.user.userType == 'admin'}">
                 <a href="${pageContext.request.contextPath}/AdminPage_StockManagement.jsp">Stock Management</a>
                 <a href="${pageContext.request.contextPath}/AdminPage_UserManagement.jsp">User Management</a>
@@ -80,6 +80,7 @@
     </div>
 
     <div style="display: flex; justify-content: flex-end; margin-right:10% ">
+        <button id="generatePdfBtn" class="btn-generate-pdf">Generate Report</button>
         <button id="openAddUserModalBtn" class="btn-add-user">Add new user</button>
     </div>
 
@@ -302,12 +303,25 @@
     </div>
 </div>
 
+<!-- Popup para confirmação de geração do PDF -->
+<div id="confirmPdfPopup" class="custom-popup" style="display: none;">
+    <div class="popup-content">
+        <h3>Confirmação</h3>
+        <p>Tens a certeza que queres gerar um PDF com os utilizadores filtrados?</p>
+        <div class="popup-buttons">
+            <button id="confirmPdfYesBtn" class="btn-confirm">Sim</button>
+            <button id="confirmPdfNoBtn" class="btn-cancel">Não</button>
+        </div>
+    </div>
+</div>
+
 
 
 <script src="${pageContext.request.contextPath}/js/PopupProfile.js"></script>
 <script src="${pageContext.request.contextPath}/js/DeleteUser.js"></script>
 <script src="${pageContext.request.contextPath}/js/AddUser.js"></script>
 <script src="${pageContext.request.contextPath}/js/UpdateUser.js"></script>
+<script src="${pageContext.request.contextPath}/js/GenerateUserPdf.js"></script>
 <script> var contextPath = "${pageContext.request.contextPath}"; </script>
 </body>
 </html>

@@ -354,5 +354,51 @@ public class UserDAO {
 
     }
 
+
+    /* Metodo para obter todos os usuários para o relatório PDF, aplicando os filtros mas sem paginação */
+    public List<User> getAllUsersForReport(String roleFilter, String nameFilter) {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM user WHERE 1=1";
+
+        if (roleFilter != null && !roleFilter.isEmpty()) {
+            sql += " AND user_type = ?";
+        }
+        if (nameFilter != null && !nameFilter.isEmpty()) {
+            sql += " AND name LIKE ?";
+        }
+
+        // Ordenar por ID
+        sql += " ORDER BY user_id";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            int index = 1;
+            if (roleFilter != null && !roleFilter.isEmpty()) {
+                stmt.setString(index++, roleFilter);
+            }
+            if (nameFilter != null && !nameFilter.isEmpty()) {
+                stmt.setString(index++, "%" + nameFilter + "%");
+            }
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                User user = new User(
+                        rs.getInt("user_id"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("phone_number"),
+                        rs.getString("name"),
+                        rs.getString("user_type"),
+                        rs.getString("Status"),
+                        rs.getDate("register_date").toLocalDate()
+                );
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return users;
+    }
+
 }
 

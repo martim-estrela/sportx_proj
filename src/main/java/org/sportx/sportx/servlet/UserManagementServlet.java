@@ -1,6 +1,5 @@
 package org.sportx.sportx.servlet;
 
-import jakarta.servlet.annotation.WebServlet;
 import org.sportx.sportx.model.User;
 import org.sportx.sportx.util.DBConnection;
 import org.sportx.sportx.util.UserDAO;

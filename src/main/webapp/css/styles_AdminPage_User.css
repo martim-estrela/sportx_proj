@@ -394,6 +394,24 @@ select.btn-update-status {
     background-color: #218838;
 }
 
+/* Estilos para o botão gerar relatorio */
+.btn-generate-pdf {
+    background-color: #000000;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.btn-generate-pdf:hover {
+    background-color: #218838;
+}
+
 /* Estilos específicos para o modal de edição de utilizador */
 
 /* Estilos para o modal */

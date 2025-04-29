@@ -24,5 +24,15 @@
         <url-pattern>/LogoutServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>UserPdfGeneratorServlet</servlet-name>
+        <servlet-class>org.sportx.sportx.servlet.UserPdfGeneratorServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UserPdfGeneratorServlet</servlet-name>
+        <url-pattern>/generateUserPdf</url-pattern>
+    </servlet-mapping>
+
 </web-app>
 
