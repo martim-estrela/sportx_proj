@@ -101,7 +101,7 @@ public class UserManagementServlet extends HttpServlet {
                 LocalDate registerDate = LocalDate.now();
 
 
-                User newUser = new User(0,name, email, password, phoneNumber, userType, status, registerDate);
+                User newUser = new User(0, email, password, phoneNumber, name, userType, status, registerDate);
                 /*
                 newUser.setName(name);
                 newUser.setEmail(email);

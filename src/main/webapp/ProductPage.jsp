@@ -33,7 +33,7 @@
             <!-- Exibe Login e Register se o usuário não estiver logado -->
             <c:if test="${empty sessionScope.user}">
                 <a href="${pageContext.request.contextPath}/Loginpage.jsp">Login</a>
-                <a href="${pageContext.request.contextPath}/Registerpage.jsp">Register</a>
+                <a href="${pageContext.request.contextPath}/Sign_up_Page.jsp">Register</a>
             </c:if>
 
             <!-- Exibe Profile, Order History e opções de admin se o usuário estiver logado -->
