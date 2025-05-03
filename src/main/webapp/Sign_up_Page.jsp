@@ -26,7 +26,9 @@
         <!-- Exibir mensagem de erro caso o parâmetro error=true esteja presente -->
         <c:if test="${param.error == 'true'}">
             <div style="color: #218A38; font-weight: bold;">There was an error during sign-up. Please try again.</div>
-            <div style="color: #218A38; font-weight: bold;">Password must be at least 8 characters long.</div>
+        </c:if>
+        <c:if test="${param.error == 'email_exists'}">
+            <div style="color: #218A38; font-weight: bold;">This email is already used.</div>
         </c:if>
 
         <form action="${pageContext.request.contextPath}/SignUpServlet" method="POST">
@@ -40,7 +42,7 @@
             <input type="tel" name="phonenumber" id="phonenumber" placeholder="Enter your phone number" required />
 
             <label for="password">Password:</label>
-            <input type="password" name="password" id="password" placeholder="Enter your password" required />
+            <input minlength="8" type="password" name="password" id="password" placeholder="Enter your password" required />
 
             <button type="submit">Sign Up</button>
         </form>

@@ -37,8 +37,14 @@ public class SignUpServlet extends HttpServlet {
         // Cria o DAO e salva o utilizador
         try (Connection conn = DBConnection.getConnection()) {
             UserDAO userDAO = new UserDAO(conn);
-            boolean isSaved = userDAO.saveUser(newUser);
 
+            if (userDAO.emailExists(email))
+            {
+                response.sendRedirect("Sign_up_Page.jsp?error=email_exists");
+                return;
+            }
+
+            boolean isSaved = userDAO.saveUser(newUser);
             // Verifica se o utilizador foi guardado com sucesso
             if (isSaved) {
                 response.sendRedirect("Loginpage.jsp");  // Redireciona para o login após cadastro bem-sucedido
