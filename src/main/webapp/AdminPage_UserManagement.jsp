@@ -142,7 +142,7 @@
                 </c:if>
 
                 <!-- Mostrar números de páginas (com limite para não ficar muito grande) -->
-                <c:forEach var="i" begin="${Math.max(1, currentPage - 2)}" end="${Math.min(totalPages, currentPage + 2)}">
+                <c:forEach var="i" begin="${startPage}" end="${endPage}">
                     <c:choose>
                         <c:when test="${i == currentPage}">
                             <span class="current-page">${i}</span>

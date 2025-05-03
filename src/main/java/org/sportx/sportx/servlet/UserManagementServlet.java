@@ -27,7 +27,7 @@ public class UserManagementServlet extends HttpServlet {
 
             // Parâmetros de paginação
             int page = 1;
-            int usersPerPage = 10; // Número de utilizadores por página
+            int usersPerPage = 5; // Número de utilizadores por página
 
             // Verificar se foi solicitada uma página específica
             String pageParam = request.getParameter("page");
@@ -43,7 +43,7 @@ public class UserManagementServlet extends HttpServlet {
             }
 
             // Contar o total de usuários para calcular o número de páginas
-            int totalUsers = userDAO.getTotalPages(role, name);
+            int totalUsers = userDAO.getTotalUsers(role, name);
             int totalPages = (int) Math.ceil((double) totalUsers / usersPerPage);
 
             // Garantir que a página atual não ultrapasse o total de páginas
@@ -51,12 +51,18 @@ public class UserManagementServlet extends HttpServlet {
                 page = totalPages;
             }
 
+            int startPage = Math.max(1, page - 2);
+            int endPage = Math.min(totalPages, page + 2);
+
+
             // Buscar utilizadores com base nos filtros
             List<User> filteredUsers = userDAO.getUsers(role, name, page, usersPerPage);
             request.setAttribute("filteredUsers", filteredUsers);
             request.setAttribute("currentPage", page);
             request.setAttribute("totalPages", totalPages);
             request.setAttribute("totalUsers", totalUsers);
+            request.setAttribute("startPage", startPage);
+            request.setAttribute("endPage", endPage);
 
             // Buscar todas as roles disponíveis (apenas 'user' e 'admin')
             List<String> allRoles = List.of("user", "admin"); // Apenas 'user' e 'admin'

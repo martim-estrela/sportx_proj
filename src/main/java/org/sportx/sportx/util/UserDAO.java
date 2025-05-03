@@ -294,8 +294,8 @@ public class UserDAO {
     }
 
     //Método para obter o numero total de paginas
-    public int getTotalPages(String roleFilter, String nameFilter) {
-        int totalPages = 0;
+    public int getTotalUsers(String roleFilter, String nameFilter) {
+        int totalUsers = 0;
         String sql = "SELECT COUNT(*) FROM user WHERE 1=1";
 
         if (roleFilter != null && !roleFilter.isEmpty()) {
@@ -316,14 +316,14 @@ public class UserDAO {
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                int totalItems = rs.getInt(1);
-                totalPages = (int) Math.ceil((double) totalItems / 10);
+                totalUsers = rs.getInt(1);
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return totalPages;
+        return totalUsers;
     }
 
     //Alterar status de um utilizador
