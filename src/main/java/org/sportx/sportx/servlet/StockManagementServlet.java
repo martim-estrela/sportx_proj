@@ -6,7 +6,7 @@ import org.sportx.sportx.DTO.StockManagementDTO;
 import org.sportx.sportx.util.DBConnection;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
+
 import jakarta.servlet.http.*;
 import org.sportx.sportx.util.StockManagementDAO;
 
@@ -15,7 +15,7 @@ import java.sql.*;
 import java.util.List;
 
 
-@WebServlet("/manageStock")
+
 public class StockManagementServlet extends HttpServlet {
 
     @Override

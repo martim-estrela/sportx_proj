@@ -34,5 +34,15 @@
         <url-pattern>/generateUserPdf</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>StockManagementServlet</servlet-name>
+        <servlet-class>org.sportx.sportx.servlet.StockManagementServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>StockManagementServlet</servlet-name>
+        <url-pattern>/manageStock</url-pattern>
+    </servlet-mapping>
+
 </web-app>
 

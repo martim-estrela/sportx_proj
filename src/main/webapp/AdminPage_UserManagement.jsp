@@ -170,62 +170,60 @@
         </c:if>
     </div>
 
-    <!-- Modal para editar utilizador -->
-    <div id="editUserModal" class="user-modal" style="display: none;">
-        <div class="user-modal-content">
-            <span class="user-modal-close edit-close">&times;</span>
-            <h2 class="edit-user-title">Editar Utilizador</h2>
-            <form id="editUserForm" method="post" action="${pageContext.request.contextPath}/manageUser">
-                <input type="hidden" name="action" value="updateUser">
-                <input type="hidden" id="editUserId" name="userId" value="">
-
-                <div class="user-form-group">
-                    <label for="editName">Nome:</label>
-                    <input type="text" id="editName" name="name" required>
-                </div>
-
-                <div class="user-form-group">
-                    <label for="editEmail">Email:</label>
-                    <input type="email" id="editEmail" name="email" required>
-                </div>
-
-                <div class="user-form-group">
-                    <label for="editPassword">Senha:</label>
-                    <input type="password" id="editPassword" name="password" placeholder="Deixe em branco para manter a senha atual">
-                </div>
-
-                <div class="user-form-group">
-                    <label for="editPhoneNumber">Número de Telefone:</label>
-                    <input type="text" id="editPhoneNumber" name="phoneNumber">
-                </div>
-
-                <div class="user-form-group">
-                    <label for="editUserType">Tipo de Utilizador:</label>
-                    <select id="editUserType" name="userType" required>
-                        <option value="user">Usuário</option>
-                        <option value="admin">Administrador</option>
-                    </select>
-                </div>
-
-                <div class="user-form-group">
-                    <label for="editStatus">Status:</label>
-                    <select id="editStatus" name="status" required>
-                        <option value="active">Ativo</option>
-                        <option value="inactive">Inativo</option>
-                    </select>
-                </div>
-
-                <div class="user-form-buttons">
-                    <button type="submit" class="user-btn-submit">Atualizar</button>
-                    <button type="button" class="user-btn-cancel" id="cancelEditUser">Cancelar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-
-
 </main>
+
+<!-- Modal para editar utilizador -->
+<div id="editUserModal" class="user-modal" style="display: none;">
+    <div class="user-modal-content">
+        <span class="user-modal-close edit-close">&times;</span>
+        <h2 class="edit-user-title">Editar Utilizador</h2>
+        <form id="editUserForm" method="post" action="${pageContext.request.contextPath}/manageUser">
+            <input type="hidden" name="action" value="updateUser">
+            <input type="hidden" id="editUserId" name="userId" value="">
+
+            <div class="user-form-group">
+                <label for="editName">Nome:</label>
+                <input type="text" id="editName" name="name" required>
+            </div>
+
+            <div class="user-form-group">
+                <label for="editEmail">Email:</label>
+                <input type="email" id="editEmail" name="email" required>
+            </div>
+
+            <div class="user-form-group">
+                <label for="editPassword">Senha:</label>
+                <input type="password" id="editPassword" name="password" placeholder="Deixe em branco para manter a senha atual">
+            </div>
+
+            <div class="user-form-group">
+                <label for="editPhoneNumber">Número de Telefone:</label>
+                <input type="text" id="editPhoneNumber" name="phoneNumber">
+            </div>
+
+            <div class="user-form-group">
+                <label for="editUserType">Tipo de Utilizador:</label>
+                <select id="editUserType" name="userType" required>
+                    <option value="user">Usuário</option>
+                    <option value="admin">Administrador</option>
+                </select>
+            </div>
+
+            <div class="user-form-group">
+                <label for="editStatus">Status:</label>
+                <select id="editStatus" name="status" required>
+                    <option value="active">Ativo</option>
+                    <option value="inactive">Inativo</option>
+                </select>
+            </div>
+
+            <div class="user-form-buttons">
+                <button type="submit" class="user-btn-submit">Atualizar</button>
+                <button type="button" class="user-btn-cancel" id="cancelEditUser">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 <!-- Custom Popup para confirmação de eliminação -->
 <div id="confirmDeletePopup" class="custom-popup" style="display: none;">
@@ -323,5 +321,6 @@
 <script src="${pageContext.request.contextPath}/js/UpdateUser.js"></script>
 <script src="${pageContext.request.contextPath}/js/GenerateUserPdf.js"></script>
 <script> var contextPath = "${pageContext.request.contextPath}"; </script>
+
 </body>
 </html>

@@ -1,16 +1,12 @@
 document.addEventListener("DOMContentLoaded", function() {
     // Elementos do modal de edição
     const editModal = document.getElementById("editUserModal");
-    const editCloseButton = document.querySelector(".edit-user-close");
+    const editCloseButton = document.querySelector(".edit-close");
     const cancelEditButton = document.getElementById("cancelEditUser");
     const editForm = document.getElementById("editUserForm");
 
     // Selecionar todos os botões de edição
     const editButtons = document.querySelectorAll(".btn-edit.edit-user");
-
-
-    // Adicionar evento a cada botão de edição
-
 
 // Adicionar evento a cada botão de edição
     editButtons.forEach(button => {
@@ -37,6 +33,28 @@ document.addEventListener("DOMContentLoaded", function() {
 
             editModal.style.display = "block";
         });
+    });
+
+    // Fechar o modal (X) - Modificado para garantir funcionamento
+    if (editCloseButton) {
+        editCloseButton.onclick = function() {
+            console.log("Botão fechar clicado");
+            editModal.style.display = "none";
+        };
+    }
+
+    // Fechar o modal (botão Cancelar) - Modificado para garantir funcionamento
+    if (cancelEditButton) {
+        cancelEditButton.onclick = function() {
+            console.log("Botão cancelar clicado");
+            editModal.style.display = "none";
+        };
+    }
+    // Fechar o modal ao clicar fora
+    window.addEventListener("click", function(event) {
+        if (event.target === editModal) {
+            editModal.style.display = "none";
+        }
     });
 
 // Processar submissão
