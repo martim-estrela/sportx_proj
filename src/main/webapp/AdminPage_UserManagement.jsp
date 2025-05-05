@@ -64,7 +64,7 @@
             <div>
                 <h3 style="text-decoration: underline;">Role:</h3>
                 <select name="role" id="role" onchange="this.form.submit();">
-                    <option value="">Todos</option>
+                    <option value="">All</option>
                     <c:forEach var="role" items="${allRoles}">
                         <option value="${role}" ${param.role == role ? 'selected' : ''}>${role}</option>
                     </c:forEach>
@@ -133,12 +133,12 @@
             <div class="pagination">
                 <!-- Botão para primeira página -->
                 <c:if test="${currentPage > 1}">
-                    <a href="${pageContext.request.contextPath}/manageUser?page=1&role=${param.role}&name=${param.name}">&laquo; Primeira</a>
+                    <a href="${pageContext.request.contextPath}/manageUser?page=1&role=${param.role}&name=${param.name}">&laquo; First</a>
                 </c:if>
 
                 <!-- Botão para página anterior -->
                 <c:if test="${currentPage > 1}">
-                    <a href="${pageContext.request.contextPath}/manageUser?page=${currentPage - 1}&role=${param.role}&name=${param.name}">&lt; Anterior</a>
+                    <a href="${pageContext.request.contextPath}/manageUser?page=${currentPage - 1}&role=${param.role}&name=${param.name}">&lt; Previous</a>
                 </c:if>
 
                 <!-- Mostrar números de páginas (com limite para não ficar muito grande) -->
@@ -155,17 +155,17 @@
 
                 <!-- Botão para próxima página -->
                 <c:if test="${currentPage < totalPages}">
-                    <a href="${pageContext.request.contextPath}/manageUser?page=${currentPage + 1}&role=${param.role}&name=${param.name}">Próxima &gt;</a>
+                    <a href="${pageContext.request.contextPath}/manageUser?page=${currentPage + 1}&role=${param.role}&name=${param.name}">Next &gt;</a>
                 </c:if>
 
                 <!-- Botão para última página -->
                 <c:if test="${currentPage < totalPages}">
-                    <a href="${pageContext.request.contextPath}/manageUser?page=${totalPages}&role=${param.role}&name=${param.name}">Última &raquo;</a>
+                    <a href="${pageContext.request.contextPath}/manageUser?page=${totalPages}&role=${param.role}&name=${param.name}">Last &raquo;</a>
                 </c:if>
             </div>
 
             <div class="pagination-info">
-                Mostrando página ${currentPage} de ${totalPages} (Total de ${totalUsers} usuários)
+                Page ${currentPage} of ${totalPages} (${totalUsers} users)
             </div>
         </c:if>
     </div>
@@ -176,13 +176,13 @@
 <div id="editUserModal" class="user-modal" style="display: none;">
     <div class="user-modal-content">
         <span class="user-modal-close edit-close">&times;</span>
-        <h2 class="edit-user-title">Editar Utilizador</h2>
+        <h2 class="edit-user-title">Update User</h2>
         <form id="editUserForm" method="post" action="${pageContext.request.contextPath}/manageUser">
             <input type="hidden" name="action" value="updateUser">
             <input type="hidden" id="editUserId" name="userId" value="">
 
             <div class="user-form-group">
-                <label for="editName">Nome:</label>
+                <label for="editName">Name:</label>
                 <input type="text" id="editName" name="name" required>
             </div>
 
@@ -192,34 +192,34 @@
             </div>
 
             <div class="user-form-group">
-                <label for="editPassword">Senha:</label>
-                <input type="password" id="editPassword" name="password" placeholder="Deixe em branco para manter a senha atual">
+                <label for="editPassword">Password:</label>
+                <input type="password" id="editPassword" name="password" placeholder="Leave blank to keep current password">
             </div>
 
             <div class="user-form-group">
-                <label for="editPhoneNumber">Número de Telefone:</label>
+                <label for="editPhoneNumber">Phone Number:</label>
                 <input type="text" id="editPhoneNumber" name="phoneNumber">
             </div>
 
             <div class="user-form-group">
-                <label for="editUserType">Tipo de Utilizador:</label>
+                <label for="editUserType">User type:</label>
                 <select id="editUserType" name="userType" required>
-                    <option value="user">Usuário</option>
-                    <option value="admin">Administrador</option>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
                 </select>
             </div>
 
             <div class="user-form-group">
                 <label for="editStatus">Status:</label>
                 <select id="editStatus" name="status" required>
-                    <option value="active">Ativo</option>
-                    <option value="inactive">Inativo</option>
+                    <option value="active">active</option>
+                    <option value="inactive">inactive</option>
                 </select>
             </div>
 
             <div class="user-form-buttons">
-                <button type="submit" class="user-btn-submit">Atualizar</button>
-                <button type="button" class="user-btn-cancel" id="cancelEditUser">Cancelar</button>
+                <button type="submit" class="user-btn-submit">Update</button>
+                <button type="button" class="user-btn-cancel" id="cancelEditUser">Cancel</button>
             </div>
         </form>
     </div>
@@ -228,11 +228,11 @@
 <!-- Custom Popup para confirmação de eliminação -->
 <div id="confirmDeletePopup" class="custom-popup" style="display: none;">
     <div class="popup-content">
-        <h3>Confirmação</h3>
-        <p>Tens a certeza que queres eliminar este utilizador?</p>
+        <h3>Confirmation</h3>
+        <p>Are you sure you want to delete this user?</p>
         <div class="popup-buttons">
-            <button id="confirmYesBtn" class="btn-confirm">Sim</button>
-            <button id="confirmNoBtn" class="btn-cancel">Não</button>
+            <button id="confirmYesBtn" class="btn-confirm">Yes</button>
+            <button id="confirmNoBtn" class="btn-cancel">No</button>
         </div>
     </div>
 </div>
@@ -240,7 +240,7 @@
 <!-- Custom Popup para mensagens de erro -->
 <div id="errorPopup" class="custom-popup" style="display: none;">
     <div class="popup-content">
-        <h3>Erro</h3>
+        <h3>Error</h3>
         <p id="errorMessage"></p>
         <div class="popup-buttons">
             <button id="errorCloseBtn" class="btn-cancel">Fechar</button>
@@ -249,16 +249,16 @@
 </div>
 
 
-<!-- Modal para adicionar usuário -->
+<!-- Modal para adicionar utilizador -->
 <div id="addUserModal" class="user-modal" style="display: none;">
     <div class="user-modal-content">
         <span class="user-modal-close">&times;</span>
-        <h2 class="add-user-title">Adicionar Novo Utilizador</h2>
+        <h2 class="add-user-title">Add new user</h2>
         <form id="addUserForm" method="post" action="${pageContext.request.contextPath}/manageUser">
             <input type="hidden" name="action" value="addUser">
 
             <div class="user-form-group">
-                <label for="name">Nome:</label>
+                <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required>
             </div>
 
@@ -268,34 +268,34 @@
             </div>
 
             <div class="user-form-group">
-                <label for="password">Senha:</label>
+                <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
             </div>
 
             <div class="user-form-group">
-                <label for="phoneNumber">Número de Telefone:</label>
+                <label for="phoneNumber">Phone Number:</label>
                 <input type="text" id="phoneNumber" name="phoneNumber">
             </div>
 
             <div class="user-form-group">
-                <label for="userType">Tipo de Utilizador:</label>
+                <label for="userType">User Type:</label>
                 <select id="userType" name="userType" required>
-                    <option value="user">Usuário</option>
-                    <option value="admin">Administrador</option>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
                 </select>
             </div>
 
             <div class="user-form-group">
                 <label for="status">Status:</label>
                 <select id="status" name="status" required>
-                    <option value="active">Ativo</option>
-                    <option value="inactive">Inativo</option>
+                    <option value="active">active</option>
+                    <option value="inactive">inactive</option>
                 </select>
             </div>
 
             <div class="user-form-buttons">
-                <button type="submit" class="user-btn-submit">Salvar</button>
-                <button type="button" class="user-btn-cancel" id="cancelAddUser">Cancelar</button>
+                <button type="submit" class="user-btn-submit">Save</button>
+                <button type="button" class="user-btn-cancel" id="cancelAddUser">Cancel</button>
             </div>
         </form>
     </div>
@@ -304,11 +304,11 @@
 <!-- Popup para confirmação de geração do PDF -->
 <div id="confirmPdfPopup" class="custom-popup" style="display: none;">
     <div class="popup-content">
-        <h3>Confirmação</h3>
-        <p>Tens a certeza que queres gerar um PDF com os utilizadores filtrados?</p>
+        <h3>Confirmation</h3>
+        <p>Are you sure you want to generate a PDF with filtered users?</p>
         <div class="popup-buttons">
-            <button id="confirmPdfYesBtn" class="btn-confirm">Sim</button>
-            <button id="confirmPdfNoBtn" class="btn-cancel">Não</button>
+            <button id="confirmPdfYesBtn" class="btn-confirm">Yes</button>
+            <button id="confirmPdfNoBtn" class="btn-cancel">No</button>
         </div>
     </div>
 </div>
