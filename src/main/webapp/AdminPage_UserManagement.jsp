@@ -227,7 +227,7 @@
 
 <!-- Custom Popup para confirmação de eliminação -->
 <div id="confirmDeletePopup" class="custom-popup" style="display: none;">
-    <div class="popup-content" style="background-color: rgb(209,209,209)">
+    <div class="popup-content">
         <h3>Confirmation</h3>
         <p>Are you sure you want to delete this user?</p>
         <div class="popup-buttons">
@@ -239,7 +239,7 @@
 
 <!-- Custom Popup para mensagens de erro -->
 <div id="errorPopup" class="custom-popup" style="display: none;">
-    <div class="popup-content" >
+    <div class="popup-content">
         <h3>Error</h3>
         <p id="errorMessage"></p>
         <div class="popup-buttons">
@@ -252,6 +252,7 @@
 <!-- Modal para adicionar utilizador -->
 <div id="addUserModal" class="user-modal" style="display: none;">
     <div class="user-modal-content">
+        <span class="user-modal-close">&times;</span>
         <h2 class="add-user-title">Add new user</h2>
         <form id="addUserForm" method="post" action="${pageContext.request.contextPath}/manageUser">
             <input type="hidden" name="action" value="addUser">
@@ -302,7 +303,7 @@
 
 <!-- Popup para confirmação de geração do PDF -->
 <div id="confirmPdfPopup" class="custom-popup" style="display: none;">
-    <div class="popup-content" style="background-color: rgb(209,209,209)">
+    <div class="popup-content">
         <h3>Confirmation</h3>
         <p>Are you sure you want to generate a PDF with filtered users?</p>
         <div class="popup-buttons">
