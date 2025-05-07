@@ -124,7 +124,10 @@
                         <div class="product-card">
                             <!-- Usa o caminho da imagem do produto da base de dados, ou uma imagem padrão se não existir -->
                             <img src="${not empty product.imageUrl ? pageContext.request.contextPath.concat(product.imageUrl) : pageContext.request.contextPath.concat('/img/default-product.jpg')}"
-                                 alt="${product.name}">
+                                 alt="${product.name}"
+                                 width="250"
+                                height="250"
+                            >
                             <h3>${product.name}</h3>
                             <p>${product.price}€</p>
                         </div>
