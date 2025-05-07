@@ -1,7 +1,7 @@
 package org.sportx.sportx.dao;
 
 import org.sportx.sportx.model.Product;
-import org.sportx.sportx.utils.DBConnection;
+import org.sportx.sportx.util.DBConnection;
 
 import java.sql.*;
 import java.util.*;
