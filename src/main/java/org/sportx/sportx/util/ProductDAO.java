@@ -14,20 +14,14 @@ public class ProductDAO {
      */
     public List<String> getAllBrands() {
         List<String> brands = new ArrayList<>();
-        // Debug output to see the SQL
-        System.out.println("Executing query: SELECT DISTINCT brand FROM product WHERE brand IS NOT NULL ORDER BY brand");
-
         String query = "SELECT DISTINCT brand FROM product WHERE brand IS NOT NULL ORDER BY brand";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query);
              ResultSet rs = pstmt.executeQuery()) {
 
-            System.out.println("Brand results:");
             while (rs.next()) {
                 String brand = rs.getString("brand");
-                // Debug output for each brand
-                System.out.println("Found brand: " + brand);
                 if (brand != null && !brand.trim().isEmpty()) {
                     brands.add(brand);
                 }
@@ -88,7 +82,7 @@ public class ProductDAO {
         // Building WHERE clause for filtering
         List<String> whereConditions = new ArrayList<>();
 
-        // Brand filter
+        // Brand filter - FIXED: Now correctly filters by brand field
         if (selectedBrands != null && selectedBrands.length > 0) {
             StringBuilder brandCondition = new StringBuilder("p.brand IN (");
             for (int i = 0; i < selectedBrands.length; i++) {
@@ -143,10 +137,6 @@ public class ProductDAO {
             countQueryBuilder.append(" WHERE ").append(String.join(" AND ", whereConditions));
         }
 
-        // Debug complete SQL
-        System.out.println("Final SQL: " + queryBuilder.toString());
-        System.out.println("With params: " + params);
-
         // Apply sorting
         switch (sortBy) {
             case "price_asc":
@@ -157,8 +147,6 @@ public class ProductDAO {
                 break;
             case "popularity":
             default:
-                // Assuming we have a view or logic for product popularity
-                // For now, we'll sort by product_id as a placeholder
                 queryBuilder.append(" ORDER BY p.product_id DESC");
                 break;
         }
@@ -212,33 +200,11 @@ public class ProductDAO {
                 products.add(product);
             }
 
-            // If no products are found, add some defaults for testing
-            if (products.isEmpty()) {
-                System.out.println("No products found, adding sample data");
-                Product sample1 = new Product(1, "Sample Running Shoes", "Running shoes for all terrains", "Nike", 99.99, "/img/MerrelMoab3.jpg");
-                Product sample2 = new Product(2, "Trail Hiking Boots", "Waterproof hiking boots", "Adidas", 149.99, "/img/SalomonXUltra4.jpg");
-                Product sample3 = new Product(3, "Fitness Tracker", "Activity monitor", "Garmin", 199.99, "/img/GarminForerunner55.jpg");
 
-                products.add(sample1);
-                products.add(sample2);
-                products.add(sample3);
-
-                totalCount = 3;
-            }
         } catch (SQLException e) {
             System.out.println("Error retrieving filtered products: " + e.getMessage());
             e.printStackTrace();
 
-            // Add sample products in case of error
-            Product sample1 = new Product(1, "Sample Running Shoes", "Running shoes for all terrains", "Nike", 99.99, "/img/MerrelMoab3.jpg");
-            Product sample2 = new Product(2, "Trail Hiking Boots", "Waterproof hiking boots", "Adidas", 149.99, "/img/SalomonXUltra4.jpg");
-            Product sample3 = new Product(3, "Fitness Tracker", "Activity monitor", "Garmin", 199.99, "/img/GarminForerunner55.jpg");
-
-            products.add(sample1);
-            products.add(sample2);
-            products.add(sample3);
-
-            totalCount = 3;
         }
 
         result.put("products", products);
