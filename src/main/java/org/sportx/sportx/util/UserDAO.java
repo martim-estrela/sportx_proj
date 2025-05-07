@@ -400,6 +400,7 @@ public class UserDAO {
         return users;
     }
 
+    //verificar a quantos utilizadores esta associado um email
     public boolean emailExists(String email) throws SQLException {
         String sql = "SELECT COUNT(*) FROM user WHERE email = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
