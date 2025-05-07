@@ -29,6 +29,7 @@ public class TicketDAO {
         }
     }
 
+    //nao usado (apenas se criarmos ticket management ... para update futuro)
     public List<Ticket> listarTodos() throws SQLException {
         List<Ticket> lista = new ArrayList<>();
         String sql = "SELECT * FROM tickets";
