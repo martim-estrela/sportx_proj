@@ -69,42 +69,52 @@
     <div class="main-container">
         <section class="filters">
             <h2>Filters</h2>
-            <div class="filter-group">
-                <h3>Product Brand</h3>
-                <label><input type="checkbox"> Merrel</label>
-                <label><input type="checkbox"> Solomon</label>
-                <label><input type="checkbox"> Danner</label>
-                <label><input type="checkbox"> Timberland</label>
-            </div>
-            <div class="filter-group">
-                <h3>Price</h3>
-                <label><input type="checkbox"> 0 - 50€</label>
-                <label><input type="checkbox"> 50 - 100€</label>
-                <label><input type="checkbox"> 100 - 150€</label>
-                <label><input type="checkbox"> >150€</label>
-            </div>
-            <div class="filter-group">
-                <h3>Color</h3>
-                <label><input type="checkbox"> Brown</label>
-                <label><input type="checkbox"> Black</label>
-                <label><input type="checkbox"> Grey</label>
-                <label><input type="checkbox"> Green</label>
-            </div>
-            <div class="filter-group">
-                <h3>Discount</h3>
-                <label><input type="checkbox"> No Discount</label>
-                <label><input type="checkbox"> 0 - 20%</label>
-                <label><input type="checkbox"> 21 - 40%</label>
-                <label><input type="checkbox"> 41 - 70%</label>
-            </div>
+            <form id="filterForm" action="${pageContext.request.contextPath}/SearchBrowseServlet" method="get">
+                <div class="filter-group">
+                    <h3>Product Brand</h3>
+                    <c:choose>
+                        <c:when test="${not empty brands}">
+                            <c:forEach var="brand" items="${brands}">
+                                <label>
+                                    <input type="checkbox" name="brand" value="${brand}"
+                                           <c:if test="${selectedBrands.contains(brand)}">checked</c:if>>
+                                        ${brand}
+                                </label>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <!-- Fallback if no brands are available -->
+                            <label><input type="checkbox" name="brand" value="Nike"> Nike</label>
+                            <label><input type="checkbox" name="brand" value="Adidas"> Adidas</label>
+                            <label><input type="checkbox" name="brand" value="Puma"> Puma</label>
+                            <label><input type="checkbox" name="brand" value="Reebok"> Reebok</label>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+                <div class="filter-group">
+                    <h3>Price</h3>
+                    <label><input type="checkbox" name="price" value="0-50"
+                                  <c:if test="${selectedPrices.contains('0-50')}">checked</c:if>> 0 - 50€</label>
+                    <label><input type="checkbox" name="price" value="50-100"
+                                  <c:if test="${selectedPrices.contains('50-100')}">checked</c:if>> 50 - 100€</label>
+                    <label><input type="checkbox" name="price" value="100-150"
+                                  <c:if test="${selectedPrices.contains('100-150')}">checked</c:if>> 100 - 150€</label>
+                    <label><input type="checkbox" name="price" value="150+"
+                                  <c:if test="${selectedPrices.contains('150+')}">checked</c:if>> >150€</label>
+                </div>
+                <!-- Hidden input for the current sort option and page -->
+                <input type="hidden" name="sort" id="currentSort" value="${param.sort != null ? param.sort : 'popularity'}">
+                <input type="hidden" name="page" id="currentPage" value="${currentPage != null ? currentPage : 1}">
+                <button type="submit" class="filter-submit">Apply Filters</button>
+            </form>
         </section>
         <section class="products">
             <div class="sort">
                 <label for="sort">Sort by:</label>
-                <select id="sort">
-                    <option>Popularity</option>
-                    <option>Price: Low to High</option>
-                    <option>Price: High to Low</option>
+                <select id="sort" onchange="updateSort(this.value)">
+                    <option value="popularity" ${param.sort == 'popularity' || param.sort == null ? 'selected' : ''}>Popularity</option>
+                    <option value="price_asc" ${param.sort == 'price_asc' ? 'selected' : ''}>Price: Low to High</option>
+                    <option value="price_desc" ${param.sort == 'price_desc' ? 'selected' : ''}>Price: High to Low</option>
                 </select>
             </div>
             <div class="product-grid">
@@ -126,21 +136,52 @@
                     </div>
                 </c:if>
             </div>
-            <nav class="pagination">
-                <a href="#">&laquo; Previous</a>
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <span>...</span>
-                <a href="#">67</a>
-                <a href="#">68</a>
-                <a href="#">Next &raquo;</a>
-            </nav>
+
+            <!-- Paginação similar ao AdminPage_UserManagement.jsp -->
+            <div class="pagination-container">
+                <c:if test="${totalPages > 1}">
+                    <div class="pagination">
+                        <!-- Botão para primeira página -->
+                        <c:if test="${currentPage > 1}">
+                            <a href="javascript:void(0)" onclick="navigateToPage(1)">&laquo; First</a>
+                        </c:if>
+
+                        <!-- Botão para página anterior -->
+                        <c:if test="${currentPage > 1}">
+                            <a href="javascript:void(0)" onclick="navigateToPage(${currentPage - 1})">&lt; Previous</a>
+                        </c:if>
+
+                        <!-- Mostrar números de páginas -->
+                        <c:forEach var="i" begin="${startPage}" end="${endPage}">
+                            <c:choose>
+                                <c:when test="${i == currentPage}">
+                                    <span class="current-page">${i}</span>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="javascript:void(0)" onclick="navigateToPage(${i})">${i}</a>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+
+                        <!-- Botão para próxima página -->
+                        <c:if test="${currentPage < totalPages}">
+                            <a href="javascript:void(0)" onclick="navigateToPage(${currentPage + 1})">Next &gt;</a>
+                        </c:if>
+
+                        <!-- Botão para última página -->
+                        <c:if test="${currentPage < totalPages}">
+                            <a href="javascript:void(0)" onclick="navigateToPage(${totalPages})">Last &raquo;</a>
+                        </c:if>
+                    </div>
+
+                    <div class="pagination-info">
+                        Page ${currentPage} of ${totalPages} (${totalProducts} products)
+                    </div>
+                </c:if>
+            </div>
         </section>
     </div>
 </main>
-
-
 
 <footer>
     <section class="support">
@@ -159,6 +200,19 @@
         </form>
     </section>
 </footer>
+
+<script>
+    function updateSort(sortValue) {
+        document.getElementById('currentSort').value = sortValue;
+        document.getElementById('filterForm').submit();
+    }
+
+    function navigateToPage(pageNumber) {
+        document.getElementById('currentPage').value = pageNumber;
+        document.getElementById('filterForm').submit();
+    }
+</script>
+
 <script src="${pageContext.request.contextPath}/js/PopupSearch.js"></script>
 <script src="${pageContext.request.contextPath}/js/PopupProfile.js"></script>
 </body>

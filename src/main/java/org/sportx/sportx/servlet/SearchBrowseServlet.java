@@ -1,76 +1,93 @@
 package org.sportx.sportx.servlet;
 
-import org.sportx.sportx.util.ProductDAO;
+import org.sportx.sportx.dao.ProductDAO;
 import org.sportx.sportx.model.Product;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 
-/**
- * Servlet que processa solicitações para a página de pesquisa e navegação de produtos
- */
 @WebServlet("/SearchBrowseServlet")
 public class SearchBrowseServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
 
-    /**
-     * Método doGet para lidar com solicitações HTTP GET
-     */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        // Instanciar o DAO para aceder aos produtos
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ProductDAO productDAO = new ProductDAO();
-        List<Product> products;
 
-        // Verificar se existe um parâmetro de pesquisa
+        // Get all available brands from the database
+        List<String> allBrands = productDAO.getAllBrands();
+        request.setAttribute("brands", allBrands);
+
+        // Get filter parameters
+        String[] selectedBrands = request.getParameterValues("brand");
+        String[] selectedPrices = request.getParameterValues("price");
+        String sortBy = request.getParameter("sort");
         String searchTerm = request.getParameter("search");
-        String categoryIdStr = request.getParameter("category");
 
-        // Processo de acordo com os parâmetros fornecidos
-        if (searchTerm != null && !searchTerm.trim().isEmpty()) {
-            // Pesquisar produtos com base no termo de pesquisa
-            products = productDAO.searchProducts(searchTerm);
-            request.setAttribute("searchTerm", searchTerm);
-        } else if (categoryIdStr != null && !categoryIdStr.trim().isEmpty()) {
-            try {
-                // Filtrar produtos por categoria
-                int categoryId = Integer.parseInt(categoryIdStr);
-                products = productDAO.getProductsByCategory(categoryId);
-                request.setAttribute("categoryId", categoryId);
-            } catch (NumberFormatException e) {
-                // Se o ID da categoria não for um número válido, obter todos os produtos
-                products = productDAO.getAllProducts();
-            }
-        } else {
-            // Se não houver parâmetros de filtragem, obter todos os produtos
-            products = productDAO.getAllProducts();
+        // Set default values if parameters are null
+        if (sortBy == null || sortBy.isEmpty()) {
+            sortBy = "popularity";
         }
 
-        if (products == null) {
-            System.out.println("SearchBrowseServlet: productList is NULL.");
-            // Consider setting an empty list to avoid NullPointerExceptions in JSP
-            // productList = new ArrayList<>();
-        } else {
-            System.out.println("SearchBrowseServlet: Retrieved " + products.size() + " products.");
-            // Optionally log details of the first product if the list isn't empty
-            if (!products.isEmpty()) {
-                // Assuming Product has a getName() method
-                // System.out.println("SearchBrowseServlet: First product name: " + productList.get(0).getName());
+        // Store selected filters for repopulating the form
+        List<String> brandList = (selectedBrands != null) ? Arrays.asList(selectedBrands) : new ArrayList<>();
+        List<String> priceList = (selectedPrices != null) ? Arrays.asList(selectedPrices) : new ArrayList<>();
+        request.setAttribute("selectedBrands", brandList);
+        request.setAttribute("selectedPrices", priceList);
+
+        // Pagination parameters
+        int page = 1;
+        int productsPerPage = 9; // Adjust as needed
+
+        try {
+            String pageParam = request.getParameter("page");
+            if (pageParam != null && !pageParam.isEmpty()) {
+                page = Integer.parseInt(pageParam);
+                if (page < 1) page = 1;
             }
+        } catch (NumberFormatException e) {
+            page = 1;
         }
 
+        // Get filtered and sorted products with pagination
+        Map<String, Object> result = productDAO.getFilteredProducts(
+                selectedBrands, selectedPrices, sortBy, searchTerm, page, productsPerPage);
 
-        // Adicionar a lista de produtos ao request
+        // Extract results
+        List<Product> products = (List<Product>) result.get("products");
+        int totalProducts = (int) result.get("totalCount");
+        int totalPages = (int) Math.ceil((double) totalProducts / productsPerPage);
+
+        // Set up pagination variables
+        int displayPageRange = 5; // Number of page links to display
+        int startPage = Math.max(1, page - (displayPageRange / 2));
+        int endPage = Math.min(totalPages, startPage + displayPageRange - 1);
+
+        if (endPage - startPage + 1 < displayPageRange && startPage > 1) {
+            // Adjust startPage to show more pages if we're near the end
+            startPage = Math.max(1, endPage - displayPageRange + 1);
+        }
+
+        // Set attributes for the JSP
         request.setAttribute("products", products);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("totalProducts", totalProducts);
+        request.setAttribute("startPage", startPage);
+        request.setAttribute("endPage", endPage);
 
-        // Encaminhar para a página JSP
-        request.getRequestDispatcher("/SearchBrowse.jsp").forward(request, response);
+        // Forward to the JSP page
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/SearchBrowse.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request, response);
     }
 }
