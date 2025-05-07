@@ -120,13 +120,15 @@
             <div class="product-grid">
                 <!-- Substituir os produtos estáticos por um loop que renderiza dinamicamente os produtos da base de dados -->
                 <c:forEach var="product" items="${products}">
-                    <div class="product-card">
-                        <!-- Usa o caminho da imagem do produto da base de dados, ou uma imagem padrão se não existir -->
-                        <img src="${not empty product.imageUrl ? pageContext.request.contextPath.concat(product.imageUrl) : pageContext.request.contextPath.concat('/img/default-product.jpg')}"
-                             alt="${product.name}">
-                        <h3>${product.name}</h3>
-                        <p>${product.price}€</p>
-                    </div>
+                    <a href="${pageContext.request.contextPath}/ProductPage.jsp?productId=${product.id}" class="product-link">
+                        <div class="product-card">
+                            <!-- Usa o caminho da imagem do produto da base de dados, ou uma imagem padrão se não existir -->
+                            <img src="${not empty product.imageUrl ? pageContext.request.contextPath.concat(product.imageUrl) : pageContext.request.contextPath.concat('/img/default-product.jpg')}"
+                                 alt="${product.name}">
+                            <h3>${product.name}</h3>
+                            <p>${product.price}€</p>
+                        </div>
+                    </a>
                 </c:forEach>
 
                 <!-- Código de fallback: se não houver produtos, mostra uma mensagem -->

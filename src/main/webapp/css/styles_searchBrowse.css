@@ -28,7 +28,7 @@ header div {
 header div:last-child {
     justify-content: right;
     display: flex;
-    align-items: flex-end;
+    align-items: right;
     gap: 20px;
     /* Espaçamento entre os elementos */
 }
@@ -232,11 +232,6 @@ main {
     justify-self: center; /* Center the card in its grid cell */
 }
 
-.product-card p, h3{
-    background-color: #FFF;
-}
-
-/* Added hover effect for better user experience */
 .product-card:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -248,11 +243,22 @@ main {
     max-height: 200px; /* Limit image height for consistency */
 }
 
-.product-card p, .product-card h3 {
+.product-card p, h3{
     background-color: #FFF;
-    margin: 8px 0;
 }
 
+/* Product Links */
+.product-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.product-link:hover .product-card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+}
 
 /* Pagination */
 .pagination {
@@ -321,7 +327,7 @@ footer {
 .subscribe form {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: left;
 }
 
 

@@ -212,4 +212,39 @@ public class ProductDAO {
 
         return result;
     }
+
+    /**
+     * Get product by its ID
+     * @param productId The ID of the product to retrieve
+     * @return Product object if found, null otherwise
+     */
+    public Product getProductById(int productId) {
+        Product product = null;
+        String query = "SELECT p.product_id, p.name, p.description, p.brand, pi.price, pi.product_image " +
+                "FROM product p " +
+                "JOIN product_item pi ON p.product_id = pi.product_id " +
+                "WHERE p.product_id = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, productId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                product = new Product();
+                product.setId(rs.getInt("product_id"));
+                product.setName(rs.getString("name"));
+                product.setDescription(rs.getString("description"));
+                product.setBrand(rs.getString("brand"));
+                product.setPrice(rs.getDouble("price"));
+                product.setImageUrl(rs.getString("product_image"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving product by ID: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return product;
+    }
 }
