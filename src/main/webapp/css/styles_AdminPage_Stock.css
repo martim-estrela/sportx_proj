@@ -141,32 +141,125 @@ header a:hover {
 .column-edit-icon {
     flex: 30%;
     background-color: #d9d9d9;
-    text-align: right;
+    text-align: center;
+}
+.column-edit-icon-top{
+    flex: 30%;
+    background-color: #d9d9d9;
+    text-align: center;
+    padding-top: 20px;
 
+}
+
+.column-edit-icon-top label {
+    background-color: #d9d9d9;
 }
 
 .column-delete-icon {
     flex: 30%;
     background-color: #d9d9d9;
     text-align: center;
+}
+.column-delete-icon-top{
+    flex: 30%;
+    background-color: #d9d9d9;
+    text-align: center;
+    padding-top: 20px;
 
 }
 
+.column-delete-icon-top label {
+    background-color: #d9d9d9;
+}
+
+
+
 .column-img {
-    flex: 22%;
+    flex: 50%;
     background-color: #d9d9d9;
     text-align: center;
 
 }
-
-.column-description {
-    padding-top: 20px;
-    padding-left: 10px;
+.column-img-top{
     flex: 50%;
+    background-color: #d9d9d9;
+    text-align: center;
+    padding-top: 20px;
+
+}
+
+.column-img-top label {
     background-color: #d9d9d9;
 }
 
+.column-description {
+    padding-top: 20px;
+
+    flex: 50%;
+    background-color: #d9d9d9;
+    text-align: center;
+}
+
 .column-description label {
+    background-color: #d9d9d9;
+}
+.column-description1 {
+    padding-top: 20px;
+    ;
+    flex: 50%;
+    background-color: #d9d9d9;
+    text-align: center;
+}
+
+.column-description1 label {
+    background-color: #d9d9d9;
+}
+
+.column-description2 {
+    padding-top: 20px;
+
+    flex: 50%;
+    background-color: #d9d9d9;
+    text-align: center;
+}
+
+.column-description2 label {
+    background-color: #d9d9d9;
+}
+
+.column-description3 {
+    padding-top: 20px;
+
+    flex: 50%;
+    background-color: #d9d9d9;
+    text-align: center;
+}
+
+.column-description3 label {
+    background-color: #d9d9d9;
+}
+
+.column-description4 {
+    padding-top: 20px;
+
+    flex: 50%;
+    background-color: #d9d9d9;
+    text-align: center;
+}
+
+.column-description4 label {
+    background-color: #d9d9d9;
+}
+
+.column-description5 {
+    padding-top: 20px;
+
+    flex: 50%;
+    background-color: #d9d9d9;
+    text-align: center;
+}
+
+.column-description5 label {
     background-color: #d9d9d9;
 }
 
@@ -399,4 +492,48 @@ footer {
     background: #222325;
     border: none;
     cursor: pointer;
+}
+
+
+
+/* Estilos para a paginação */
+.pagination-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.pagination a, .pagination span {
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+}
+
+.pagination a:hover {
+    background-color: #4CAF50;
+    color: white;
+    border-color: #4CAF50;
+}
+
+.pagination .current-page {
+    background-color: #4CAF50;
+    color: white;
+    border-color: #4CAF50;
+    font-weight: bold;
+}
+
+.pagination-info {
+    margin-top: 10px;
+    margin-bottom:  10px;
+    color: #666;
 }

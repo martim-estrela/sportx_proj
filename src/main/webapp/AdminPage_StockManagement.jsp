@@ -128,15 +128,15 @@
         <div class=" table-container">
 
             <div class="row1">
-                <div class="column-img"><label>Image</label></div>
+                <div class="column-img-top"><label>Image</label></div>
                 <div class="column-description"><label>ID</label></div>
                 <div class="column-description1"><label>Name</label></div>
                 <div class="column-description2"><label>Brand</label></div>
                 <div class="column-description3"><label>Color</label></div>
                 <div class="column-description4"><label>Size</label></div>
                 <div class="column-description5"><label>Stock</label></div>
-                <div class="column-edit-icon"><label>Edit</label></div>
-                <div class="column-delete-icon"><label>Delete</label></div>
+                <div class="column-edit-icon-top"><label>Edit</label></div>
+                <div class="column-delete-icon-top"><label>Delete</label></div>
             </div>
 
             <%-- lista de produtos --%>
@@ -146,10 +146,10 @@
                         <img src="${product.image}" style="width: 104px; height: 104px;" alt="">
                     </div>
                     <div class="column-description">
-                        <label><strong>${product.productId}</strong></label><br><br>
+                        <label>${product.productId}</label><br><br>
                     </div>
                     <div class="column-description1">
-                        <label><strong>${product.name}</strong></label><br><br>
+                        <label>${product.name}</label><br><br>
                     </div>
                     <div class="column-description2">
                         <label class="product-color">${product.brand}</label>
