@@ -113,7 +113,7 @@
                         <fmt:formatNumber value="${product.price}" type="currency" currencySymbol="€"/>
                     </h3>
                     <span class="discount-tag" style="background: #218A38; color: #fff; padding: 4px 10px; border-radius: 4px; font-weight: bold;">
-                -<fmt:formatNumber value="${product.promotion.discountRate}" type="number" maxFractionDigits="0"/>%
+                    -<fmt:formatNumber value="${product.promotion.discountRate}" type="number" maxFractionDigits="0"/>%
                     </span>
                     <h3 class="price-final" style="color: black;">
                         <fmt:formatNumber  value="${product.price * (1 - (product.promotion.discountRate / 100))}" type="currency" currencySymbol="€"/>

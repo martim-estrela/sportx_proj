@@ -189,7 +189,18 @@ input[type="text"] {
     color: #555;
 }
 
-.product-details span, label {
+.product-details {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 50%;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto; 
+}
+
+.product-details span,
+.product-details label {
     font-weight: bold;
 }
 
