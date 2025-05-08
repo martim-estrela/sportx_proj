@@ -1,7 +1,16 @@
+
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%
+    // Verificar se os dados dos produtos e variações foram carregados pelo servlet
+    if (request.getAttribute("filteredProducts") == null || request.getAttribute("variationOptions") == null) {
+        // Redirecionar para o servlet para carregar os produtos e variações
+        response.sendRedirect(request.getContextPath() + "/manageStock");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,18 +42,18 @@
     <!-- Popup Menu -->
     <div id="profilePopup" class="popup">
         <div class="popup-content">
-            <!-- Exibe Login e Register se o usuário não estiver logado -->
+            <!-- Exibe Login e Register se o utilizador não estiver logado -->
             <c:if test="${empty sessionScope.user}">
                 <a href="${pageContext.request.contextPath}/Loginpage.jsp">Login</a>
                 <a href="${pageContext.request.contextPath}/Sign_up_Page.jsp">Register</a>
             </c:if>
 
-            <!-- Exibe Profile, Order History e opções de admin se o usuário estiver logado -->
+            <!-- Exibe Profile, Order History e opções de admin se o utilizador estiver logado -->
             <c:if test="${not empty sessionScope.user}">
                 <a href="${pageContext.request.contextPath}/ProfilePage.jsp">Profile</a>
                 <a href="${pageContext.request.contextPath}/Orderhistory.jsp">Order History</a>
 
-                <!-- Exibe as opções de admin se o usuário for admin -->
+                <!-- Exibe as opções de admin se o utilizador for admin -->
                 <c:if test="${sessionScope.user.userType == 'admin'}">
                     <a href="${pageContext.request.contextPath}/AdminPage_StockManagement.jsp">Stock Management</a>
                     <a href="${pageContext.request.contextPath}/AdminPage_UserManagement.jsp">User Management</a>
@@ -56,145 +65,306 @@
         </div>
     </div>
 
+
     <main>
-        <form method="get" action="filterStock">
+        <form method="get" action="manageStock">
             <div class="select-container">
                 <div>
                     <h3 style="text-decoration: underline;">Category:</h3>
-                    <select name="category" id="category">
+                    <select name="category" id="category" onchange="this.form.submit();">
                         <option value="">Selecione...</option>
-                        <c:forEach var="category" items="${categories}">
-                            <option value="${category.id}">${category.name}</option>
+                        <c:forEach var="category" items="${allCategories}">
+                            <option value="${category.name} ${param.category == category.name ? 'selected' : ''}">${category.name}</option>
                         </c:forEach>
                     </select>
                 </div>
                 <div>
                     <h3 style="text-decoration: underline;">Sub-Category:</h3>
-                    <select name="sub-category" id="sub-category">
+                    <select name="sub-category" id="sub-category" onchange="this.form.submit();">
                         <option value="">Selecione...</option>
-                        <c:forEach var="subcategory" items="${subcategories}">
-                            <option value="${subcategory.id}">${subcategory.name}</option>
+                        <c:forEach var="subcategory" items="${allSubcategories}">
+                            <option value="${subcategory.name} ${param.subcategory == subcategory.name ? 'selected' : ''}">${subcategory.name}</option>
                         </c:forEach>
                     </select>
                 </div>
-                <div class="search-bar">
-                    <h3 style="text-decoration: underline;">Product Name:</h3>
-                    <input type="text" placeholder="Search.." name="search">
+                <div>
+                    <h3 style="text-decoration: underline;">Brand:</h3>
+                    <select name="brand" id="brand" onchange="this.form.submit();">
+                        <option value="">Selecione...</option>
+                        <c:forEach var="brand" items="${allBrands}">
+                            <option value="${brand} ${param.brand == brand ? 'selected' : ''}">${brand}</option>
+                        </c:forEach>
+                    </select>
                 </div>
                 <div>
-                    <button type="submit">Filtrar</button>
+                    <h3 style="text-decoration: underline;">Color:</h3>
+                    <select name="color" id="color" onchange="this.form.submit();">
+                        <option value="">All colors</option>
+                        <c:forEach var="colorOption" items="${variationOptions['Color']}">
+                            <option value="${colorOption.value}" ${param.color == colorOption.value ? 'selected' : ''}>${colorOption.value}</option>
+                        </c:forEach>
+                    </select>
                 </div>
+                <div>
+                    <h3 style="text-decoration: underline;">Size:</h3>
+                    <select name="size" id="size" onchange="this.form.submit();">
+                        <option value="">All sizes</option>
+                        <c:forEach var="sizeOption" items="${variationOptions['Size']}">
+                            <option value="${sizeOption.value}" ${param.size == sizeOption.value ? 'selected' : ''}>${sizeOption.value}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+
+                <div class="search-bar">
+                    <h3 style="text-decoration: underline;">Product Name:</h3>
+                    <input type="text" placeholder="Search.." name="name" value="${param.name}" onkeydown="if(event.key === 'Enter'){ this.form.submit(); }">
+                </div>
+
             </div>
         </form>
-
-        <div class="report-links">
-            <a href="#"><strong style="color: black; text-decoration: underline;">Generate stock
-                    report...</strong></a><br>
-            <a href="#"><strong style="color: black; text-decoration: underline;">Add product...</strong></a>
-        </div>
 
 
         <!--  Tabela de Produtos -->
-        <form method="get" action="manageStock">
-            <div class=" table-container">
-                <%-- lista de produtos --%>
-                <c:forEach var="product" items="${products}" varStatus="status">
-                    <c:if test="${status.index % 8 == 0}">
-                        <div class="page" style="${status.index == 0 ? '' : 'display:none;'}">
-                    </c:if>
+        <div class=" table-container">
 
-                    <div class="row1">
-                        <div class="column-img">
-                            <img src="${product.product_image}" style="width: 104px; height: 104px;" alt="">
-                        </div>
-                        <div class="column-description">
-                            <label><strong>${product.name}</strong></label><br><br>
-                            <c:forEach var="item" items="${product.items}">
-                                <label>Color: ${item.color}, Size: ${item.size}, Stock: ${item.qtyInStock}</label><br>
-                            </c:forEach>
-                        </div>
-                        <div class="column">
-                            <button
-                                    class="btn-update-stock"
-                                    type="button"
-                                    onclick="openStockModal('${product.id}', ${product.items})">
-                                Update
-                            </button>
-                        </div>
-                        <div class="column-edit-icon">
-                            <button class="btn-edit"><i class="material-icons" style="background-color: #d9d9d9d9; font-size:40px">edit_square</i></button>
-                        </div>
-                        <div class="column-delete-icon">
-                            <form method="post" action="manageStock">
-                                <input type="hidden" name="action" value="DeleteProductServlet" />
-                                <input type="hidden" name="productId" value="${product.id}" />
-                                <button class="btn-edit" type="submit">
-                                    <i class="material-icons" style="color: red; background-color: #d9d9d9d9; font-size:40px">close</i>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-
-                    <c:if test="${(status.index + 1) % 8 == 0 || status.last}">
-                        </div> <!-- fecha .page -->
-                    </c:if>
-                </c:forEach>
+            <div class="row1">
+                <div class="column-img"><label>Image</label></div>
+                <div class="column-description"><label>ID</label></div>
+                <div class="column-description1"><label>Name</label></div>
+                <div class="column-description2"><label>Brand</label></div>
+                <div class="column-description3"><label>Color</label></div>
+                <div class="column-description4"><label>Size</label></div>
+                <div class="column-description5"><label>Stock</label></div>
+                <div class="column-edit-icon"><label>Edit</label></div>
+                <div class="column-delete-icon"><label>Delete</label></div>
             </div>
-        </form>
 
-
-            <!--Modal-->
-        <div class="modal" id="stockModal">
-            <di class="modal-content">
-                <h3>Update Stock</h3>
-                <form method="post" action="manageStock">
-                    <input type="hidden" name="action" value="UpdateStockServlet">
-                    <div id="stockInputs" class="input-grid">
-                        <!-- Inputs dinâmicos inseridos via JavaScript -->
+            <%-- lista de produtos --%>
+            <c:forEach var="product" items="${filteredProducts}">
+                <div class="row1">
+                    <div class="column-img">
+                        <img src="${product.image}" style="width: 104px; height: 104px;" alt="">
                     </div>
-                    <br>
-                    <button class="add-modal-btn" type="submit">Save</button>
-                    <a href="#" class="close-modal-btn" onclick="closeModal()">Cancel</a>
-                </form>
-            </di>
+                    <div class="column-description">
+                        <label><strong>${product.productId}</strong></label><br><br>
+                    </div>
+                    <div class="column-description1">
+                        <label><strong>${product.name}</strong></label><br><br>
+                    </div>
+                    <div class="column-description2">
+                        <label class="product-color">${product.brand}</label>
+                    </div>
+                    <div class="column-description3">
+                        <label class="product-color">${product.colors}</label>
+                    </div>
+                    <div class="column-description4">
+                        <label class="product-size">${product.sizes}</label>
+                    </div>
+                    <div class="column-description5">
+                        <label class="product-stock">${product.stock}</label>
+                    </div>
+                    <div class="column-edit-icon">
+                        <button class="btn-edit"><i class="material-icons" style="background-color: #d9d9d9d9; font-size:40px">edit_square</i></button>
+                    </div>
+                    <div class="column-delete-icon">
+                        <button class="btn-edit">
+                            <i class="material-icons" style="color: red; background-color: #d9d9d9d9; font-size:40px">close</i>
+                        </button>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
+
+        <!-- Navegação de paginação -->
+        <div class="pagination-container">
+            <c:if test="${totalPages > 1}">
+                <div class="pagination">
+                    <!-- Botão para primeira página -->
+                    <c:if test="${currentPage > 1}">
+                        <a href="${pageContext.request.contextPath}/manageStock?page=1&category=${param.category}&subcategory=${param.subcategory}&brand=${param.brand}&color=${param.color}&size=${param.size}&name=${param.name}">&laquo; First</a>
+                    </c:if>
+
+                    <!-- Botão para página anterior -->
+                    <c:if test="${currentPage > 1}">
+                        <a href="${pageContext.request.contextPath}/manageStock?page=${currentPage - 1}&category=${param.category}&subcategory=${param.subcategory}&brand=${param.brand}&color=${param.color}&size=${param.size}&name=${param.name}">&lt; Previous</a>
+                    </c:if>
+
+                    <!-- Mostrar números de páginas (com limite para não ficar muito grande) -->
+                    <c:forEach var="i" begin="${startPage}" end="${endPage}">
+                        <c:choose>
+                            <c:when test="${i == currentPage}">
+                                <span class="current-page">${i}</span>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="${pageContext.request.contextPath}/manageStock?page=${i}&category=${param.category}&subcategory=${param.subcategory}&brand=${param.brand}&color=${param.color}&size=${param.size}&name=${param.name}">${i}</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+
+                    <!-- Botão para próxima página -->
+                    <c:if test="${currentPage < totalPages}">
+                        <a href="${pageContext.request.contextPath}/manageStock?page=${currentPage + 1}&category=${param.category}&subcategory=${param.subcategory}&brand=${param.brand}&color=${param.color}&size=${param.size}&name=${param.name}">Next &gt;</a>
+                    </c:if>
+
+                    <!-- Botão para última página -->
+                    <c:if test="${currentPage < totalPages}">
+                        <a href="${pageContext.request.contextPath}/manageStock?page=${totalPages}&category=${param.category}&subcategory=${param.subcategory}&brand=${param.brand}&color=${param.color}&size=${param.size}&name=${param.name}">Last &raquo;</a>
+                    </c:if>
+                </div>
+
+                <div class="pagination-info">
+                    Page ${currentPage} of ${totalPages} (${totalProducts} products)
+                </div>
+            </c:if>
         </div>
 
 
-            <script src="${pageContext.request.contextPath}/js/PopupStock.js">
-            </script>
-            <!-- Paginação -->
-            <div class="pagination">
-                <a href="#">&#8592; Previous</a>
-                <span>
-                    <a href="#" class="active">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <span>...</span>
-                    <a href="#">67</a>
-                    <a href="#">68</a>
-                </span>
-                <a href="#">Next &#8594;</a>
-            </div>
-        </div>
+
     </main>
 
-    <footer>
-        <section class="support">
-            <h2>Support</h2>
-            <ul>
-                <li><a href="ContactUs.jsp">Contact us</a></li>
-                <li><a href="FAQ.jsp">FAQ</a></li>
-            </ul>
-        </section>
 
-        <section class="subscribe">
-            <h2>Subscribe for latest updates</h2>
-            <form action="/subscribe">
-                <input type="email" name="email" placeholder="Enter your email" required />
-                <button type="submit">Subscribe</button>
+    <!-- Modal para editar produto -->
+    <div id="editProductModal" class="product-modal" style="display: none;">
+        <div class="product-modal-content">
+            <span class="user-modal-close edit-close">&times;</span>
+            <h2 class="edit-user-title">Update User</h2>
+            <form id="editUserForm" method="post" action="${pageContext.request.contextPath}/manageUser">
+                <input type="hidden" name="action" value="updateUser">
+                <input type="hidden" id="editUserId" name="userId" value="">
+
+                <div class="user-form-group">
+                    <label for="editName">Name:</label>
+                    <input type="text" id="editName" name="name" required>
+                </div>
+
+                <div class="user-form-group">
+                    <label for="editEmail">Email:</label>
+                    <input type="email" id="editEmail" name="email" required>
+                </div>
+
+                <div class="user-form-group">
+                    <label for="editPassword">Password:</label>
+                    <input type="password" id="editPassword" name="password" placeholder="Leave blank to keep current password">
+                </div>
+
+                <div class="user-form-group">
+                    <label for="editPhoneNumber">Phone Number:</label>
+                    <input type="text" id="editPhoneNumber" name="phoneNumber">
+                </div>
+
+                <div class="user-form-group">
+                    <label for="editUserType">User type:</label>
+                    <select id="editUserType" name="userType" required>
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+
+                <div class="user-form-group">
+                    <label for="editStatus">Status:</label>
+                    <select id="editStatus" name="status" required>
+                        <option value="active">active</option>
+                        <option value="inactive">inactive</option>
+                    </select>
+                </div>
+
+                <div class="user-form-buttons">
+                    <button type="submit" class="user-btn-submit">Update</button>
+                    <button type="button" class="user-btn-cancel" id="cancelEditUser">Cancel</button>
+                </div>
             </form>
-        </section>
-    </footer>
+        </div>
+    </div>
+
+    <!-- Custom Popup para confirmação de eliminação -->
+    <div id="confirmDeletePopup" class="custom-popup" style="display: none;">
+        <div class="popup-content">
+            <h3>Confirmation</h3>
+            <p>Are you sure you want to delete this user?</p>
+            <div class="popup-buttons">
+                <button id="confirmYesBtn" class="btn-confirm">Yes</button>
+                <button id="confirmNoBtn" class="btn-cancel">No</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Popup para mensagens de erro -->
+    <div id="errorPopup" class="custom-popup" style="display: none;">
+        <div class="popup-content">
+            <h3>Error</h3>
+            <p id="errorMessage"></p>
+            <div class="popup-buttons">
+                <button id="errorCloseBtn" class="btn-cancel">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal para adicionar utilizador -->
+    <div id="addUserModal" class="user-modal" style="display: none;">
+        <div class="user-modal-content">
+            <span class="user-modal-close">&times;</span>
+            <h2 class="add-user-title">Add new user</h2>
+            <form id="addUserForm" method="post" action="${pageContext.request.contextPath}/manageUser">
+                <input type="hidden" name="action" value="addUser">
+
+                <div class="user-form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="user-form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="user-form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <div class="user-form-group">
+                    <label for="phoneNumber">Phone Number:</label>
+                    <input type="text" id="phoneNumber" name="phoneNumber">
+                </div>
+
+                <div class="user-form-group">
+                    <label for="userType">User Type:</label>
+                    <select id="userType" name="userType" required>
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+
+                <div class="user-form-group">
+                    <label for="status">Status:</label>
+                    <select id="status" name="status" required>
+                        <option value="active">active</option>
+                        <option value="inactive">inactive</option>
+                    </select>
+                </div>
+
+                <div class="user-form-buttons">
+                    <button type="submit" class="user-btn-submit">Save</button>
+                    <button type="button" class="user-btn-cancel" id="cancelAddUser">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Popup para confirmação de geração do PDF -->
+    <div id="confirmPdfPopup" class="custom-popup" style="display: none;">
+        <div class="popup-content">
+            <h3>Confirmation</h3>
+            <p>Are you sure you want to generate a PDF with filtered users?</p>
+            <div class="popup-buttons">
+                <button id="confirmPdfYesBtn" class="btn-confirm">Yes</button>
+                <button id="confirmPdfNoBtn" class="btn-cancel">No</button>
+            </div>
+        </div>
+    </div>
+
+
     <script src="${pageContext.request.contextPath}/js/PopupProfile.js"></script>
 </body>
 

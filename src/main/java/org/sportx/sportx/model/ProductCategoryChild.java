@@ -3,9 +3,10 @@ package org.sportx.sportx.model;
 public class ProductCategoryChild {
     private int subCategoryId;
     private String name;
+    private int categoryId;
 
     // Getters, Setters, Construtor
-    public ProductCategoryChild(int subCategoryId, String name) {
+    public ProductCategoryChild(int subCategoryId, String name, int categoryId) {
         this.subCategoryId = subCategoryId;
         this.name = name;
     }
@@ -25,6 +26,8 @@ public class ProductCategoryChild {
     public void setName(String name) {
         this.name = name;
     }
+    public int getCategoryId() { return categoryId; }
+    public void setCategoryId(int categoryId) { this.categoryId = categoryId; }
 
 
 }

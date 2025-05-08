@@ -143,7 +143,7 @@ public class UserManagementServlet extends HttpServlet {
                         userType == null || userType.trim().isEmpty() ||
                         status == null || status.trim().isEmpty()) {
 
-                    request.setAttribute("errorMessage", "Todos os campos obrigatórios devem ser preenchidos.");
+                    request.setAttribute("errorMessage", "All mandatory fields must be completed..");
                     request.getRequestDispatcher("/AdminPage_UserManagement.jsp").forward(request, response);
                     return;
                 }
@@ -159,7 +159,7 @@ public class UserManagementServlet extends HttpServlet {
                 User existingUser = userDAO.getUserById(userId);
 
                 if (existingUser == null) {
-                    request.setAttribute("errorMessage", "Usuário não encontrado.");
+                    request.setAttribute("errorMessage", "User not found.");
                     request.getRequestDispatcher("/AdminPage_UserManagement.jsp").forward(request, response);
                     return;
                 }
@@ -184,7 +184,7 @@ public class UserManagementServlet extends HttpServlet {
             }
                 
              else {
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Ação inválida");
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action");
             }
         } catch (Exception e) {
             e.printStackTrace();

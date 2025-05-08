@@ -209,7 +209,7 @@ public class UserDAO {
         boolean isUserUpdated = false;
         boolean isAddressUpdated = false;
 
-        // Atualiza os dados do usuário
+        // Atualiza os dados do utilizador
         String updateUserQuery = "UPDATE user SET name = ?, email = ?, phone_number = ? WHERE user_id = ?";
         try (PreparedStatement ps = conn.prepareStatement(updateUserQuery)) {
             ps.setString(1, user.getName());

@@ -1,44 +1,47 @@
 package org.sportx.sportx.DTO;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ProductDTO {
     private int productId;
     private String name;
     private String description;
-    private String category;
-    private String subcategory;
-    private List<ProductItemDTO> items;
+    private String brand;
+    private double price;
+    private String image;
+    private int stock;
+    private Set<String> colors = new HashSet<>();
+    private Set<String> sizes = new HashSet<>();
 
-    public ProductDTO(int productId, String name, String description) {
-        this.productId = productId;
-        this.name = name;
-        this.description = description;
-        this.items = new ArrayList<>();
+
+    public ProductDTO() {
+
     }
 
-    public void addItem(ProductItemDTO item) {
-        this.items.add(item);
-    }
 
-    public ProductItemDTO getItemById(int productItemId) {
-        for (ProductItemDTO item : items) {
-            if (item.getProductItemId() == productItemId) {
-                return item;
-            }
-        }
-        return null;
-    }
+
 
     // Getters e setters (podes gerar com IDE se quiseres)
     public int getProductId() { return productId; }
+    public void setProductId(int productId) { this.productId = productId; }
     public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
     public String getDescription() { return description; }
-    public String getCategory() { return category; }
-    public String getSubcategory() { return subcategory; }
-    public void setCategory(String category) {this.category = category;}
-    public void setSubcategory(String subcategory) {this.subcategory = subcategory;}
-    public List<ProductItemDTO> getItems() { return items; }
-    public void setItems(List<ProductItemDTO> items) { this.items = items; }
+    public void setDescription(String description) { this.description = description; }
+    public String getBrand() { return brand; }
+    public void setBrand(String brand) { this.brand = brand; }
+    public double getPrice() { return price; }
+    public void setPrice(double price) { this.price = price; }
+    public String getImage() { return image; }
+    public void setImage(String image) { this.image = image; }
+    public int getStock() { return stock; }
+    public void setStock(int stock) { this.stock = stock; }
+    public Set<String> getColors() { return colors; }
+    public void setColors(Set<String> colors) { this.colors = colors; }
+    public Set<String> getSizes() { return sizes; }
+    public void setSizes(Set<String> sizes) { this.sizes = sizes; }
+
+
+
+
 }
