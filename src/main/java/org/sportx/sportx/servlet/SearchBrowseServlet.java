@@ -1,6 +1,6 @@
 package org.sportx.sportx.servlet;
 
-import org.sportx.sportx.dao.ProductDAO;
+import org.sportx.sportx.util.ProductDAO;
 import org.sportx.sportx.model.Product;
 
 import javax.servlet.RequestDispatcher;

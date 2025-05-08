@@ -1,9 +1,10 @@
-package org.sportx.sportx.dao;
+package org.sportx.sportx.util;
 
 import org.sportx.sportx.model.Product;
-import org.sportx.sportx.util.DBConnection;
+import org.sportx.sportx.model.Promotion;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.*;
 
 public class ProductDAO {
@@ -220,10 +221,9 @@ public class ProductDAO {
      */
     public Product getProductById(int productId) {
         Product product = null;
-        String query = "SELECT p.product_id, p.name, p.description, p.brand, pi.price, pi.product_image " +
-                "FROM product p " +
-                "JOIN product_item pi ON p.product_id = pi.product_id " +
-                "WHERE p.product_id = ?";
+        String query = "SELECT product_id, name, description, brand, sub_category_id, price, product_image, " +
+                "promotion_id, discount_rate, start_date, end_date " +
+                "FROM product_detailed_view WHERE product_id = ? LIMIT 1";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -239,12 +239,62 @@ public class ProductDAO {
                 product.setBrand(rs.getString("brand"));
                 product.setPrice(rs.getDouble("price"));
                 product.setImageUrl(rs.getString("product_image"));
+
+                // Verifica se tem promoção e cria o objeto com o construtor correto
+                Double discountRate = rs.getObject("discount_rate") != null ? rs.getDouble("discount_rate") : null;
+                if (discountRate != null) {
+                    int promotion_id = rs.getInt("promotion_id");
+                    LocalDate startDate = rs.getDate("start_date").toLocalDate();
+                    LocalDate endDate = rs.getDate("end_date").toLocalDate();
+
+                    Promotion promo = new Promotion(
+                            promotion_id,
+                            null,
+                            null,
+                            discountRate,
+                            startDate,
+                            endDate
+                    );
+                    product.setPromotion(promo);
+                }
             }
         } catch (SQLException e) {
-            System.out.println("Error retrieving product by ID: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return product;
+    }
+
+
+    public List<Product> getSimilarProducts(int productId, String brand) {
+        List<Product> similarProducts = new ArrayList<>();
+        String query = "SELECT product_id, name, description, brand, price, product_image " +
+                "FROM product_detailed_view " +
+                "WHERE brand = ? AND product_id != ? " +
+                "GROUP BY product_id " +
+                "LIMIT 4";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, brand);
+            pstmt.setInt(2, productId);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Product product = new Product();
+                product.setId(rs.getInt("product_id"));
+                product.setName(rs.getString("name"));
+                product.setDescription(rs.getString("description"));
+                product.setBrand(rs.getString("brand"));
+                product.setPrice(rs.getDouble("price"));
+                product.setImageUrl(rs.getString("product_image"));
+                similarProducts.add(product);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving similar products: " + e.getMessage());
             e.printStackTrace();
         }
 
-        return product;
+        return similarProducts;
     }
 }

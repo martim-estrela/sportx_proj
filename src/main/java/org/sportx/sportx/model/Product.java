@@ -1,5 +1,7 @@
 package org.sportx.sportx.model;
 
+import java.time.LocalDate;
+
 public class Product {
     private int id;
     private String name;
@@ -7,18 +9,20 @@ public class Product {
     private String brand;
     private double price;
     private String imageUrl;
+    private Promotion promotion;
 
     // Constructors
     public Product() {
     }
 
-    public Product(int id, String name, String description, String brand, double price, String imageUrl) {
+    public Product(int id, String name, String description, String brand, Promotion promotion, double price, String imageUrl) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.brand = brand;
         this.price = price;
         this.imageUrl = imageUrl;
+        this.promotion = promotion;
     }
 
     // Getters and setters
@@ -70,6 +74,28 @@ public class Product {
         this.imageUrl = imageUrl;
     }
 
+    public Promotion getPromotion() {
+        return promotion;
+    }
+
+    public void setPromotion(Promotion promotion) {
+        this.promotion = promotion;
+    }
+
+    // Métodos úteis para promoções
+    public boolean hasActivePromotion() {
+        if (promotion == null) return false;
+        LocalDate today = LocalDate.now();
+        return promotion.getDiscountRate() > 0 &&
+                !today.isBefore(promotion.getStartDate()) &&
+                !today.isAfter(promotion.getEndDate());
+    }
+
+    public double getDiscountedPrice() { // correto
+        if (!hasActivePromotion()) return price;
+        return price * ((100.00 - promotion.getDiscountRate())/100.0);
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -80,4 +106,5 @@ public class Product {
                 ", price=" + price +
                 '}';
     }
+
 }

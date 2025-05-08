@@ -146,34 +146,34 @@
         </div>
     </div>
     <div class="extra-div">
-    <!-- Similar Products -->
-    <section class="product-section">
-        <h2>More from this brand</h2>
-        <div class="product-grid">
-            <c:choose>
-                <c:when test="${not empty similarProducts}">
-                    <c:forEach var="similar" items="${similarProducts}">
-                        <a href="${pageContext.request.contextPath}/ProductPage.jsp?productId=${similar.id}"
-                           class="product-card">
-                            <img src="${not empty similar.imageUrl ?
+        <!-- Similar Products -->
+        <section class="product-section">
+            <h2>More from this brand</h2>
+            <div class="product-grid">
+                <c:choose>
+                    <c:when test="${not empty similarProducts}">
+                        <c:forEach var="similar" items="${similarProducts}">
+                            <a href="${pageContext.request.contextPath}/ProductPage.jsp?productId=${similar.id}"
+                               class="product-card">
+                                <img src="${not empty similar.imageUrl ?
                                           pageContext.request.contextPath.concat(similar.imageUrl) :
                                           pageContext.request.contextPath.concat('/img/default-product.jpg')}"
-                                 alt="${similar.name}">
-                            <p class="Top-Left-text">${similar.name}</p>
-                            <p class="Top-Left-text2">
-                                <fmt:formatNumber value="${similar.price}" type="currency" currencySymbol="€"/>
-                            </p>
-                        </a>
-                    </c:forEach>
-                </c:when>
-                <c:otherwise>
-                    <div class="no-results">
-                        <p>No more products from this brand</p>
-                    </div>
-                </c:otherwise>
-            </c:choose>
-        </div>
-    </section>
+                                     alt="${similar.name}">
+                                <p class="Top-Left-text">${similar.name}</p>
+                                <p class="Top-Left-text2">
+                                    <fmt:formatNumber value="${similar.price}" type="currency" currencySymbol="€"/>
+                                </p>
+                            </a>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="no-results">
+                            <p>No more products from this brand</p>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+        </section>
     </div>
 </main>
 

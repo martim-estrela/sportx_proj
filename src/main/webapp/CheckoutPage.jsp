@@ -18,7 +18,7 @@
         </div>
         <div>
             <a href="${pageContext.request.contextPath}/SearchBrowse.jsp">Products</a>
-            <a href="${pageContext.request.contextPath}/SearchBrowse.jsp">Sale</a>
+            <a href="${pageContext.request.contextPath}/Sale_Page.jsp">Sale</a>
             <a href="#" id="searchButton">Search</a>
         </div>
         <div>
