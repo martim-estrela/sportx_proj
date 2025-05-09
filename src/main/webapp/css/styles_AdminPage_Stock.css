@@ -102,17 +102,30 @@ header a:hover {
     height: fit-content;
     padding: 20px;
     margin-left: 10%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.select-container > div {
+    flex: 1 1 calc(33.33% - 20px); /* dois por linha com espaço */
+    box-sizing: border-box;
 }
 
 .select-container select {
-    width: 13%;
+
     padding: 10px;
     border: #D1D1D1;
     background-color: #d9d9d9;
 }
 
+select, input[type="text"] {
+    width: 50%;
+    padding: 5px;
+}
+
 .search-bar input {
-    width: 11.9%;
+
     padding: 10px;
     border: #D1D1D1;
     background-color: #d9d9d9;
@@ -263,6 +276,18 @@ header a:hover {
     background-color: #d9d9d9;
 }
 
+.column-description6 {
+    padding-top: 20px;
+
+    flex: 50%;
+    background-color: #d9d9d9;
+    text-align: center;
+}
+
+.column-description6 label {
+    background-color: #d9d9d9;
+}
+
 
 button.btn-edit {
     border: #d9d9d9;
@@ -291,209 +316,45 @@ button.btn-update-stock {
 }
 
 
-/* Modal container */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: none;
-    /* Oculto por padrão */
-    justify-content: center;
-    align-items: center;
-}
 
-/* Mostrar modal quando ativado */
-.modal.active {
-    display: flex;
-    /* Exibe o modal */
-}
 
-/* Conteúdo do modal */
-.modal-content {
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: auto;
-    text-align: center;
-
-}
-
-.modal-content h3 {
-    margin-top: 0;
-    background: #ffffff;
-}
-
-.input-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    /* Define duas colunas */
-    gap: 10px;
-    /* Espaçamento entre os campos */
-    background: #ffffff;
-}
-
-.input-container {
-    margin: 15px 0;
-    background: #ffffff;
-}
-
-.input-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    background: #ffffff;
-}
-
-.input-field {
-    padding: 8px;
-    font-size: 14px;
-    border: 1px solid #ddd;
-}
-
-/* Botão para fechar */
-.close-modal-btn {
-    margin-top: 15px;
-    padding: 10px 20px;
-    background-color: #dc3545;
+/* Estilos para o botão de adicionar utilizador */
+.btn-add-product {
+    background-color: #000000;
     color: white;
+    padding: 10px 15px;
+    margin-right: 10px;
     border: none;
+
     cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
 }
 
-.close-modal-btn:hover {
-    background-color: #a71d2a;
+.btn-add-product:hover {
+    background-color: #4CAF50;
 }
 
-.add-modal-btn {
-    margin-top: 15px;
-    padding: 10px 20px;
-    background-color: #45a049;
+/* Estilos para o botão gerar relatorio */
+.btn-generate-pdf {
+    background-color: #000000;
     color: white;
+    padding: 10px 15px;
+    margin-right: 10px;
     border: none;
+
     cursor: pointer;
-}
-
-.add-modal-btn:hover {
-    background-color: #296c2b;
-}
-
-/* Pagination */
-.pagination {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.pagination a {
-    margin: 0 10px;
-    font-size: 16px;
-    color: #000000;
-    text-decoration: none;
-}
-
-.pagination a:hover {
-    color: #218A38;
-}
-
-/* Estilo do número ativo com borda */
-.pagination a.active {
-    padding: 5px 8px;
-    border: 2px solid #000000;
-    border-radius: 5px;
-    background-color: #D1D1D1;
-    font-weight: bold;
-    color: #000000;
-}
-
-.pagination span {
-    font-size: 16px;
-}
-
-/*--------------------------------------------------------------------FOOTER-------------------------------------------------------------------------------*/
-
-footer {
+    font-weight: 500;
     display: flex;
-    /* Habilita Flexbox para organizar os elementos no rodapé */
-    justify-content: space-between;
-    /* Coloca os elementos nos cantos */
-    align-items: flex-start;
-    /* Alinha os itens no topo do rodapé */
-    padding: 20px;
-    /* Espaçamento interno */
-    margin-top: auto;
-    /* Garante que o rodapé fique no final da página */
+    justify-content: flex-end;
+    margin-bottom: 20px;
 }
 
-/*Fonte e margem do titulo "Support"*/
-.support h2 {
-    font-size: 17px;
-    margin-bottom: 10px;
+.btn-generate-pdf:hover {
+    background-color: #4CAF50;
 }
-
-/*mudança na lista*/
-.support ul {
-    list-style-type: none;
-    padding-left: 0;
-}
-
-/*margem entre os elementos da lista*/
-.support ul li {
-    margin: 10px 0;
-}
-
-/* Elementos da lista */
-.support ul li a {
-    text-decoration: none;
-    color: #000000;
-    font-size: 14px;
-}
-
-/*Quando se passa rato por cima sublinhar*/
-.support ul li a:hover {
-    text-decoration: underline;
-}
-
-/* Estilos da secção de inscrição */
-
-/*Fonte e margem do titulo "Subscribe"*/
-.subscribe h2 {
-    font-size: 17px;
-    margin-bottom: 10px;
-}
-
-/*Estilo do formulario*/
-.subscribe form {
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-}
-
-
-.subscribe input {
-    background-color: #D1D1D1;
-    margin-bottom: 30px;
-    font-size: 15px;
-    border: 0.1px solid #cccccc;
-}
-
-/* Retirar borda ao clicar para inserir */
-.subscribe input:focus {
-    outline: none;
-}
-
-/*Botao subcrever*/
-.subscribe button {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    color: #D1D1D1;
-    background: #222325;
-    border: none;
-    cursor: pointer;
-}
-
 
 
 /* Estilos para a paginação */
@@ -536,4 +397,171 @@ footer {
     margin-top: 10px;
     margin-bottom:  10px;
     color: #666;
+}
+
+
+/* Estilos específicos para o modal de edição e adição */
+
+/* Estilos para o modal */
+.product-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #D1D1D1;
+}
+
+.product-modal-content {
+    background-color: #D1D1D1;
+    margin: 10% auto;
+    padding: 20px;
+    width: 50%;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+}
+
+.product-modal-close {
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+    cursor: pointer;
+    background-color: #D1D1D1;
+}
+
+.product-form-group {
+    margin-bottom: 15px;
+    background-color: #D1D1D1;
+}
+
+.product-form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: normal;
+    background-color: #D1D1D1;
+}
+
+.product-form-group input,
+.product-form-group select {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.product-form-buttons {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.product-btn-submit {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.product-btn-submit:hover {
+    background-color: #333;
+}
+
+.modal,
+.user-modal {
+    overflow-y: auto;
+}
+
+
+/* Estilos para os pop-ups de confirmaçao */
+.custom-popup {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+}
+
+.custom-popup .popup-content {
+    background-color: #d9d9d9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    width: 300px;
+    max-width: 90%;
+    color: black;
+    /* Posicionamento no topo da página */
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+}
+
+.custom-popup h3 {
+    color: black;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.custom-popup p {
+    margin-bottom: 20px;
+    color: black;
+}
+
+.popup-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-confirm, .btn-cancel {
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.btn-confirm {
+    background-color: #000000;
+    color: white;
+    border: 1px solid white;
+}
+
+.btn-cancel {
+    background-color: #000000;
+    color: white;
+    border: 1px solid #cccccc;
+}
+
+.btn-confirm:hover {
+    background-color: #4CAF50;
+}
+
+.btn-cancel:hover {
+    background-color: #4CAF50;
+}
+
+@keyframes slideDown {
+    from {
+        top: -100px;
+        opacity: 0;
+    }
+    to {
+        top: 10px;
+        opacity: 1;
+    }
+}
+
+.custom-popup .popup-content {
+    /* ... outras propriedades ... */
+    animation: slideDown 0.3s ease-out forwards;
 }

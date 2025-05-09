@@ -44,5 +44,13 @@
         <url-pattern>/manageStock</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ProductPdfGeneratorServlet</servlet-name>
+        <servlet-class>org.sportx.sportx.servlet.ProductPdfGeneratorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProductPdfGeneratorServlet</servlet-name>
+        <url-pattern>/ProductPdfGenerator</url-pattern>
+    </servlet-mapping>
 </web-app>
 

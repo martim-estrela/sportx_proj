@@ -38,7 +38,7 @@ public class StockManagementDAO {
         }
     }
 
-
+    //Eliminar produto da BD
     public void deleteProduct(int product_item_id)
             throws SQLException {
 

@@ -72,7 +72,7 @@
                 <div>
                     <h3 style="text-decoration: underline;">Category:</h3>
                     <select name="category" id="category" onchange="this.form.submit();">
-                        <option value="">Selecione...</option>
+                        <option value="">Select...</option>
                         <c:forEach var="category" items="${allCategories}">
                             <option value="${category.name} ${param.category == category.name ? 'selected' : ''}">${category.name}</option>
                         </c:forEach>
@@ -81,7 +81,7 @@
                 <div>
                     <h3 style="text-decoration: underline;">Sub-Category:</h3>
                     <select name="sub-category" id="sub-category" onchange="this.form.submit();">
-                        <option value="">Selecione...</option>
+                        <option value="">Select...</option>
                         <c:forEach var="subcategory" items="${allSubcategories}">
                             <option value="${subcategory.name} ${param.subcategory == subcategory.name ? 'selected' : ''}">${subcategory.name}</option>
                         </c:forEach>
@@ -90,7 +90,7 @@
                 <div>
                     <h3 style="text-decoration: underline;">Brand:</h3>
                     <select name="brand" id="brand" onchange="this.form.submit();">
-                        <option value="">Selecione...</option>
+                        <option value="">Select...</option>
                         <c:forEach var="brand" items="${allBrands}">
                             <option value="${brand} ${param.brand == brand ? 'selected' : ''}">${brand}</option>
                         </c:forEach>
@@ -99,7 +99,7 @@
                 <div>
                     <h3 style="text-decoration: underline;">Color:</h3>
                     <select name="color" id="color" onchange="this.form.submit();">
-                        <option value="">All colors</option>
+                        <option value="">Select...</option>
                         <c:forEach var="colorOption" items="${variationOptions['Color']}">
                             <option value="${colorOption.value}" ${param.color == colorOption.value ? 'selected' : ''}>${colorOption.value}</option>
                         </c:forEach>
@@ -108,7 +108,7 @@
                 <div>
                     <h3 style="text-decoration: underline;">Size:</h3>
                     <select name="size" id="size" onchange="this.form.submit();">
-                        <option value="">All sizes</option>
+                        <option value="">Select...</option>
                         <c:forEach var="sizeOption" items="${variationOptions['Size']}">
                             <option value="${sizeOption.value}" ${param.size == sizeOption.value ? 'selected' : ''}>${sizeOption.value}</option>
                         </c:forEach>
@@ -117,12 +117,16 @@
 
                 <div class="search-bar">
                     <h3 style="text-decoration: underline;">Product Name:</h3>
-                    <input type="text" placeholder="Search.." name="name" value="${param.name}" onkeydown="if(event.key === 'Enter'){ this.form.submit(); }">
+                    <input type="text" placeholder="Search..." name="name" value="${param.name}" onkeydown="if(event.key === 'Enter'){ this.form.submit(); }">
                 </div>
 
             </div>
         </form>
 
+        <div style="display: flex; justify-content: flex-end; margin-right:10% ">
+            <button id="generatePdfBtn" class="btn-generate-pdf">Generate Report</button>
+            <button id="openAddProductModalBtn" class="btn-add-product">Add new product</button>
+        </div>
 
         <!--  Tabela de Produtos -->
         <div class=" table-container">
@@ -135,6 +139,7 @@
                 <div class="column-description3"><label>Color</label></div>
                 <div class="column-description4"><label>Size</label></div>
                 <div class="column-description5"><label>Stock</label></div>
+                <div class="column-description6"><label>Price</label></div>
                 <div class="column-edit-icon-top"><label>Edit</label></div>
                 <div class="column-delete-icon-top"><label>Delete</label></div>
             </div>
@@ -143,16 +148,16 @@
             <c:forEach var="product" items="${filteredProducts}">
                 <div class="row1">
                     <div class="column-img">
-                        <img src="${product.image}" style="width: 104px; height: 104px;" alt="">
+                        <img class="product-img" src="${product.image}" style="width: 104px; height: 104px;" alt="">
                     </div>
                     <div class="column-description">
-                        <label>${product.productId}</label><br><br>
+                        <label class="product-id">${product.productId}</label><br><br>
                     </div>
                     <div class="column-description1">
-                        <label>${product.name}</label><br><br>
+                        <label class="product-name">${product.name}</label><br><br>
                     </div>
                     <div class="column-description2">
-                        <label class="product-color">${product.brand}</label>
+                        <label class="product-brand">${product.brand}</label>
                     </div>
                     <div class="column-description3">
                         <label class="product-color">${product.colors}</label>
@@ -163,11 +168,14 @@
                     <div class="column-description5">
                         <label class="product-stock">${product.stock}</label>
                     </div>
+                    <div class="column-description6">
+                        <label class="product-price">${product.price}€</label>
+                    </div>
                     <div class="column-edit-icon">
-                        <button class="btn-edit"><i class="material-icons" style="background-color: #d9d9d9d9; font-size:40px">edit_square</i></button>
+                        <button class="btn-edit edit-product" data-productid="${product.productId}"><i class="material-icons" style="background-color: #d9d9d9d9; font-size:40px">edit_square</i></button>
                     </div>
                     <div class="column-delete-icon">
-                        <button class="btn-edit">
+                        <button class="btn-edit delete-product" data-productid="${product.productId}">
                             <i class="material-icons" style="color: red; background-color: #d9d9d9d9; font-size:40px">close</i>
                         </button>
                     </div>
@@ -223,68 +231,57 @@
     </main>
 
 
-    <!-- Modal para editar produto -->
+    <!-- Modal Editar Produto -->
     <div id="editProductModal" class="product-modal" style="display: none;">
         <div class="product-modal-content">
-            <span class="user-modal-close edit-close">&times;</span>
-            <h2 class="edit-user-title">Update User</h2>
-            <form id="editUserForm" method="post" action="${pageContext.request.contextPath}/manageUser">
-                <input type="hidden" name="action" value="updateUser">
-                <input type="hidden" id="editUserId" name="userId" value="">
+            <span class="product-modal-close edit-close">&times;</span>
+            <h2 class="edit-product-title">Update Product</h2>
+            <form id="editProductForm" method="post" action="${pageContext.request.contextPath}/manageStock">
+                <input type="hidden" name="action" value="updateProduct">
+                <input type="hidden" id="editProductId" name="productId" value="">
 
-                <div class="user-form-group">
+                <div class="product-form-group">
                     <label for="editName">Name:</label>
-                    <input type="text" id="editName" name="name" required>
+                    <input type="text" id="name" name="name">
                 </div>
 
-                <div class="user-form-group">
-                    <label for="editEmail">Email:</label>
-                    <input type="email" id="editEmail" name="email" required>
+                <div class="product-form-group">
+                    <label for="editBrand">Brand:</label>
+                    <input type="text" id="brand" name="brand">
                 </div>
 
-                <div class="user-form-group">
-                    <label for="editPassword">Password:</label>
-                    <input type="password" id="editPassword" name="password" placeholder="Leave blank to keep current password">
+                <div class="product-form-group">
+                    <label for="editColor">Color:</label>
+                    <input type="text" id="color" name="color">
                 </div>
 
-                <div class="user-form-group">
-                    <label for="editPhoneNumber">Phone Number:</label>
-                    <input type="text" id="editPhoneNumber" name="phoneNumber">
+                <div class="product-form-group">
+                    <label for="editSize">Size:</label>
+                    <input type="text" id="size" name="size">
                 </div>
 
-                <div class="user-form-group">
-                    <label for="editUserType">User type:</label>
-                    <select id="editUserType" name="userType" required>
-                        <option value="user">User</option>
-                        <option value="admin">Admin</option>
-                    </select>
+                <div class="product-form-group">
+                    <label for="editStock">Stock:</label>
+                    <input type="number" id="stock" name="stock">
                 </div>
 
-                <div class="user-form-group">
-                    <label for="editStatus">Status:</label>
-                    <select id="editStatus" name="status" required>
-                        <option value="active">active</option>
-                        <option value="inactive">inactive</option>
-                    </select>
-                </div>
-
-                <div class="user-form-buttons">
-                    <button type="submit" class="user-btn-submit">Update</button>
-                    <button type="button" class="user-btn-cancel" id="cancelEditUser">Cancel</button>
+                <div class="product-form-buttons">
+                    <button type="submit" class="product-btn-submit">Update</button>
+                    <button type="button" class="product-btn-cancel" id="cancelEditProduct">Cancel</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Custom Popup para confirmação de eliminação -->
-    <div id="confirmDeletePopup" class="custom-popup" style="display: none;">
-        <div class="popup-content">
-            <h3>Confirmation</h3>
-            <p>Are you sure you want to delete this user?</p>
-            <div class="popup-buttons">
-                <button id="confirmYesBtn" class="btn-confirm">Yes</button>
-                <button id="confirmNoBtn" class="btn-cancel">No</button>
-            </div>
+    <!-- Modal Confirmar Eliminação -->
+    <div id="deleteConfirmModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('deleteConfirmModal')">&times;</span>
+            <h3>Are you sure you want to delete this product?</h3>
+            <form id="deleteProductForm" action="DeleteProductServlet" method="post">
+                <input type="hidden" name="productId" id="deleteProductId">
+                <button type="submit">Yes, Delete</button>
+            </form>
         </div>
     </div>
 
@@ -300,63 +297,13 @@
     </div>
 
 
-    <!-- Modal para adicionar utilizador -->
-    <div id="addUserModal" class="user-modal" style="display: none;">
-        <div class="user-modal-content">
-            <span class="user-modal-close">&times;</span>
-            <h2 class="add-user-title">Add new user</h2>
-            <form id="addUserForm" method="post" action="${pageContext.request.contextPath}/manageUser">
-                <input type="hidden" name="action" value="addUser">
 
-                <div class="user-form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-
-                <div class="user-form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-
-                <div class="user-form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-
-                <div class="user-form-group">
-                    <label for="phoneNumber">Phone Number:</label>
-                    <input type="text" id="phoneNumber" name="phoneNumber">
-                </div>
-
-                <div class="user-form-group">
-                    <label for="userType">User Type:</label>
-                    <select id="userType" name="userType" required>
-                        <option value="user">User</option>
-                        <option value="admin">Admin</option>
-                    </select>
-                </div>
-
-                <div class="user-form-group">
-                    <label for="status">Status:</label>
-                    <select id="status" name="status" required>
-                        <option value="active">active</option>
-                        <option value="inactive">inactive</option>
-                    </select>
-                </div>
-
-                <div class="user-form-buttons">
-                    <button type="submit" class="user-btn-submit">Save</button>
-                    <button type="button" class="user-btn-cancel" id="cancelAddUser">Cancel</button>
-                </div>
-            </form>
-        </div>
-    </div>
 
     <!-- Popup para confirmação de geração do PDF -->
     <div id="confirmPdfPopup" class="custom-popup" style="display: none;">
-        <div class="popup-content">
+        <div class="popup-content" style="background-color: rgb(209,209,209)">
             <h3>Confirmation</h3>
-            <p>Are you sure you want to generate a PDF with filtered users?</p>
+            <p>Are you sure you want to generate a PDF with filtered Products?</p>
             <div class="popup-buttons">
                 <button id="confirmPdfYesBtn" class="btn-confirm">Yes</button>
                 <button id="confirmPdfNoBtn" class="btn-cancel">No</button>
@@ -365,7 +312,54 @@
     </div>
 
 
+    <!-- Modal Adicionar Produto -->
+    <div id="addProductModal" class="product-modal" style="display: none;">
+        <div class="product-modal-content">
+            <h2 class="add-product-title">Add new product</h2>
+            <form id="addProductForm" method="post" action="${pageContext.request.contextPath}/manageStock">
+                <input type="hidden" name="action" value="addProduct">
+
+                <div class="product-form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name">
+                </div>
+
+                <div class="product-form-group">
+                    <label for="brand">Brand:</label>
+                    <input type="text" id="brand" name="brand">
+                </div>
+
+                <div class="product-form-group">
+                    <label for="color">Color:</label>
+                    <input type="text" id="color" name="color">
+                </div>
+
+                <div class="product-form-group">
+                    <label for="size">Size:</label>
+                    <input type="text" id="size" name="size">
+                </div>
+
+                <div class="product-form-group">
+                    <label for="stock">Stock:</label>
+                    <input type="number" id="stock" name="stock">
+                </div>
+
+
+                <div class="product-form-buttons">
+                    <button type="submit" class="product-btn-submit">Save</button>
+                    <button type="button" class="product-btn-cancel" id="cancelAddProduct">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="${pageContext.request.contextPath}/js/UpdateProduct.js"></script>
+    <script src="${pageContext.request.contextPath}/js/AddProduct.js"></script>
     <script src="${pageContext.request.contextPath}/js/PopupProfile.js"></script>
+    <script src="${pageContext.request.contextPath}/js/GenerateProductPdf.js"></script>
+    <script> var contextPath = "${pageContext.request.contextPath}"; </script>
 </body>
+
+
+
 
 </html>
