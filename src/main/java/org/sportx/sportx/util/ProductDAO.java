@@ -264,7 +264,7 @@ public class ProductDAO {
         return product;
     }
 
-
+    // Método para buscar produtos similares
     public List<Product> getSimilarProducts(int productId, String brand) {
         List<Product> similarProducts = new ArrayList<>();
         String query = "SELECT product_id, name, description, brand, price, product_image " +
@@ -296,5 +296,33 @@ public class ProductDAO {
         }
 
         return similarProducts;
+    }
+
+    // Método para buscar tamanhos disponíveis
+    public List<String> getAvailableSizes(int productId) throws SQLException {
+        List<String> sizes = new ArrayList<>();
+
+        String query = "SELECT DISTINCT variation_value " +
+                "FROM product_detailed_view " +
+                "WHERE product_id = ? " +
+                "AND variation_type = 'Size' " +
+                "AND stock > 0 " +
+                "ORDER BY variation_value";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, productId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                String size = rs.getString("variation_value");
+                if (size != null && !size.trim().isEmpty()) {
+                    sizes.add(size);
+                }
+            }
+        }
+
+        return sizes;
     }
 }

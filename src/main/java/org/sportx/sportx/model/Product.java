@@ -1,6 +1,7 @@
 package org.sportx.sportx.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Product {
     private int id;
@@ -10,6 +11,7 @@ public class Product {
     private double price;
     private String imageUrl;
     private Promotion promotion;
+    private List<String> sizes; // Nova propriedade
 
     // Constructors
     public Product() {
@@ -26,6 +28,13 @@ public class Product {
     }
 
     // Getters and setters
+    public List<String> getSizes() {
+        return sizes;
+    }
+
+    public void setSizes(List<String> sizes) {
+        this.sizes = sizes;
+    }
     public int getId() {
         return id;
     }
@@ -106,5 +115,4 @@ public class Product {
                 ", price=" + price +
                 '}';
     }
-
 }

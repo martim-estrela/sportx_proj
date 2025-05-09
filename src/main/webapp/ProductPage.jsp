@@ -9,27 +9,36 @@
     String productIdParam = request.getParameter("productId");
     Product product = null;
     List<Product> similarProducts = null;
+    List<String> availableSizes = null;
+    ProductDAO productDAO = new ProductDAO();
 
+    // Verifica se temos um ID válido
     if (productIdParam != null && !productIdParam.isEmpty()) {
         try {
             int productId = Integer.parseInt(productIdParam);
-            ProductDAO productDAO = new ProductDAO();
 
-            // Busca o produto principal (você pode criar um método que use a view também)
+            // Busca o produto principal
             product = productDAO.getProductById(productId);
 
+            // Se produto não existe, redireciona
             if (product == null) {
                 response.sendRedirect(request.getContextPath() + "/SearchBrowseServlet");
                 return;
             }
 
-            // Busca produtos similares pelo mesmo brand, excluindo o próprio produto
+            // Busca tamanhos disponíveis
+            availableSizes = productDAO.getAvailableSizes(productId);
+
+            // Busca produtos similares da mesma marca
             similarProducts = productDAO.getSimilarProducts(productId, product.getBrand());
 
+            // Define os atributos para o JSP
             request.setAttribute("product", product);
+            request.setAttribute("availableSizes", availableSizes);
             request.setAttribute("similarProducts", similarProducts);
 
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
             response.sendRedirect(request.getContextPath() + "/SearchBrowseServlet");
             return;
         }
@@ -121,7 +130,9 @@
                 </c:when>
                 <c:otherwise>
                     <h3 class="price-regular" style="color: black; font-weight: bold;">
-                        <fmt:formatNumber value="${product.price}" type="currency" currencySymbol="€"/>
+                        <c:if test="${not empty product}">
+                            <fmt:formatNumber value="${product.price}" type="currency" currencySymbol="€"/>
+                        </c:if>
                     </h3>
                 </c:otherwise>
             </c:choose>
@@ -130,6 +141,16 @@
             <p>${product.description}</p>
             <p><span>Brand:</span> ${product.brand}</p>
             <form action="${pageContext.request.contextPath}/AddToCartServlet" method="post">
+                <c:if test="${not empty availableSizes}">
+                    <div class="variation">
+                        <label for="size">Tamanho:</label>
+                        <select name="size" id="size" required>
+                            <c:forEach var="size" items="${availableSizes}">
+                                <option value="${size}">${size}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </c:if>
                 <div class="quantity">
                     <label for="quantity">Quantity:</label>
                     <select name="quantity" id="quantity">
