@@ -12,6 +12,7 @@ public class Product {
     private String imageUrl;
     private Promotion promotion;
     private List<String> sizes; // Nova propriedade
+    private String color;
 
     // Constructors
     public Product() {
@@ -30,6 +31,14 @@ public class Product {
     // Getters and setters
     public List<String> getSizes() {
         return sizes;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public void setSizes(List<String> sizes) {

@@ -267,10 +267,10 @@ public class ProductDAO {
     // Método para buscar produtos similares
     public List<Product> getSimilarProducts(int productId, String brand) {
         List<Product> similarProducts = new ArrayList<>();
-        String query = "SELECT product_id, name, description, brand, price, product_image " +
+        String query =
+                "SELECT DISTINCT product_id, name, description, brand, price, product_image, variation_type " +
                 "FROM product_detailed_view " +
-                "WHERE brand = ? AND product_id != ? " +
-                "GROUP BY product_id " +
+                "WHERE brand = ? AND product_id != ?  AND variation_type = 'Color' " +
                 "LIMIT 4";
 
         try (Connection conn = DBConnection.getConnection();
