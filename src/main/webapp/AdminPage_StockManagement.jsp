@@ -273,17 +273,6 @@
         </div>
     </div>
 
-    <!-- Modal Confirmar Eliminação -->
-    <div id="deleteConfirmModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('deleteConfirmModal')">&times;</span>
-            <h3>Are you sure you want to delete this product?</h3>
-            <form id="deleteProductForm" action="DeleteProductServlet" method="post">
-                <input type="hidden" name="productId" id="deleteProductId">
-                <button type="submit">Yes, Delete</button>
-            </form>
-        </div>
-    </div>
 
     <!-- Custom Popup para mensagens de erro -->
     <div id="errorPopup" class="custom-popup" style="display: none;">
@@ -296,7 +285,17 @@
         </div>
     </div>
 
-
+    <!-- Custom Popup para confirmação de eliminação -->
+    <div id="confirmDeletePopup" class="custom-popup" style="display: none;">
+        <div class="popup-content" style="background-color: rgb(209,209,209)">
+            <h3>Confirmation</h3>
+            <p>Are you sure you want to delete this product?</p>
+            <div class="popup-buttons">
+                <button id="confirmYesBtn" class="btn-confirm">Yes</button>
+                <button id="confirmNoBtn" class="btn-cancel">No</button>
+            </div>
+        </div>
+    </div>
 
 
     <!-- Popup para confirmação de geração do PDF -->
