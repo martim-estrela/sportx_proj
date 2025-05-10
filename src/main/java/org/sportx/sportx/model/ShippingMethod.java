@@ -5,7 +5,10 @@ public class ShippingMethod {
     private String name;
     private double price;
 
-    // Getters, Setters, Construtor
+    // Construtor vazio necessário para o DAO
+    public ShippingMethod() {
+    }
+
     public ShippingMethod(int shippingId, String name, double price) {
         this.shippingId = shippingId;
         this.name = name;

@@ -126,27 +126,49 @@
                         </tbody>
                     </table>
 
+                    <div class="shipping-methods">
+                        <h3>Shipping Method</h3>
+                        <div class="shipping-options">
+                            <c:forEach var="method" items="${shippingMethods}">
+                                <div class="shipping-option">
+                                    <input type="radio"
+                                           id="shipping_${method.shippingId}"
+                                           name="shippingMethod"
+                                           value="${method.shippingId}"
+                                           onchange="updateShippingCost(${method.price})"
+                                        ${method.shippingId == sessionScope.selectedShippingMethod.shippingId ? 'checked' : ''}>
+                                    <label for="shipping_${method.shippingId}">
+                                        <span class="shipping-name">${method.name}</span>
+                                        <span class="shipping-price">€${method.price}</span>
+                                    </label>
+                                </div>
+                            </c:forEach>
+                        </div>
+                    </div>
+
                     <div class="cart-totals">
                         <h3 style="text-align: center; background-color: #D9D9D9;">Cart Totals</h3>
                         <div class="totals-item">
                             <span>Subtotal:</span>
                             <span id="cart-subtotal">
-                            <fmt:formatNumber value="${sessionScope.cartTotal}" type="currency" currencySymbol="€"/>
-                        </span>
+                                <fmt:formatNumber value="${sessionScope.cartTotal}" type="currency" currencySymbol="€"/>
+                            </span>
                         </div>
                         <div class="line"></div>
                         <div class="totals-item">
                             <span>Shipping:</span>
-                            <span>6,00 €</span>
+                            <span id="shipping-cost">
+                                 <fmt:formatNumber value="${sessionScope.selectedShippingMethod.price}" type="currency" currencySymbol="€"/>
+                            </span>
                         </div>
                         <div class="line"></div>
                         <div class="totals-item">
                             <span><strong style="background-color: #D9D9D9;">Total:</strong></span>
                             <span id="cart-total">
-                            <strong style="background-color: #D9D9D9;">
-                                <fmt:formatNumber value="${sessionScope.totalWithShipping}" type="currency" currencySymbol="€"/>
-                            </strong>
-                        </span>
+                                <strong style="background-color: #D9D9D9;">
+                                    <fmt:formatNumber value="${sessionScope.cartTotal + sessionScope.selectedShippingMethod.price}" type="currency" currencySymbol="€"/>
+                                </strong>
+                            </span>
                         </div>
                         <a href="CheckoutPage.jsp">
                             <button class="checkout-btn">Checkout</button>
@@ -291,6 +313,41 @@
 
             // Limpa o ID armazenado
             productIdToRemove = null;
+        }
+
+        function updateShippingCost(shippingPrice) {
+            // Atualizar o preço do envio
+            const shippingCostElement = document.getElementById('shipping-cost');
+            shippingCostElement.textContent = '€' + shippingPrice.toFixed(2);
+
+            // Calcular e atualizar o total
+            const subtotal = ${sessionScope.cartTotal};
+            const total = subtotal + shippingPrice;
+
+            const cartTotalElement = document.getElementById('cart-total');
+            cartTotalElement.innerHTML = '<strong style="background-color: #D9D9D9;">€' + total.toFixed(2) + '</strong>';
+
+            // Enviar a seleção para o servidor
+            updateShippingMethod(shippingPrice);
+        }
+
+        function updateShippingMethod(shippingMethodId) {
+            fetch('${pageContext.request.contextPath}/UpdateShippingMethodServlet', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'shippingMethodId=' + shippingMethodId
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.success) {
+                        console.error('Failed to update shipping method');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }
     </script>
 </body>

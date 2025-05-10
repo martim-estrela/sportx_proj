@@ -465,3 +465,59 @@ footer {
     background-color: #45a049;
     color: white;
 }
+
+.shipping-methods {
+    margin-bottom: 20px; /* Espaçamento abaixo da seção */
+    background-color: #D9D9D9; /* Cor de fundo similar ao cart-totals */
+    padding: 20px; /* Espaçamento interno */
+}
+
+.shipping-methods h3 {
+    text-align: center; /* Centraliza o título */
+    margin-bottom: 15px; /* Espaçamento abaixo do título */
+    background-color: #D9D9D9;
+}
+
+.shipping-options {
+    display: flex;
+    flex-direction: column; /* Organiza as opções verticalmente */
+    gap: 10px; /* Espaçamento entre as opções */
+    background-color: #D9D9D9;
+}
+
+.shipping-option {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Transição suave no hover */
+    background-color: #D9D9D9;
+}
+
+.shipping-option:hover {
+    background-color: #c0c0c0; /* Cor de fundo no hover */
+}
+
+.shipping-option input[type="radio"] {
+    margin-right: 10px; /* Espaçamento à direita do radio button */
+}
+
+.shipping-option label {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    cursor: pointer;
+    background-color: #D9D9D9;
+}
+
+.shipping-name {
+    font-weight: bold; /* Nome do método de envio em negrito */
+    background-color: #D9D9D9;
+}
+
+.shipping-price {
+    color: #333; /* Cor do preço */
+    background-color: #D9D9D9;
+}
