@@ -325,4 +325,34 @@ public class ProductDAO {
 
         return sizes;
     }
+
+    public List<String> getAvailableColors(int productId) {
+        List<String> colors = new ArrayList<>();
+
+        String query = "SELECT DISTINCT variation_value " +
+                "FROM product_detailed_view " +
+                "WHERE product_id = ? " +
+                "AND variation_type = 'Color' " +
+                "AND stock > 0 " +  // Só mostra cores com stock disponível
+                "ORDER BY variation_value";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, productId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                String color = rs.getString("variation_value");
+                if (color != null && !color.trim().isEmpty()) {
+                    colors.add(color);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return colors;
+    }
+
 }

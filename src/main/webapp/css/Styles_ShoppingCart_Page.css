@@ -380,3 +380,88 @@ footer {
     border: none;
     cursor: pointer;
 }
+
+.continue-shopping {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #222325;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.continue-shopping:hover {
+    background-color: #45a049;
+}
+
+.remove-btn {
+    background-color: #6A6A6A;
+    color: #222325;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.remove-btn:hover {
+    background-color: #45a049;
+}
+
+.confirm-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #222325;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.confirm-dialog-content {
+    background-color: #D1D1D1;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+
+.confirm-dialog-buttons {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.confirm-dialog-buttons button {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.confirm-dialog-buttons button:first-child {
+    background-color: #222325;
+    color: white;
+}
+
+.confirm-dialog-buttons button:last-child {
+    background-color: #222325;
+    color: white;
+}
+
+.confirm-dialog-buttons button:first-child:hover {
+    background-color: #45a049;
+}
+
+.confirm-dialog-buttons button:last-child:hover {
+    background-color: #45a049;
+    color: white;
+}

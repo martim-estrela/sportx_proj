@@ -8,8 +8,11 @@
 <%
     String productIdParam = request.getParameter("productId");
     Product product = null;
+    String colorParam = request.getParameter("color");
     List<Product> similarProducts = null;
     List<String> availableSizes = null;
+    List<String> availableColors = null;
+
     ProductDAO productDAO = new ProductDAO();
 
     // Verifica se temos um ID válido
@@ -26,8 +29,9 @@
                 return;
             }
 
-            // Busca tamanhos disponíveis
+            // Busca tamanhos e cores disponíveis
             availableSizes = productDAO.getAvailableSizes(productId);
+            availableColors = productDAO.getAvailableColors(productId);
 
             // Busca produtos similares da mesma marca
             similarProducts = productDAO.getSimilarProducts(productId, product.getBrand());
@@ -36,6 +40,7 @@
             request.setAttribute("product", product);
             request.setAttribute("availableSizes", availableSizes);
             request.setAttribute("similarProducts", similarProducts);
+            request.setAttribute("availableColors", availableColors);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -141,15 +146,29 @@
             <p>${product.description}</p>
             <p><span>Brand:</span> ${product.brand}</p>
             <form action="${pageContext.request.contextPath}/AddToCartServlet" method="post">
+                <input type="hidden" name="productId" value="${product.id}">
+                <input type="hidden" name="productName" value="${product.name}">
+                <input type="hidden" name="productImage" value="${product.imageUrl}">
                 <c:if test="${not empty availableSizes}">
                     <div class="variation">
-                        <label for="size">Tamanho:</label>
+                        <label for="size">Size:</label>
                         <select name="size" id="size" required>
                             <c:forEach var="size" items="${availableSizes}">
                                 <option value="${size}">${size}</option>
                             </c:forEach>
                         </select>
                     </div>
+                </c:if>
+                <c:if test="${not empty availableColors}">
+                <div class="variation">
+                    <label for="colorSelect">Color:</label>
+                    <select id="colorSelect" name="color" required>
+                        <option value="">Select color</option>
+                        <c:forEach var="color" items="${availableColors}">
+                            <option value="${color}">${color}</option>
+                        </c:forEach>
+                    </select>
+                </div>
                 </c:if>
                 <div class="quantity">
                     <label for="quantity">Quantity:</label>

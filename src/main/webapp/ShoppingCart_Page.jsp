@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -64,162 +65,98 @@
     <main>
         <h1>Shopping Cart</h1>
         <div class="table1">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th></th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <div class="imgStyle">
-                                <img src="${pageContext.request.contextPath}/img/GarminForerunner55.jpg" alt="Product Image" class="product-img">
-                            </div>
+            <c:choose>
+                <c:when test="${empty sessionScope.cart}">
+                    <div class="empty-cart-message">
+                        <p>Your shopping cart is empty</p>
+                        <a href="${pageContext.request.contextPath}/SearchBrowseServlet" class="continue-shopping">
+                            Continue Shopping
+                        </a>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th></th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="item" items="${sessionScope.cart}">
+                            <tr>
+                                <td>
+                                    <div class="imgStyle">
+                                        <img src="${not empty item.imageUrl ?
+                                              pageContext.request.contextPath.concat(item.imageUrl) :
+                                              pageContext.request.contextPath.concat('/img/default-product.jpg')}"
+                                             alt="${item.productName}">
+                                    </div>
+                                </td>
+                                <td class="product_info">
+                                        ${item.productName}<br>
+                                        ${item.color}<br>
+                                        ${item.size}
+                                </td>
+                                <td>
+                                    <fmt:formatNumber value="${item.price}" type="currency" currencySymbol="€"/>
+                                </td>
+                                <td>
+                                    <div class="quantity-controls">
+                                        <button type="button" onclick="decrementQuantity('${item.productItemId}', '${item.price}')">-</button>
+                                        <input type="number"
+                                               value="${item.quantity}"
+                                               min="1"
+                                               id="quantity_${item.productItemId}"
+                                               onchange="updateQuantity('${item.productItemId}', this, '${item.price}')">
+                                        <button type="button" onclick="incrementQuantity('${item.productItemId}', '${item.price}')">+</button>
+                                    </div>
+                                </td>
+                                <td id="subtotal_${item.productItemId}">
+                                    <fmt:formatNumber value="${item.price * item.quantity}" type="currency" currencySymbol="€"/>
+                                </td>
+                                <td>
+                                    <button type="button" class="remove-btn" onclick="removeItem(${item.productItemId})">X</button>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
 
-                        </td>
-                        <td class="product_info">
-                            GARMIN<br>
-                            FORERUNNER<br><br>
-                            Color: Black<br><br>
-                            Size: One size
-                        </td>
-                        <td>109,00 €</td>
-                        <td>
-                            <div class="quantity-controls">
-                                <button>-</button>
-                                <input type="number" value="1" min="0">
-                                <button>+</button>
-                            </div>
-                        </td>
-                        <td>109,00 €</td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div class="imgStyle">
-                                <img src="${pageContext.request.contextPath}/img/GarminForerunner55.jpg" alt="Product Image" class="product-img">
-                            </div>
-
-                        </td>
-                        <td class="product_info">
-                            GARMIN<br>
-                            FORERUNNER<br><br>
-                            Color: Black<br><br>
-                            Size: One size
-                        </td>
-                        <td>109,00 €</td>
-                        <td>
-                            <div class="quantity-controls">
-                                <button>-</button>
-                                <input type="number" value="1" min="0">
-                                <button>+</button>
-                            </div>
-                        </td>
-                        <td>109,00 €</td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div class="imgStyle">
-                                <img src="${pageContext.request.contextPath}/img/GarminForerunner55.jpg" alt="Product Image" class="product-img">
-                            </div>
-
-                        </td>
-                        <td class="product_info">
-                            GARMIN<br>
-                            FORERUNNER<br><br>
-                            Color: Black<br><br>
-                            Size: One size
-                        </td>
-                        <td>109,00 €</td>
-                        <td>
-                            <div class="quantity-controls">
-                                <button>-</button>
-                                <input type="number" value="1" min="0">
-                                <button>+</button>
-                            </div>
-                        </td>
-                        <td>109,00 €</td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div class="imgStyle">
-                                <img src="${pageContext.request.contextPath}/img/GarminForerunner55.jpg" alt="Product Image" class="product-img">
-                            </div>
-
-                        </td>
-                        <td class="product_info">
-                            GARMIN<br>
-                            FORERUNNER<br><br>
-                            Color: Black<br><br>
-                            Size: One size
-                        </td>
-                        <td>109,00 €</td>
-                        <td>
-                            <div class="quantity-controls">
-                                <button>-</button>
-                                <input type="number" value="1" min="0">
-                                <button>+</button>
-                            </div>
-                        </td>
-                        <td>109,00 €</td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div class="imgStyle">
-                                <img src="${pageContext.request.contextPath}/img/GarminForerunner55.jpg" alt="Product Image" class="product-img">
-                            </div>
-
-                        </td>
-                        <td class="product_info">
-                            GARMIN<br>
-                            FORERUNNER<br><br>
-                            Color: Black<br><br>
-                            Size: One size
-                        </td>
-                        <td>109,00 €</td>
-                        <td>
-                            <div class="quantity-controls">
-                                <button>-</button>
-                                <input type="number" value="1" min="0">
-                                <button>+</button>
-                            </div>
-                        </td>
-                        <td>109,00 €</td>
-                    </tr>
-
-                </tbody>
-            </table>
-
-            <div class="cart-totals">
-                <h3 style="text-align: center; background-color: #D9D9D9;">Cart Totals</h3>
-                <div class="totals-item">
-                    <span>Subtotal:</span>
-                    <span>100,00 €</span>
-                </div>
-                <div class="line"></div>
-                <div class="totals-item">
-                    <span>Shipping:</span>
-                    <span>6,00 €</span>
-                </div>
-                <div class="line"></div>
-                <div class="totals-item">
-                    <span><strong style="background-color: #D9D9D9;">Total:</strong></span>
-                    <span><strong style="background-color: #D9D9D9;">106,00 €</strong></span>
-                </div>
-                <a href="CheckoutPage.jsp">
-                    <button class="checkout-btn">Checkout</button>
-                  </a>
-            </div>
+                    <div class="cart-totals">
+                        <h3 style="text-align: center; background-color: #D9D9D9;">Cart Totals</h3>
+                        <div class="totals-item">
+                            <span>Subtotal:</span>
+                            <span id="cart-subtotal">
+                            <fmt:formatNumber value="${sessionScope.cartTotal}" type="currency" currencySymbol="€"/>
+                        </span>
+                        </div>
+                        <div class="line"></div>
+                        <div class="totals-item">
+                            <span>Shipping:</span>
+                            <span>6,00 €</span>
+                        </div>
+                        <div class="line"></div>
+                        <div class="totals-item">
+                            <span><strong style="background-color: #D9D9D9;">Total:</strong></span>
+                            <span id="cart-total">
+                            <strong style="background-color: #D9D9D9;">
+                                <fmt:formatNumber value="${sessionScope.totalWithShipping}" type="currency" currencySymbol="€"/>
+                            </strong>
+                        </span>
+                        </div>
+                        <a href="CheckoutPage.jsp">
+                            <button class="checkout-btn">Checkout</button>
+                        </a>
+                    </div>
+                </c:otherwise>
+            </c:choose>
         </div>
     </main>
+
 
     <footer>
         <section class="support">
@@ -240,6 +177,122 @@
     </footer>
     <script src="${pageContext.request.contextPath}/js/PopupSearch.js"></script>
     <script src="${pageContext.request.contextPath}/js/PopupProfile.js"></script>
+    <script>
+        // Variável global para armazenar o ID do produto a ser removido
+        let productIdToRemove = null;
+
+        function updateQuantity(productId, element, price) {
+            const quantity = parseInt(element.value) || 1;
+            if (quantity < 1) {
+                element.value = 1;
+                return;
+            }
+
+            // Cria e submete um formulário "invisível"
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '${pageContext.request.contextPath}/UpdateCartServlet';
+
+            const inputId = document.createElement('input');
+            inputId.type = 'hidden';
+            inputId.name = 'productId';
+            inputId.value = productId;
+
+            const inputQty = document.createElement('input');
+            inputQty.type = 'hidden';
+            inputQty.name = 'quantity';
+            inputQty.value = quantity;
+
+            form.appendChild(inputId);
+            form.appendChild(inputQty);
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+        function incrementQuantity(productId, price) {
+            const input = document.getElementById('quantity_' + productId);
+            if (!input) return;
+
+            const currentValue = parseInt(input.value) || 0;
+            input.value = currentValue + 1;
+            updateQuantity(productId, input, price);
+        }
+
+        function decrementQuantity(productId, price) {
+            const input = document.getElementById('quantity_' + productId);
+            if (!input) return;
+
+            const currentValue = parseInt(input.value) || 2;
+            if (currentValue > 1) {
+                input.value = currentValue - 1;
+                updateQuantity(productId, input, price);
+            }
+        }
+
+        function removeItem(productId) {
+            // Armazena o ID do produto para uso posterior
+            productIdToRemove = productId;
+
+            // Cria o diálogo de confirmação
+            const confirmDialog = document.createElement('div');
+            confirmDialog.className = 'confirm-dialog';
+            confirmDialog.innerHTML = `
+                <div class="confirm-dialog-content">
+                    <h3>Remove Item</h3>
+                    <p>Are you sure you want to remove this item?</p>
+                    <div class="confirm-dialog-buttons">
+                        <button onclick="confirmRemove()">Yes</button>
+                        <button onclick="cancelRemove()">No</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(confirmDialog);
+        }
+
+        function confirmRemove() {
+            // Remove o diálogo de confirmação
+            const dialog = document.querySelector('.confirm-dialog');
+            if (dialog) {
+                dialog.remove();
+            }
+
+            // Verifica se temos um ID válido
+            if (productIdToRemove === null) {
+                console.error('No product ID to remove');
+                return;
+            }
+
+            console.log('Removing product:', productIdToRemove);
+
+            // Cria e submete o formulário
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '${pageContext.request.contextPath}/RemoveFromCartServlet';
+
+            const inputId = document.createElement('input');
+            inputId.type = 'hidden';
+            inputId.name = 'productId';
+            inputId.value = productIdToRemove;
+
+            form.appendChild(inputId);
+            document.body.appendChild(form);
+            form.submit();
+
+            // Limpa o ID armazenado
+            productIdToRemove = null;
+        }
+
+        function cancelRemove() {
+            // Remove o diálogo de confirmação
+            const dialog = document.querySelector('.confirm-dialog');
+            if (dialog) {
+                dialog.remove();
+            }
+
+            // Limpa o ID armazenado
+            productIdToRemove = null;
+        }
+    </script>
 </body>
 
 </html>
