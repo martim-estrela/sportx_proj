@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const deleteButtons = document.querySelectorAll('.delete-user');
+    const deleteButtons = document.querySelectorAll('.delete-product');
     const confirmDeletePopup = document.getElementById('confirmDeletePopup');
     const errorPopup = document.getElementById('errorPopup');
     const confirmYesBtn = document.getElementById('confirmYesBtn');
@@ -7,12 +7,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const errorCloseBtn = document.getElementById('errorCloseBtn');
     const errorMessage = document.getElementById('errorMessage');
 
-    let currentUserId = null;
+    let currentProductId = null;
 
     // Adicionar eventos aos botões de eliminação
     deleteButtons.forEach(button => {
         button.addEventListener('click', function () {
-            currentUserId = this.getAttribute('data-userid');
+            currentProductId = this.getAttribute('data-productid');
             showConfirmPopup();
         });
     });
@@ -64,13 +64,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Função para eliminar utilizador
-    function deleteUser(userId) {
-        fetch(`${contextPath}/manageUser`, {
+    function deleteUser(productId) {
+        fetch(`${contextPath}/manageStock`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: `action=deleteUser&userId=${encodeURIComponent(userId)}`
+            body: `action=deleteProduct&productId=${encodeURIComponent(productId)}`
         })
             .then(response => {
                 if (response.ok) {
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             })
             .catch(error => {
-                showErrorPopup("Error eliminating user: " + error.message);
+                showErrorPopup("Error eliminating product : " + error.message);
             });
     }
 });
