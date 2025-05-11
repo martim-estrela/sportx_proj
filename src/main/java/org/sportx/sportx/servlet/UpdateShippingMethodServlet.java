@@ -3,7 +3,6 @@ package org.sportx.sportx.servlet;
 import org.sportx.sportx.dao.ShippingMethodDAO;
 import org.sportx.sportx.model.ShippingMethod;
 
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -1,11 +1,16 @@
 package org.sportx.sportx.util;
 
+import org.sportx.sportx.DTO.ProductItemDTO;
 import org.sportx.sportx.model.Product;
+import org.sportx.sportx.model.ProductItem;
 import org.sportx.sportx.model.Promotion;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductDAO {
 
@@ -69,27 +74,52 @@ public class ProductDAO {
         StringBuilder queryBuilder = new StringBuilder();
         StringBuilder countQueryBuilder = new StringBuilder();
         List<Object> params = new ArrayList<>();
+        List<Object> countParams = new ArrayList<>();
 
-        // Base query to join product and product_item tables
+        // Query principal: produto + product_item de menor preço (único)
         queryBuilder.append("SELECT p.product_id, p.name, p.description, p.brand, pi.price, pi.product_image ");
         queryBuilder.append("FROM product p ");
-        queryBuilder.append("JOIN product_item pi ON p.product_id = pi.product_id ");
+        queryBuilder.append("JOIN product_item pi ON pi.product_item_id = ( ");
+        queryBuilder.append("    SELECT pi2.product_item_id ");
+        queryBuilder.append("    FROM product_item pi2 ");
+        queryBuilder.append("    WHERE pi2.product_id = p.product_id ");
 
-        // Count query for pagination
-        countQueryBuilder.append("SELECT COUNT(*) AS total ");
-        countQueryBuilder.append("FROM product p ");
-        countQueryBuilder.append("JOIN product_item pi ON p.product_id = pi.product_id ");
+        // Filtros de preço na subquery para garantir que o product_item escolhido respeita o filtro
+        if (selectedPrices != null && selectedPrices.length > 0) {
+            queryBuilder.append(" AND (");
+            List<String> priceConditions = new ArrayList<>();
+            for (String priceRange : selectedPrices) {
+                switch (priceRange) {
+                    case "0-50":
+                        priceConditions.add("pi2.price >= 0 AND pi2.price <= 50");
+                        break;
+                    case "50-100":
+                        priceConditions.add("pi2.price > 50 AND pi2.price <= 100");
+                        break;
+                    case "100-150":
+                        priceConditions.add("pi2.price > 100 AND pi2.price <= 150");
+                        break;
+                    case "150+":
+                        priceConditions.add("pi2.price > 150");
+                        break;
+                }
+            }
+            queryBuilder.append(String.join(" OR ", priceConditions));
+            queryBuilder.append(") ");
+        }
 
-        // Building WHERE clause for filtering
+        queryBuilder.append("    ORDER BY pi2.price ASC, pi2.product_item_id ASC ");
+        queryBuilder.append("    LIMIT 1 ");
+        queryBuilder.append(") ");
+
+        // Construção da cláusula WHERE para filtros que não são de product_item (marca, pesquisa)
         List<String> whereConditions = new ArrayList<>();
 
-        // Brand filter - FIXED: Now correctly filters by brand field
+        // Filtro por marcas
         if (selectedBrands != null && selectedBrands.length > 0) {
             StringBuilder brandCondition = new StringBuilder("p.brand IN (");
             for (int i = 0; i < selectedBrands.length; i++) {
-                if (i > 0) {
-                    brandCondition.append(", ");
-                }
+                if (i > 0) brandCondition.append(", ");
                 brandCondition.append("?");
                 params.add(selectedBrands[i]);
             }
@@ -97,33 +127,7 @@ public class ProductDAO {
             whereConditions.add(brandCondition.toString());
         }
 
-        // Price filter
-        if (selectedPrices != null && selectedPrices.length > 0) {
-            List<String> priceConditions = new ArrayList<>();
-
-            for (String priceRange : selectedPrices) {
-                switch (priceRange) {
-                    case "0-50":
-                        priceConditions.add("(pi.price >= 0 AND pi.price <= 50)");
-                        break;
-                    case "50-100":
-                        priceConditions.add("(pi.price > 50 AND pi.price <= 100)");
-                        break;
-                    case "100-150":
-                        priceConditions.add("(pi.price > 100 AND pi.price <= 150)");
-                        break;
-                    case "150+":
-                        priceConditions.add("(pi.price > 150)");
-                        break;
-                }
-            }
-
-            if (!priceConditions.isEmpty()) {
-                whereConditions.add("(" + String.join(" OR ", priceConditions) + ")");
-            }
-        }
-
-        // Search term filter
+        // Filtro por termo de pesquisa
         if (searchTerm != null && !searchTerm.trim().isEmpty()) {
             whereConditions.add("(p.name LIKE ? OR p.description LIKE ? OR p.brand LIKE ?)");
             String searchPattern = "%" + searchTerm.trim() + "%";
@@ -132,13 +136,12 @@ public class ProductDAO {
             params.add(searchPattern);
         }
 
-        // Append WHERE clause if there are conditions
+        // Adiciona cláusula WHERE se existirem condições
         if (!whereConditions.isEmpty()) {
             queryBuilder.append(" WHERE ").append(String.join(" AND ", whereConditions));
-            countQueryBuilder.append(" WHERE ").append(String.join(" AND ", whereConditions));
         }
 
-        // Apply sorting
+        // Ordenação
         switch (sortBy) {
             case "price_asc":
                 queryBuilder.append(" ORDER BY pi.price ASC");
@@ -152,17 +155,70 @@ public class ProductDAO {
                 break;
         }
 
-        // Add pagination
+        // Paginação
         queryBuilder.append(" LIMIT ? OFFSET ?");
         int offset = (page - 1) * productsPerPage;
 
-        // First get total count for pagination
+        // --- Query de contagem ---
+        countQueryBuilder.append("SELECT COUNT(*) AS total FROM product p ");
+
+        // Filtros na contagem: marca e pesquisa (mesmos que na query principal)
+        List<String> countWhereConditions = new ArrayList<>();
+
+        if (selectedBrands != null && selectedBrands.length > 0) {
+            StringBuilder brandCondition = new StringBuilder("p.brand IN (");
+            for (int i = 0; i < selectedBrands.length; i++) {
+                if (i > 0) brandCondition.append(", ");
+                brandCondition.append("?");
+                countParams.add(selectedBrands[i]);
+            }
+            brandCondition.append(")");
+            countWhereConditions.add(brandCondition.toString());
+        }
+
+        if (searchTerm != null && !searchTerm.trim().isEmpty()) {
+            countWhereConditions.add("(p.name LIKE ? OR p.description LIKE ? OR p.brand LIKE ?)");
+            String searchPattern = "%" + searchTerm.trim() + "%";
+            countParams.add(searchPattern);
+            countParams.add(searchPattern);
+            countParams.add(searchPattern);
+        }
+
+        // Filtro de preço na contagem: produtos que tenham pelo menos um product_item dentro do filtro
+        if (selectedPrices != null && selectedPrices.length > 0) {
+            countWhereConditions.add("EXISTS (SELECT 1 FROM product_item pi WHERE pi.product_id = p.product_id AND (");
+
+            List<String> priceConditions = new ArrayList<>();
+            for (String priceRange : selectedPrices) {
+                switch (priceRange) {
+                    case "0-50":
+                        priceConditions.add("pi.price >= 0 AND pi.price <= 50");
+                        break;
+                    case "50-100":
+                        priceConditions.add("pi.price > 50 AND pi.price <= 100");
+                        break;
+                    case "100-150":
+                        priceConditions.add("pi.price > 100 AND pi.price <= 150");
+                        break;
+                    case "150+":
+                        priceConditions.add("pi.price > 150");
+                        break;
+                }
+            }
+            countWhereConditions.add(String.join(" OR ", priceConditions));
+            countWhereConditions.add("))");
+        }
+
+        if (!countWhereConditions.isEmpty()) {
+            countQueryBuilder.append(" WHERE ").append(String.join(" AND ", countWhereConditions));
+        }
+
+        // --- Executa query de contagem ---
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement countStmt = conn.prepareStatement(countQueryBuilder.toString())) {
 
-            // Set parameters for count query
-            for (int i = 0; i < params.size(); i++) {
-                countStmt.setObject(i + 1, params.get(i));
+            for (int i = 0; i < countParams.size(); i++) {
+                countStmt.setObject(i + 1, countParams.get(i));
             }
 
             ResultSet countRs = countStmt.executeQuery();
@@ -174,17 +230,14 @@ public class ProductDAO {
             e.printStackTrace();
         }
 
-        // Execute the main query with pagination
+        // --- Executa query principal ---
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(queryBuilder.toString())) {
 
-            // Set parameters for main query
             int paramIndex = 1;
             for (Object param : params) {
                 pstmt.setObject(paramIndex++, param);
             }
-
-            // Add pagination parameters
             pstmt.setInt(paramIndex++, productsPerPage);
             pstmt.setInt(paramIndex, offset);
 
@@ -200,12 +253,9 @@ public class ProductDAO {
 
                 products.add(product);
             }
-
-
         } catch (SQLException e) {
             System.out.println("Error retrieving filtered products: " + e.getMessage());
             e.printStackTrace();
-
         }
 
         result.put("products", products);
@@ -213,6 +263,7 @@ public class ProductDAO {
 
         return result;
     }
+
 
     /**
      * Get product by its ID
@@ -264,14 +315,23 @@ public class ProductDAO {
         return product;
     }
 
-    // Método para buscar produtos similares
     public List<Product> getSimilarProducts(int productId, String brand) {
         List<Product> similarProducts = new ArrayList<>();
         String query =
-                "SELECT DISTINCT product_id, name, description, brand, price, product_image, variation_type " +
-                "FROM product_detailed_view " +
-                "WHERE brand = ? AND product_id != ?  AND variation_type = 'Color' " +
-                "LIMIT 4";
+                "SELECT p.product_id, p.name, p.description, p.brand, pi.price, pi.product_image " +
+                        "FROM product p " +
+                        "JOIN product_item pi ON p.product_id = pi.product_id " +
+                        "WHERE p.brand = ? AND p.product_id != ? " +
+                        "AND pi.product_item_id = ( " +
+                        "    SELECT pi2.product_item_id " +
+                        "    FROM product_item pi2 " +
+                        "    WHERE pi2.product_id = p.product_id " +
+                        "    ORDER BY pi2.price ASC " +
+                        "    LIMIT 1 " +
+                        ") " +
+                        "GROUP BY p.product_id, p.name, p.description, p.brand, pi.price, pi.product_image " +
+                        "ORDER BY pi.price ASC " +
+                        "LIMIT 4";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -298,61 +358,74 @@ public class ProductDAO {
         return similarProducts;
     }
 
-    // Método para buscar tamanhos disponíveis
-    public List<String> getAvailableSizes(int productId) throws SQLException {
-        List<String> sizes = new ArrayList<>();
-
-        String query = "SELECT DISTINCT variation_value " +
-                "FROM product_detailed_view " +
-                "WHERE product_id = ? " +
-                "AND variation_type = 'Size' " +
-                "AND stock > 0 " +
-                "ORDER BY variation_value";
+    public List<ProductItemDTO> getProductItemsByProductId(int productId) {
+        List<ProductItemDTO> productItems = new ArrayList<>();
+        String sql = "SELECT p.*, promo.promotion_id, promo.name as promo_name, promo.description as promo_desc, " +
+                "promo.discount_rate, promo.start_date, promo.end_date " +
+                "FROM product_detailed_view_agg p " +
+                "LEFT JOIN promotion promo ON p.product_item_id = promo.product_item_id " +
+                "WHERE p.product_id = ?";
 
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, productId);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                String size = rs.getString("variation_value");
-                if (size != null && !size.trim().isEmpty()) {
-                    sizes.add(size);
-                }
-            }
-        }
-
-        return sizes;
-    }
-
-    public List<String> getAvailableColors(int productId) {
-        List<String> colors = new ArrayList<>();
-
-        String query = "SELECT DISTINCT variation_value " +
-                "FROM product_detailed_view " +
-                "WHERE product_id = ? " +
-                "AND variation_type = 'Color' " +
-                "AND stock > 0 " +  // Só mostra cores com stock disponível
-                "ORDER BY variation_value";
-
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setInt(1, productId);
-            ResultSet rs = stmt.executeQuery();
+            pstmt.setInt(1, productId);
+            ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                String color = rs.getString("variation_value");
-                if (color != null && !color.trim().isEmpty()) {
-                    colors.add(color);
+                ProductItemDTO item = new ProductItemDTO();
+                item.setProductItemId(rs.getInt("product_item_id"));
+                item.setPrice(rs.getDouble("price"));
+                item.setQtyInStock(rs.getInt("stock"));
+                item.setImageUrl(rs.getString("product_image"));
+                item.setVariationPairs(rs.getString("variation_pairs"));
+
+                int promoId = rs.getInt("promotion_id");
+                if (!rs.wasNull()) {
+                    String promoName = rs.getString("promo_name");
+                    String promoDesc = rs.getString("promo_desc");
+                    Double discountRate = rs.getObject("discount_rate") != null ? rs.getDouble("discount_rate") : null;
+
+                    Date sqlStartDate = rs.getDate("start_date");
+                    Date sqlEndDate = rs.getDate("end_date");
+
+                    LocalDate startDate = (sqlStartDate != null) ? sqlStartDate.toLocalDate() : null;
+                    LocalDate endDate = (sqlEndDate != null) ? sqlEndDate.toLocalDate() : null;
+
+                    if (discountRate != null && startDate != null && endDate != null) {
+                        Promotion promo = new Promotion(
+                                promoId,
+                                promoName,
+                                promoDesc,
+                                discountRate,
+                                startDate,
+                                endDate
+                        );
+
+                        if (promo.isActive()) {
+                            double discountedPrice = item.getPrice() * (1 - (discountRate / 100));
+                            item.setDiscountRate(discountRate);
+                            item.setDiscountedPrice(Math.round(discountedPrice * 100.0) / 100.0); // Arredonda para 2 casas decimais
+                        } else {
+                            item.setDiscountRate(0.0);
+                            item.setDiscountedPrice(item.getPrice());
+                        }
+                    } else {
+                        item.setDiscountRate(0.0);
+                        item.setDiscountedPrice(item.getPrice());
+                    }
+                } else {
+                    item.setDiscountRate(0.0);
+                    item.setDiscountedPrice(item.getPrice());
                 }
+
+                productItems.add(item);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return colors;
+        return productItems;
     }
+
 
 }

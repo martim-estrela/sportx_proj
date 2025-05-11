@@ -480,6 +480,11 @@ footer {
     justify-content: center;
 }
 
+.stock-warning {
+    color: #218A38;
+    font-size: 0.8em;
+    margin-left: 5px;
+}
 /* Nova div para conteúdo extra embaixo */
 .extra-div {
     width: auto; /* largura da img-div + gap + product-details */
@@ -487,3 +492,4 @@ footer {
     background: #D1D1D1;
 
 }
+

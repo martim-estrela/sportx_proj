@@ -6,7 +6,11 @@ public class ProductItem {
     private String SKU;
     private String imageUrl;
 
-    // Getters, Setters, Construtor
+    // Construtor padrão público
+    public ProductItem() {
+    }
+
+    // Construtor completo
     public ProductItem(int productItemId, int qtyInStock, String SKU, String imageUrl) {
         this.productItemId = productItemId;
         this.qtyInStock = qtyInStock;
@@ -14,6 +18,7 @@ public class ProductItem {
         this.imageUrl = imageUrl;
     }
 
+    // Getters e Setters
     public int getProductItemId() {
         return productItemId;
     }
@@ -38,17 +43,22 @@ public class ProductItem {
         this.SKU = SKU;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    // Métodos auxiliares
     public boolean isInStock() {
         return qtyInStock > 0;
     }
 
     public void reduceStock(int quantity) {
-        if (qtyInStock >= quantity) {
+        if (quantity > 0 && qtyInStock >= quantity) {
             qtyInStock -= quantity;
         }
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
     }
 }

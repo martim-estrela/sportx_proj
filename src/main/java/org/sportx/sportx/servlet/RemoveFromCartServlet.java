@@ -1,12 +1,9 @@
 package org.sportx.sportx.servlet;
 
 import org.sportx.sportx.model.CartItem;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import org.sportx.sportx.model.ShippingMethod;
+import javax.servlet.*;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.Iterator;
@@ -16,31 +13,31 @@ public class RemoveFromCartServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        HttpSession session = request.getSession();
+
         try {
-            String productIdStr = request.getParameter("productId");
-
-            if (productIdStr == null || productIdStr.trim().isEmpty()) {
-                throw new IllegalArgumentException("Product ID is required");
+            // 1. Obter e validar o parâmetro
+            String productItemIdStr = request.getParameter("productItemId");
+            if (productItemIdStr == null || productItemIdStr.trim().isEmpty()) {
+                throw new IllegalArgumentException("Product Item ID is required");
             }
 
-            int productId = Integer.parseInt(productIdStr.trim());
+            int productItemId = Integer.parseInt(productItemIdStr.trim());
 
-            // Obter o carrinho da sessão
-            HttpSession session = request.getSession();
+            // 2. Obter o carrinho da sessão
             List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
-
-            if (cart == null) {
-                throw new IllegalStateException("Cart not found in session");
+            if (cart == null || cart.isEmpty()) {
+                throw new IllegalStateException("Your cart is empty");
             }
 
-            // Remover o item e recalcular totais
+            // 3. Remover o item e calcular novos totais
             boolean itemRemoved = false;
             double cartTotal = 0.0;
 
             Iterator<CartItem> iterator = cart.iterator();
             while (iterator.hasNext()) {
                 CartItem item = iterator.next();
-                if (item.getProductItemId() == productId) {
+                if (item.getProductItemId() == productItemId) {
                     iterator.remove();
                     itemRemoved = true;
                 } else {
@@ -49,26 +46,33 @@ public class RemoveFromCartServlet extends HttpServlet {
             }
 
             if (!itemRemoved) {
-                throw new IllegalArgumentException("Item not found in cart");
+                throw new IllegalArgumentException("Item not found in your cart");
             }
 
-            // Calcular total com frete (se o carrinho não estiver vazio)
-            double totalWithShipping = cartTotal;
+            // 4. Calcular frete (se houver itens restantes)
+            double shippingCost = 0.0;
+            ShippingMethod shippingMethod = (ShippingMethod) session.getAttribute("selectedShippingMethod");
+
             if (!cart.isEmpty()) {
-                double shippingCost = 6.00;
-                totalWithShipping = cartTotal + shippingCost;
+                shippingCost = (shippingMethod != null) ? shippingMethod.getPrice() : 6.00; // Valor padrão
             }
 
-            // Atualizar valores na sessão
+            // 5. Atualizar a sessão
             session.setAttribute("cart", cart);
             session.setAttribute("cartTotal", cartTotal);
-            session.setAttribute("totalWithShipping", totalWithShipping);
+            session.setAttribute("totalWithShipping", cartTotal + shippingCost);
 
-            // Redirecionar de volta para a página do carrinho
-            response.sendRedirect(request.getContextPath() + "/ShoppingCart_Page.jsp");
+            // 6. Redirecionar com mensagem de sucesso
+            response.sendRedirect(request.getContextPath() + "/ShoppingCart_Page.jsp?removed=true");
 
+        } catch (NumberFormatException e) {
+            session.setAttribute("errorMessage", "Invalid product ID format");
+            response.sendRedirect(request.getContextPath() + "/ShoppingCart_Page.jsp?error=true");
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            session.setAttribute("errorMessage", e.getMessage());
+            response.sendRedirect(request.getContextPath() + "/ShoppingCart_Page.jsp?error=true");
         } catch (Exception e) {
-            e.printStackTrace();
+            session.setAttribute("errorMessage", "An unexpected error occurred");
             response.sendRedirect(request.getContextPath() + "/ShoppingCart_Page.jsp?error=true");
         }
     }
