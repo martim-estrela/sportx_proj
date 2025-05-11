@@ -186,8 +186,6 @@ public class ProductDAO {
 
         // Filtro de preço na contagem: produtos que tenham pelo menos um product_item dentro do filtro
         if (selectedPrices != null && selectedPrices.length > 0) {
-            countWhereConditions.add("EXISTS (SELECT 1 FROM product_item pi WHERE pi.product_id = p.product_id AND (");
-
             List<String> priceConditions = new ArrayList<>();
             for (String priceRange : selectedPrices) {
                 switch (priceRange) {
@@ -205,8 +203,11 @@ public class ProductDAO {
                         break;
                 }
             }
-            countWhereConditions.add(String.join(" OR ", priceConditions));
-            countWhereConditions.add("))");
+            if (!priceConditions.isEmpty()) {
+                String existsCondition = "EXISTS (SELECT 1 FROM product_item pi WHERE pi.product_id = p.product_id AND ("
+                        + String.join(" OR ", priceConditions) + "))";
+                countWhereConditions.add(existsCondition);
+            }
         }
 
         if (!countWhereConditions.isEmpty()) {
