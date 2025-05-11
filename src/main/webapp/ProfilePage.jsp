@@ -20,8 +20,6 @@
     </div>
     <div>
         <a href="${pageContext.request.contextPath}/SearchBrowse.jsp">Products</a>
-        <a href="${pageContext.request.contextPath}/SearchBrowse.jsp">Sale</a>
-        <a href="#" id="searchButton">Search</a>
     </div>
     <div>
         <a href="ShoppingCart_Page.jsp"><img src="${pageContext.request.contextPath}/img/shopping-cart.jpg"></a>

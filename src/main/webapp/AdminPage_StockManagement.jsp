@@ -24,22 +24,17 @@
 </head>
 
 <body>
-    <header>
-        <div>
-            <a href="${pageContext.request.contextPath}/index.jsp"><strong>SPORTX</strong></a>
-        </div>
-        <div>
-            <a href="${pageContext.request.contextPath}/SearchBrowse.jsp">Products</a>
-            <a href="${pageContext.request.contextPath}/SearchBrowse.jsp">Sale</a>
-            <a href="#" id="searchButton">Search</a>
-        </div>
-        <div>
-            <a href="${pageContext.request.contextPath}/ShoppingCart_Page.jsp"><img src="${pageContext.request.contextPath}/img/shopping-cart.jpg"></a>
-            <a href="#" id="profileButton"><img src="${pageContext.request.contextPath}/img/account_circle.jpg" alt="Profile"></a>
-        </div>
-    </header>
+<header>
+    <div>
+        <a href="${pageContext.request.contextPath}/index.jsp"><strong>SPORTX</strong></a>
+    </div>
+    <div>
+        <a href="#" id="profileButton"><img src="${pageContext.request.contextPath}/img/account_circle.jpg" alt="Profile"></a>
+    </div>
+</header>
 
-    <!-- Popup Menu -->
+
+<!-- Popup Menu -->
     <div id="profilePopup" class="popup">
         <div class="popup-content">
             <!-- Exibe Login e Register se o utilizador não estiver logado -->

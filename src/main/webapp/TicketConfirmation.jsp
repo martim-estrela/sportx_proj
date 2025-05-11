@@ -317,8 +317,6 @@
     </div>
     <div>
         <a href="${pageContext.request.contextPath}/SearchBrowseServlet">Products</a>
-        <a href="${pageContext.request.contextPath}/SearchBrowseServlet">Sale</a>
-        <a href="#" id="searchButton">Search</a>
     </div>
     <div>
         <a href="ShoppingCart_Page.jsp"><img src="${pageContext.request.contextPath}/img/shopping-cart.jpg"></a>

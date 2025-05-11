@@ -72,8 +72,6 @@
     </div>
     <div>
         <a href="${pageContext.request.contextPath}/SearchBrowse.jsp">Products</a>
-        <a href="${pageContext.request.contextPath}/SearchBrowse.jsp">Sale</a>
-        <a href="#" id="searchButton">Search</a>
     </div>
     <div>
         <a href="${pageContext.request.contextPath}/ShoppingCart_Page.jsp"><img src="${pageContext.request.contextPath}/img/shopping-cart.jpg" alt="Cart"></a>
