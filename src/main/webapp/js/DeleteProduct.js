@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Eventos para os botões do popup de confirmação
     confirmYesBtn.addEventListener('click', function() {
         hideConfirmPopup();
-        deleteUser(currentUserId);
+        deleteUser(currentProductId);
     });
 
     confirmNoBtn.addEventListener('click', function() {
@@ -64,13 +64,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Função para eliminar utilizador
-    function deleteUser(productId) {
+    function deleteUser(productItemId) {
         fetch(`${contextPath}/manageStock`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: `action=deleteProduct&productId=${encodeURIComponent(productId)}`
+            body: `action=deleteProduct&productItemId=${encodeURIComponent(productItemId)}`
         })
             .then(response => {
                 if (response.ok) {

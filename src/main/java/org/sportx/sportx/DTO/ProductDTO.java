@@ -4,6 +4,7 @@ import java.util.*;
 
 public class ProductDTO {
     private int productId;
+    private int productItemId;
     private String name;
     private String description;
     private String brand;
@@ -24,6 +25,8 @@ public class ProductDTO {
     // Getters e setters (podes gerar com IDE se quiseres)
     public int getProductId() { return productId; }
     public void setProductId(int productId) { this.productId = productId; }
+    public int getProductItemId() { return productItemId; }
+    public void setProductItemId(int productItemId) { this.productItemId = productItemId; }
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
     public String getDescription() { return description; }

@@ -16,7 +16,8 @@ public class StockManagementDAO {
         StockManagementDAO.conn = conn;
     }
 
-    public void updateStock(StockManagementDTO stockManagementDTO)
+    /*
+    public void updateStock(ProductDTO product)
             throws SQLException {
 
         String query = "UPDATE product_item pi" +
@@ -29,27 +30,30 @@ public class StockManagementDAO {
                 "AND vo.value = ? ";
 
         try (PreparedStatement stmt = conn.prepareStatement(query);) {
-            stmt.setInt(1, stockManagementDTO.getQtyInStock());
-            stmt.setInt(2, stockManagementDTO.getProductItemID());
-            stmt.setString(3, stockManagementDTO.getOptionType());
-            stmt.setString(4, stockManagementDTO.getOptionValue());
+            stmt.setInt(1, product.getStock());
+            stmt.setInt(2, product.getProductItemId());
+            stmt.setString(3, product.getOptionType());
+            stmt.setString(4, product.getOptionValue());
 
             stmt.executeUpdate();
         }
-    }
+    }*/
 
     //Eliminar produto da BD
-    public void deleteProduct(int product_item_id)
+    public void deleteProduct(int productItemId)
             throws SQLException {
 
         String query = "DELETE FROM product_item WHERE product_item_id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query);) {
 
-            stmt.setInt(1, product_item_id);
+            stmt.setInt(1, productItemId);
 
             stmt.executeUpdate();
 
 
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -119,6 +123,7 @@ public class StockManagementDAO {
                 if (product == null) {
                     product = new ProductDTO();
                     product.setProductId(productId);
+                    product.setProductItemId(rs.getInt("product_item_id"));
                     product.setName(rs.getString("name"));
                     product.setDescription(rs.getString("description"));
                     product.setBrand(rs.getString("brand"));

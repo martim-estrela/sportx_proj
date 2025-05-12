@@ -130,7 +130,6 @@
 
         <!--  Tabela de Produtos -->
         <div class=" table-container">
-
             <div class="row1">
                 <div class="column-img-top"><label>Image</label></div>
                 <div class="column-description"><label>ID</label></div>
@@ -172,10 +171,10 @@
                         <label class="product-price">${product.price}€</label>
                     </div>
                     <div class="column-edit-icon">
-                        <button class="btn-edit edit-product" data-productid="${product.productId}"><i class="material-icons" style="background-color: #d9d9d9d9; font-size:40px">edit_square</i></button>
+                        <button class="btn-edit edit-product" data-productid="${product.productItemId}"><i class="material-icons" style="background-color: #d9d9d9d9; font-size:40px">edit_square</i></button>
                     </div>
                     <div class="column-delete-icon">
-                        <button class="btn-edit delete-product" data-productid="${product.productId}">
+                        <button class="btn-edit delete-product" data-productid="${product.productItemId}">
                             <i class="material-icons" style="color: red; background-color: #d9d9d9d9; font-size:40px">close</i>
                         </button>
                     </div>
