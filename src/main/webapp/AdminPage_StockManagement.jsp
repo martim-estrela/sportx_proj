@@ -154,10 +154,10 @@
                         <label class="product-brand">${product.brand}</label>
                     </div>
                     <div class="column-description3">
-                        <label class="product-color">${product.colors}</label>
+                        <label class="product-color">${product.color}</label>
                     </div>
                     <div class="column-description4">
-                        <label class="product-size">${product.sizes}</label>
+                        <label class="product-size">${product.size}</label>
                     </div>
                     <div class="column-description5">
                         <label class="product-stock">${product.stock}</label>

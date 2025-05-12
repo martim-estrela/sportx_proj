@@ -11,8 +11,8 @@ public class ProductDTO {
     private double price;
     private String image;
     private int stock;
-    private Set<String> colors = new HashSet<>();
-    private Set<String> sizes = new HashSet<>();
+    private String color;
+    private String size;
 
 
     public ProductDTO() {
@@ -39,10 +39,10 @@ public class ProductDTO {
     public void setImage(String image) { this.image = image; }
     public int getStock() { return stock; }
     public void setStock(int stock) { this.stock = stock; }
-    public Set<String> getColors() { return colors; }
-    public void setColors(Set<String> colors) { this.colors = colors; }
-    public Set<String> getSizes() { return sizes; }
-    public void setSizes(Set<String> sizes) { this.sizes = sizes; }
+    public String getColor() { return color; }
+    public void setColor(String color) { this.color = color; }
+    public String getSize() { return size; }
+    public void setSize(String size) { this.size = size; }
 
 
 

@@ -110,8 +110,8 @@ public class ProductPdfGeneratorServlet extends HttpServlet {
                 addTableCell(table, String.valueOf(product.getProductId()), cellFont, rowColor);
                 addTableCell(table, product.getName(), cellFont, rowColor);
                 addTableCell(table, product.getBrand(), cellFont, rowColor);
-                addTableCell(table, formatSet(product.getColors()), cellFont, rowColor);
-                addTableCell(table, formatSet(product.getSizes()), cellFont, rowColor);
+                addTableCell(table, product.getColor(), cellFont, rowColor);
+                addTableCell(table, product.getSize(), cellFont, rowColor);
                 addTableCell(table, String.valueOf(product.getStock()), cellFont, rowColor);
                 addTableCell(table, String.format("%.2f", product.getPrice()), cellFont, rowColor);
 

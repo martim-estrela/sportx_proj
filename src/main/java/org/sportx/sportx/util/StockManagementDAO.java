@@ -8,6 +8,7 @@ import org.sportx.sportx.model.VariationOption;
 import java.sql.Connection;
 import java.sql.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class StockManagementDAO {
     private static Connection conn = null;
@@ -45,28 +46,25 @@ public class StockManagementDAO {
 
         String query = "DELETE FROM product_item WHERE product_item_id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query);) {
-
             stmt.setInt(1, productItemId);
-
             stmt.executeUpdate();
-
-
         }
         catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-
+/*
     public List<ProductDTO> getFilteredProducts(String category, String subcategory, String brand, String color,
                                                 String size, String name, int page, int productsPerPage) {
         List<ProductDTO> products = new ArrayList<>();
-        Map<Integer, ProductDTO> productMap = new HashMap<>(); // Para agregar variações por produto
+        Map<Integer, ProductDTO> productMap = new HashMap<>();
 
         String sql = "SELECT * FROM product_detailed_view pdv " +
                 "JOIN product_category_child sc ON pdv.sub_category_id = sc.sub_category_id " +
                 "JOIN product_category_parent c ON sc.category_id = c.category_id " +
                 "WHERE 1=1";
 
+        // Adiciona condições de filtro
         if (category != null && !category.isEmpty()) {
             sql += " AND c.category_name = ?";
         }
@@ -86,11 +84,12 @@ public class StockManagementDAO {
             sql += " AND pdv.name LIKE ?";
         }
 
-        sql += " ORDER BY pdv.product_id LIMIT ? OFFSET ?";
+        sql += " ORDER BY pdv.product_item_id LIMIT ? OFFSET ?";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             int index = 1;
 
+            // Definir parâmetros de filtro
             if (category != null && !category.isEmpty()) {
                 stmt.setString(index++, category);
             }
@@ -110,43 +109,150 @@ public class StockManagementDAO {
                 stmt.setString(index++, "%" + name + "%");
             }
 
-            // Paginação
+            // Parâmetros de paginação
             stmt.setInt(index++, productsPerPage);
             stmt.setInt(index++, (page - 1) * productsPerPage);
 
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                int productId = rs.getInt("product_id");
-                ProductDTO product = productMap.get(productId);
+                int productItemId = rs.getInt("product_item_id");
+                ProductDTO product = productMap.get(productItemId);
 
+                // Se o produto ainda não existe no mapa, cria um novo
                 if (product == null) {
                     product = new ProductDTO();
-                    product.setProductId(productId);
-                    product.setProductItemId(rs.getInt("product_item_id"));
+                    product.setProductId(rs.getInt("product_id"));
+                    product.setProductItemId(productItemId);
                     product.setName(rs.getString("name"));
                     product.setDescription(rs.getString("description"));
                     product.setBrand(rs.getString("brand"));
                     product.setPrice(rs.getDouble("price"));
                     product.setImage(rs.getString("product_image"));
                     product.setStock(rs.getInt("stock"));
-                    product.setColors(new HashSet<>());
-                    product.setSizes(new HashSet<>());
 
-                    productMap.put(productId, product);
+                    productMap.put(productItemId, product);
+                }
+
+                // Adiciona variações
+                String variationType = rs.getString("variation_type");
+                String variationValue = rs.getString("variation_value");
+
+                if ("Color".equalsIgnoreCase(variationType) && variationValue != null) {
+                    // Se já existir uma cor, concatena com a nova
+                    if (product.getColor() == null) {
+                        product.setColor(variationValue);
+                    } else if (!product.getColor().contains(variationValue)) {
+                        product.setColor(product.getColor() + ", " + variationValue);
+                    }
+                }
+
+                if ("Size".equalsIgnoreCase(variationType) && variationValue != null) {
+                    // Se já existir um tamanho, concatena com o novo
+                    if (product.getSize() == null) {
+                        product.setSize(variationValue);
+                    } else if (!product.getSize().contains(variationValue)) {
+                        product.setSize(product.getSize() + ", " + variationValue);
+                    }
+                }
+            }
+
+            // Converte o mapa para lista
+            products.addAll(productMap.values());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return products;
+    }*/
+
+    public List<ProductDTO> getFilteredProducts(String category, String subcategory, String brand, String color,
+                                                String size, String name, int page, int productsPerPage) {
+        List<ProductDTO> products = new ArrayList<>();
+        List<Integer> productIds = new ArrayList<>();
+
+        // Parte 1: Buscar os product_ids paginados
+        String idSql = "SELECT DISTINCT pdv.product_id FROM product_detailed_view pdv " +
+                "JOIN product_category_child sc ON pdv.sub_category_id = sc.sub_category_id " +
+                "JOIN product_category_parent c ON sc.category_id = c.category_id " +
+                "WHERE 1=1";
+        if (category != null && !category.isEmpty()) idSql += " AND c.category_name = ?";
+        if (subcategory != null && !subcategory.isEmpty()) idSql += " AND sc.sub_category_name = ?";
+        if (brand != null && !brand.isEmpty()) idSql += " AND pdv.brand = ?";
+        if (color != null && !color.isEmpty()) idSql += " AND (pdv.variation_type = 'Color' AND pdv.variation_value = ?)";
+        if (size != null && !size.isEmpty()) idSql += " AND (pdv.variation_type = 'Size' AND pdv.variation_value = ?)";
+        if (name != null && !name.isEmpty()) idSql += " AND pdv.name LIKE ?";
+        idSql += " ORDER BY pdv.product_id LIMIT ? OFFSET ?";
+
+        try (PreparedStatement idStmt = conn.prepareStatement(idSql)) {
+            int index = 1;
+            if (category != null && !category.isEmpty()) idStmt.setString(index++, category);
+            if (subcategory != null && !subcategory.isEmpty()) idStmt.setString(index++, subcategory);
+            if (brand != null && !brand.isEmpty()) idStmt.setString(index++, brand);
+            if (color != null && !color.isEmpty()) idStmt.setString(index++, color);
+            if (size != null && !size.isEmpty()) idStmt.setString(index++, size);
+            if (name != null && !name.isEmpty()) idStmt.setString(index++, "%" + name + "%");
+            idStmt.setInt(index++, productsPerPage);
+            idStmt.setInt(index, (page - 1) * productsPerPage);
+
+            ResultSet idRs = idStmt.executeQuery();
+            while (idRs.next()) {
+                productIds.add(idRs.getInt("product_id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return products;
+        }
+
+        if (productIds.isEmpty()) return products;
+
+        // Parte 2: Buscar os dados das variações por product_item_id
+        String dataSql = "SELECT * FROM product_detailed_view pdv " +
+                "JOIN product_category_child sc ON pdv.sub_category_id = sc.sub_category_id " +
+                "JOIN product_category_parent c ON sc.category_id = c.category_id " +
+                "WHERE pdv.product_id IN (" +
+                productIds.stream().map(id -> "?").collect(Collectors.joining(", ")) +
+                ") ORDER BY pdv.product_id, pdv.product_item_id";
+
+        try (PreparedStatement stmt = conn.prepareStatement(dataSql)) {
+            int idx = 1;
+            for (Integer id : productIds) {
+                stmt.setInt(idx++, id);
+            }
+
+            ResultSet rs = stmt.executeQuery();
+
+            Map<Integer, ProductDTO> productItemMap = new HashMap<>();
+
+            while (rs.next()) {
+                int productItemId = rs.getInt("product_item_id");
+
+                ProductDTO product = productItemMap.get(productItemId);
+                if (product == null) {
+                    product = new ProductDTO();
+                    product.setProductId(rs.getInt("product_id"));
+                    product.setProductItemId(productItemId);
+                    product.setName(rs.getString("name"));
+                    product.setDescription(rs.getString("description"));
+                    product.setBrand(rs.getString("brand"));
+                    product.setPrice(rs.getDouble("price"));
+                    product.setImage(rs.getString("product_image"));
+                    product.setStock(rs.getInt("stock"));
+                    productItemMap.put(productItemId, product);
                 }
 
                 String variationType = rs.getString("variation_type");
                 String variationValue = rs.getString("variation_value");
 
-                if ("Color".equalsIgnoreCase(variationType) && variationValue != null) {
-                    product.getColors().add(variationValue);
-                } else if ("Size".equalsIgnoreCase(variationType) && variationValue != null) {
-                    product.getSizes().add(variationValue);
+                if ("Color".equalsIgnoreCase(variationType)) {
+                    product.setColor(variationValue);
+                } else if ("Size".equalsIgnoreCase(variationType)) {
+                    product.setSize(variationValue);
                 }
             }
 
-            products.addAll(productMap.values());
+            products.addAll(productItemMap.values());
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -156,9 +262,12 @@ public class StockManagementDAO {
     }
 
 
+
+
+
     public static int getTotalProducts(String category, String subcategory, String brand, String color, String size, String name) throws SQLException {
         StringBuilder sql = new StringBuilder(
-                "SELECT COUNT(DISTINCT pdv.product_id) AS total " +
+                "SELECT COUNT(DISTINCT pdv.product_item_id) AS total " +
                         "FROM product_detailed_view pdv " +
                         "JOIN product_category_child sc ON pdv.sub_category_id = sc.sub_category_id " +
                         "JOIN product_category_parent c ON sc.category_id = c.category_id " +

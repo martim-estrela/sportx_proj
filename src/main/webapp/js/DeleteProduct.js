@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Eventos para os botões do popup de confirmação
     confirmYesBtn.addEventListener('click', function() {
         hideConfirmPopup();
-        deleteUser(currentProductId);
+        deleteProduct(currentProductId);
     });
 
     confirmNoBtn.addEventListener('click', function() {
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Função para eliminar utilizador
-    function deleteUser(productItemId) {
+    function deleteProduct(productItemId) {
         fetch(`${contextPath}/manageStock`, {
             method: 'POST',
             headers: {

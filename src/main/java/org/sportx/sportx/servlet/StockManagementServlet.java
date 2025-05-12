@@ -36,7 +36,7 @@ public class StockManagementServlet extends HttpServlet {
                 String variationOption = request.getParameter("variationOption");
 
                 StockManagementDTO DTO = new StockManagementDTO(product_item_Id, stock, variation, variationOption);
-                dao.updateStock(DTO);
+                //dao.updateStock(DTO);
             } else if ("DeleteProductServlet".equals(action)) {
                 int product_item_Id = Integer.parseInt(request.getParameter("product_item_id"));
                 dao.deleteProduct(product_item_Id);
@@ -94,8 +94,8 @@ public class StockManagementServlet extends HttpServlet {
             int startPage = Math.max(1, page - 2);
             int endPage = Math.min(totalPages, page + 2);
 
-            // Buscar utilizadores com base nos filtros
             List<ProductDTO> filteredProducts = stockDAO.getFilteredProducts(category, subCategory, brand, color, size, name, page, productPerPage);
+            // Set atributos
             request.setAttribute("filteredProducts", filteredProducts);
             request.setAttribute("currentPage", page);
             request.setAttribute("totalPages", totalPages);
