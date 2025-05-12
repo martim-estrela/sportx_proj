@@ -18,7 +18,6 @@
     </div>
     <div>
         <a href="${pageContext.request.contextPath}/SearchBrowseServlet">Products</a>
-        <a href="${pageContext.request.contextPath}/SearchBrowseServlet">Sale</a>
         <a href="#" id="searchButton">Search</a>
     </div>
     <div>

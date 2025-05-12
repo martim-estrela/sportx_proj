@@ -78,5 +78,15 @@
         <servlet-name>RemoveFromCartServlet</servlet-name>
         <url-pattern>/RemoveFromCartServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UpdateShippingMethodServlet</servlet-name>
+        <servlet-class>org.sportx.sportx.servlet.UpdateShippingMethodServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UpdateShippingMethodServlet</servlet-name>
+        <url-pattern>/UpdateShippingMethodServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
 
