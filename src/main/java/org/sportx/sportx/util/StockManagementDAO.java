@@ -1,9 +1,7 @@
 package org.sportx.sportx.util;
 
 import org.sportx.sportx.DTO.*;
-import org.sportx.sportx.model.ProductCategoryChild;
-import org.sportx.sportx.model.ProductCategoryParent;
-import org.sportx.sportx.model.VariationOption;
+import org.sportx.sportx.model.*;
 
 import java.sql.Connection;
 import java.sql.*;
@@ -17,28 +15,21 @@ public class StockManagementDAO {
         StockManagementDAO.conn = conn;
     }
 
-    /*
+
     public void updateStock(ProductDTO product)
             throws SQLException {
 
         String query = "UPDATE product_item pi" +
-        "JOIN product_item_variation_option povo ON pi.product_item_id = povo.product_item_id" +
-        "JOIN variation_option vo ON povo.variation_option_id = vo.variation_option_id" +
-        "JOIN variation v ON vo.variation_id = v.variation_id" +
-        "SET pi.qty_in_stock = ?" +
-                "WHERE pi.product_id = ?" +
-                "AND v.name = ?" +
-                "AND vo.value = ? ";
+        "SET pi.qty_in_stock = ? ,pi.price = ?" +
+                "WHERE pi.product_id = ?";
 
         try (PreparedStatement stmt = conn.prepareStatement(query);) {
             stmt.setInt(1, product.getStock());
             stmt.setInt(2, product.getProductItemId());
-            stmt.setString(3, product.getOptionType());
-            stmt.setString(4, product.getOptionValue());
 
             stmt.executeUpdate();
         }
-    }*/
+    }
 
     //Eliminar produto da BD
     public void deleteProduct(int productItemId)
@@ -53,18 +44,125 @@ public class StockManagementDAO {
             ex.printStackTrace();
         }
     }
-/*
+    //Adicionar produto na DB
+    public boolean addProduct(Product product, ProductItem productItem, String subCategory) throws SQLException {
+        int subCategoryId = -1;
+
+        String query2 = "SELECT sub_category_id FROM product_category_child" +
+                "WHERE value = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query2);) {
+            stmt.setString(1, subCategory);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                subCategoryId = rs.getInt("sub_category_id");
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        product.setSub_category_id(subCategoryId);
+
+
+        String query =  "INSERT INTO product (brand, name, description, sub_category_id) VALUES (?, ?, ?, ?)";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query);) {
+            stmt.setString(1, product.getBrand());
+            stmt.setString(2, product.getName());
+            stmt.setString(3, product.getDescription());
+            stmt.setInt(4, product.getSub_category_id());
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        String query1 = "INSERT INTO product_item (qty_in_stock, SKU, price, product_image, product_id) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement stmt = conn.prepareStatement(query1);) {
+            stmt.setInt(1, productItem.getQtyInStock());
+            stmt.setString(2, productItem.getSKU());
+            stmt.setDouble(3, productItem.getPrice());
+            stmt.setString(4, productItem.getImageUrl());
+            stmt.setInt(4, productItem.getProductItemId());
+
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+
+    }
+
+    //Linkar as cores aos produtos
+    public void linkColorWithProduct(ProductItem productItem, String color) throws SQLException {
+        int variationOptionId = -1;
+
+        String query1 = "SELECT variation_option_id FROM variation_option" +
+                "WHERE value = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query1);) {
+            stmt.setString(1, color);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                variationOptionId = rs.getInt("variation_option_id");
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+
+        String query = "INSERT INTO product_item_variation_option (product_item_id, variation_option_id) VALUES (?, ?)";
+        try (PreparedStatement stmt = conn.prepareStatement(query);) {
+            stmt.setInt(1, productItem.getProductItemId());
+            stmt.setInt(2, variationOptionId);
+            stmt.executeUpdate();
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    //Linkar os tamanhos aos produtos
+    public void linkSizeWithProduct(ProductItem productItem, String size) throws SQLException {
+        int variationOptionId = -1;
+
+        String query1 = "SELECT variation_option_id FROM variation_option" +
+                "WHERE value = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query1);) {
+            stmt.setString(1, size);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                variationOptionId = rs.getInt("variation_option_id");
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+
+        String query = "INSERT INTO product_item_variation_option (product_item_id, variation_option_id) VALUES (?, ?)";
+        try (PreparedStatement stmt = conn.prepareStatement(query);) {
+            stmt.setInt(1, productItem.getProductItemId());
+            stmt.setInt(2, variationOptionId);
+            stmt.executeUpdate();
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
+
+    //Busca produtos consoante os filtros
     public List<ProductDTO> getFilteredProducts(String category, String subcategory, String brand, String color,
                                                 String size, String name, int page, int productsPerPage) {
         List<ProductDTO> products = new ArrayList<>();
-        Map<Integer, ProductDTO> productMap = new HashMap<>();
-
-        String sql = "SELECT * FROM product_detailed_view pdv " +
+        String sql = "SELECT pdv.*, sc.sub_category_name, c.category_name " +
+                "FROM product_detailed_view_agg pdv " +
                 "JOIN product_category_child sc ON pdv.sub_category_id = sc.sub_category_id " +
                 "JOIN product_category_parent c ON sc.category_id = c.category_id " +
                 "WHERE 1=1";
 
-        // Adiciona condições de filtro
         if (category != null && !category.isEmpty()) {
             sql += " AND c.category_name = ?";
         }
@@ -75,10 +173,10 @@ public class StockManagementDAO {
             sql += " AND pdv.brand = ?";
         }
         if (color != null && !color.isEmpty()) {
-            sql += " AND (pdv.variation_type = 'Color' AND pdv.variation_value = ?)";
+            sql += " AND pdv.variation_pairs LIKE ?";
         }
         if (size != null && !size.isEmpty()) {
-            sql += " AND (pdv.variation_type = 'Size' AND pdv.variation_value = ?)";
+            sql += " AND pdv.variation_pairs LIKE ?";
         }
         if (name != null && !name.isEmpty()) {
             sql += " AND pdv.name LIKE ?";
@@ -89,7 +187,6 @@ public class StockManagementDAO {
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             int index = 1;
 
-            // Definir parâmetros de filtro
             if (category != null && !category.isEmpty()) {
                 stmt.setString(index++, category);
             }
@@ -100,80 +197,63 @@ public class StockManagementDAO {
                 stmt.setString(index++, brand);
             }
             if (color != null && !color.isEmpty()) {
-                stmt.setString(index++, color);
+                stmt.setString(index++, "%Color:" + color + "%");
             }
             if (size != null && !size.isEmpty()) {
-                stmt.setString(index++, size);
+                stmt.setString(index++, "%Size:" + size + "%");
             }
             if (name != null && !name.isEmpty()) {
                 stmt.setString(index++, "%" + name + "%");
             }
 
-            // Parâmetros de paginação
             stmt.setInt(index++, productsPerPage);
-            stmt.setInt(index++, (page - 1) * productsPerPage);
+            stmt.setInt(index, (page - 1) * productsPerPage);
 
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                int productItemId = rs.getInt("product_item_id");
-                ProductDTO product = productMap.get(productItemId);
+                ProductDTO product = new ProductDTO();
+                product.setProductId(rs.getInt("product_id"));
+                product.setProductItemId(rs.getInt("product_item_id"));
+                product.setName(rs.getString("name"));
+                product.setDescription(rs.getString("description"));
+                product.setBrand(rs.getString("brand"));
+                product.setPrice(rs.getDouble("price"));
+                product.setImage(rs.getString("product_image"));
+                product.setStock(rs.getInt("stock"));
 
-                // Se o produto ainda não existe no mapa, cria um novo
-                if (product == null) {
-                    product = new ProductDTO();
-                    product.setProductId(rs.getInt("product_id"));
-                    product.setProductItemId(productItemId);
-                    product.setName(rs.getString("name"));
-                    product.setDescription(rs.getString("description"));
-                    product.setBrand(rs.getString("brand"));
-                    product.setPrice(rs.getDouble("price"));
-                    product.setImage(rs.getString("product_image"));
-                    product.setStock(rs.getInt("stock"));
-
-                    productMap.put(productItemId, product);
-                }
-
-                // Adiciona variações
-                String variationType = rs.getString("variation_type");
-                String variationValue = rs.getString("variation_value");
-
-                if ("Color".equalsIgnoreCase(variationType) && variationValue != null) {
-                    // Se já existir uma cor, concatena com a nova
-                    if (product.getColor() == null) {
-                        product.setColor(variationValue);
-                    } else if (!product.getColor().contains(variationValue)) {
-                        product.setColor(product.getColor() + ", " + variationValue);
+                // Separar variações da string variation_pairs
+                String variationPairs = rs.getString("variation_pairs");
+                if (variationPairs != null) {
+                    for (String pair : variationPairs.split(",")) {
+                        String[] parts = pair.split(":");
+                        if (parts.length == 2) {
+                            if (parts[0].equalsIgnoreCase("Color")) {
+                                product.setColor(parts[1]);
+                            } else if (parts[0].equalsIgnoreCase("Size")) {
+                                product.setSize(parts[1]);
+                            }
+                        }
                     }
                 }
 
-                if ("Size".equalsIgnoreCase(variationType) && variationValue != null) {
-                    // Se já existir um tamanho, concatena com o novo
-                    if (product.getSize() == null) {
-                        product.setSize(variationValue);
-                    } else if (!product.getSize().contains(variationValue)) {
-                        product.setSize(product.getSize() + ", " + variationValue);
-                    }
-                }
+                products.add(product);
             }
-
-            // Converte o mapa para lista
-            products.addAll(productMap.values());
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return products;
-    }*/
+    }
 
+/*
     public List<ProductDTO> getFilteredProducts(String category, String subcategory, String brand, String color,
                                                 String size, String name, int page, int productsPerPage) {
         List<ProductDTO> products = new ArrayList<>();
         List<Integer> productIds = new ArrayList<>();
 
         // Parte 1: Buscar os product_ids paginados
-        String idSql = "SELECT DISTINCT pdv.product_id FROM product_detailed_view pdv " +
+        String idSql = "SELECT DISTINCT pdv.product_id FROM product_detailed_view_agg pdv " +
                 "JOIN product_category_child sc ON pdv.sub_category_id = sc.sub_category_id " +
                 "JOIN product_category_parent c ON sc.category_id = c.category_id " +
                 "WHERE 1=1";
@@ -227,8 +307,8 @@ public class StockManagementDAO {
 
             while (rs.next()) {
                 int productItemId = rs.getInt("product_item_id");
-
-                ProductDTO product = productItemMap.get(productItemId);
+                int productId = rs.getInt("product_id");
+                ProductDTO product = productItemMap.get(productId);
                 if (product == null) {
                     product = new ProductDTO();
                     product.setProductId(rs.getInt("product_id"));
@@ -260,7 +340,7 @@ public class StockManagementDAO {
 
         return products;
     }
-
+*/
 
 
 

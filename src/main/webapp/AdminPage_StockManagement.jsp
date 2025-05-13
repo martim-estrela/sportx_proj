@@ -235,28 +235,13 @@
                 <input type="hidden" id="editProductId" name="productId" value="">
 
                 <div class="product-form-group">
-                    <label for="editName">Name:</label>
-                    <input type="text" id="name" name="name">
-                </div>
-
-                <div class="product-form-group">
-                    <label for="editBrand">Brand:</label>
-                    <input type="text" id="brand" name="brand">
-                </div>
-
-                <div class="product-form-group">
-                    <label for="editColor">Color:</label>
-                    <input type="text" id="color" name="color">
-                </div>
-
-                <div class="product-form-group">
-                    <label for="editSize">Size:</label>
-                    <input type="text" id="size" name="size">
-                </div>
-
-                <div class="product-form-group">
                     <label for="editStock">Stock:</label>
                     <input type="number" id="stock" name="stock">
+                </div>
+
+                <div class="product-form-group">
+                    <label for="editPrice">Price:</label>
+                    <input type="number" id="price" name="price">
                 </div>
 
                 <div class="product-form-buttons">
@@ -308,36 +293,81 @@
     <!-- Modal Adicionar Produto -->
     <div id="addProductModal" class="product-modal" style="display: none;">
         <div class="product-modal-content">
+            <span class="product-modal-close">&times;</span>
             <h2 class="add-product-title">Add new product</h2>
             <form id="addProductForm" method="post" action="${pageContext.request.contextPath}/manageStock">
                 <input type="hidden" name="action" value="addProduct">
+                <div class="product-form-row">
+                    <div class="product-form-group">
+                        <label for="img">Image:</label>
+                        <input type="text" id="img" name="img">
+                    </div>
 
-                <div class="product-form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name">
+                    <div class="product-form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name">
+                    </div>
                 </div>
 
-                <div class="product-form-group">
-                    <label for="brand">Brand:</label>
-                    <input type="text" id="brand" name="brand">
+                <div class="product-form-row">
+                    <div class="product-form-group">
+                        <label for="brand">Brand:</label>
+                        <input type="text" id="brand" name="brand">
+                    </div>
+
+                    <div class="product-form-group">
+                        <label for="description">Description:</label>
+                        <input type="text" id="description" name="description">
+                    </div>
+                </div>
+                <div class="product-form-row">
+                    <div class="product-form-group">
+                        <label for="color">Color:</label>
+                        <select name="color" id="color" >
+                            <option value="">Select...</option>
+                            <c:forEach var="colorOption" items="${variationOptions['Color']}">
+                                <option value="${colorOption.value}" ${param.color == colorOption.value ? 'selected' : ''}>${colorOption.value}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="product-form-group">
+                        <label for="size">Size:</label>
+                        <select name="size" id="size" >
+                            <option value="">Select...</option>
+                            <c:forEach var="sizeOption" items="${variationOptions['Size']}">
+                                <option value="${sizeOption.value}" ${param.size == sizeOption.value ? 'selected' : ''}>${sizeOption.value}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="product-form-group">
-                    <label for="color">Color:</label>
-                    <input type="text" id="color" name="color">
+                <div class="product-form-row">
+                    <div class="product-form-group">
+                        <label for="SKU">SKU:</label>
+                        <input type="text" id="SKU" name="SKU">
+                    </div>
+
+                    <div class="product-form-group">
+                        <label for="price">Price:</label>
+                        <input type="number" id="price" name="price">
+                    </div>
                 </div>
 
-                <div class="product-form-group">
-                    <label for="size">Size:</label>
-                    <input type="text" id="size" name="size">
+                <div class="product-form-row">
+                    <div class="product-form-group">
+                        <label for="stock">Stock:</label>
+                        <input type="number" id="stock" name="stock">
+                    </div>
+                    <div class="product-form-group">
+                        <label for="sub-category">Sub-category:</label>
+                        <select name="sub-category" id="sub-category">
+                            <option value="">Select...</option>
+                            <c:forEach var="subcategory" items="${allSubcategories}">
+                                <option value="${subcategory.name} ${param.subcategory == subcategory.name ? 'selected' : ''}">${subcategory.name}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
                 </div>
-
-                <div class="product-form-group">
-                    <label for="stock">Stock:</label>
-                    <input type="number" id="stock" name="stock">
-                </div>
-
-
                 <div class="product-form-buttons">
                     <button type="submit" class="product-btn-submit">Save</button>
                     <button type="button" class="product-btn-cancel" id="cancelAddProduct">Cancel</button>
@@ -347,6 +377,7 @@
     </div>
     <script src="${pageContext.request.contextPath}/js/UpdateProduct.js"></script>
     <script src="${pageContext.request.contextPath}/js/AddProduct.js"></script>
+    <script src="${pageContext.request.contextPath}/js/DeleteProduct.js"></script>
     <script src="${pageContext.request.contextPath}/js/PopupProfile.js"></script>
     <script src="${pageContext.request.contextPath}/js/GenerateProductPdf.js"></script>
     <script> var contextPath = "${pageContext.request.contextPath}"; </script>

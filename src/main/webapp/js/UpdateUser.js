@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("editUserType").value = userRow.querySelector(".user-type").textContent.toLowerCase();
             document.getElementById("editStatus").value = userRow.querySelector(".user-status").textContent.toLowerCase();
 
-            editModal.style.display = "block";
+            editModal.style.display = "flex";
         });
     });
 

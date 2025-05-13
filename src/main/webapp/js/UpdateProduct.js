@@ -21,13 +21,9 @@ document.addEventListener("DOMContentLoaded", function() {
             const productRow = this.closest(".row1");
 
             // Preencher o formulário
-            document.getElementById("editName").value = productRow.querySelector(".product-name").textContent;
-            document.getElementById("editBrand").value = productRow.querySelector(".product-brand").textContent;
-            document.getElementById("editColor").value = productRow.querySelector(".product-color").textContent;
-            document.getElementById("editSize").value = productRow.querySelector(".product-size").textContent;
             document.getElementById("editStock").value = productRow.querySelector(".product-stock").textContent;
-
-            editModal.style.display = "block";
+            document.getElementById("editPrice").value = productRow.querySelector(".product-price").textContent;
+            editModal.style.display = "flex";
         });
     });
 

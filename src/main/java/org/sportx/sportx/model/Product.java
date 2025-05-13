@@ -13,19 +13,18 @@ public class Product {
     private Promotion promotion;
     private List<String> sizes; // Nova propriedade
     private String color;
-
+    int sub_category_id;
     // Constructors
     public Product() {
     }
 
-    public Product(int id, String name, String description, String brand, Promotion promotion, double price, String imageUrl) {
+    public Product(int id, String name, String description, String brand, int sub_category_id) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.brand = brand;
-        this.price = price;
-        this.imageUrl = imageUrl;
-        this.promotion = promotion;
+        this.sub_category_id = sub_category_id;
+
     }
 
     // Getters and setters
@@ -123,5 +122,12 @@ public class Product {
                 ", brand='" + brand + '\'' +
                 ", price=" + price +
                 '}';
+    }
+
+    public int getSub_category_id() {
+        return sub_category_id;
+    }
+    public void setSub_category_id(int sub_category_id) {
+        this.sub_category_id = sub_category_id;
     }
 }

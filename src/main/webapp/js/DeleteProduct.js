@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const deleteButtons = document.querySelectorAll('.delete-product');
+    console.log("Delete buttons found:", deleteButtons.length);
     const confirmDeletePopup = document.getElementById('confirmDeletePopup');
     const errorPopup = document.getElementById('errorPopup');
     const confirmYesBtn = document.getElementById('confirmYesBtn');
@@ -13,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
     deleteButtons.forEach(button => {
         button.addEventListener('click', function () {
             currentProductId = this.getAttribute('data-productid');
+            console.log("id",currentProductId);
             showConfirmPopup();
         });
     });

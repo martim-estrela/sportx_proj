@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Abrir o modal
     openModalBtn.addEventListener("click", function() {
-        modal.style.display = "block";
+        modal.style.display = "flex";
     });
 
     // Fechar o modal (X)
@@ -30,39 +30,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Processar o formulário
     form.addEventListener("submit", function(e) {
-        // Se precisar de validações adicionais antes de enviar, adicione aqui
-        // Por exemplo, verificar se email é válido, senha forte, etc.
 
-        // Se quiser manipular o envio com AJAX em vez de submissão normal:
-        /*
-        e.preventDefault();
-        const formData = new FormData(form);
-        const data = new URLSearchParams();
-
-        for (const pair of formData) {
-            data.append(pair[0], pair[1]);
-        }
-
-        fetch(`${contextPath}/manageUser`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: data
-        })
-        .then(response => {
-            if (response.ok) {
-                modal.style.display = "none";
-                location.reload();
-            } else {
-                return response.text().then(msg => {
-                    throw new Error(msg);
-                });
-            }
-        })
-        .catch(error => {
-            alert("Erro ao adicionar usuário: " + error.message);
-        });
-        */
     });
 });

@@ -406,23 +406,34 @@ button.btn-update-stock {
 .product-modal {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: #D1D1D1;
+    background-color: rgba(0, 0, 0, 0.5); /* escurece o fundo */
+
+    /* centralizar com flex */
+    justify-content: center;
+    align-items: center;
+
+    /* scroll se necessário */
+    overflow-y: auto;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .product-modal-content {
     background-color: #D1D1D1;
-    margin: 10% auto;
     padding: 20px;
-    width: 50%;
-    max-width: 400px;
+    width: 100%;
+    max-width: 500px;
     text-align: center;
     position: relative;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
+
 
 .product-modal-close {
     float: right;
@@ -475,6 +486,16 @@ button.btn-update-stock {
 .modal,
 .user-modal {
     overflow-y: auto;
+}
+
+.product-form-row {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.product-form-row .product-form-group {
+    flex: 1;
 }
 
 

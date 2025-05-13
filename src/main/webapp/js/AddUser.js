@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Abrir o modal
     openModalBtn.addEventListener("click", function() {
-        modal.style.display = "block";
+        modal.style.display = "flex";
     });
 
     // Fechar o modal (X)
