@@ -428,5 +428,133 @@ public class ProductDAO {
         return productItems;
     }
 
+    /**
+     * Get products by subcategory ID
+     * @param subcategoryId The ID of the subcategory to filter by
+     * @param limit Maximum number of products to return
+     * @return List of products in the specified subcategory
+     */
+    public List<Product> getProductsBySubcategory(int subcategoryId, int limit) {
+        List<Product> products = new ArrayList<>();
 
+        // Query to get product + product_item with lower price for each product
+        String sql = "SELECT p.product_id, p.name, p.description, p.brand, pi.product_item_id, pi.price, pi.product_image, " +
+                "p.sub_category_id, promo.promotion_id, promo.discount_rate, promo.start_date, promo.end_date " +
+                "FROM product p " +
+                "JOIN product_item pi ON pi.product_id = p.product_id " +
+                "LEFT JOIN promotion promo ON promo.product_item_id = pi.product_item_id " +
+                "WHERE p.sub_category_id = ? " +
+                "GROUP BY p.product_id " +
+                "ORDER BY p.product_id " +
+                "LIMIT ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, subcategoryId);
+            stmt.setInt(2, limit);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Product product = new Product();
+                product.setId(rs.getInt("product_id"));
+                product.setName(rs.getString("name"));
+                product.setDescription(rs.getString("description"));
+                product.setBrand(rs.getString("brand"));
+                product.setPrice(rs.getDouble("price"));
+                product.setImageUrl(rs.getString("product_image"));
+
+                // Add promotion if exists
+                Integer promotionId = rs.getObject("promotion_id") != null ? rs.getInt("promotion_id") : null;
+                if (promotionId != null) {
+                    double discountRate = rs.getDouble("discount_rate");
+                    Date startDate = rs.getDate("start_date");
+                    Date endDate = rs.getDate("end_date");
+
+                    if (startDate != null && endDate != null) {
+                        Promotion promo = new Promotion(
+                                promotionId,
+                                null,  // name not needed here
+                                null,  // description not needed here
+                                discountRate,
+                                startDate.toLocalDate(),
+                                endDate.toLocalDate()
+                        );
+                        product.setPromotion(promo);
+                    }
+                }
+
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return products;
+    }
+
+    /**
+     * Get products with active promotions
+     * @param limit Maximum number of products to return
+     * @return List of products with active promotions
+     */
+    public List<Product> getProductsWithActivePromotions(int limit) {
+        List<Product> products = new ArrayList<>();
+
+        // Get current date for comparing with promotion dates
+        java.sql.Date currentDate = java.sql.Date.valueOf(LocalDate.now());
+
+        String sql = "SELECT p.product_id, p.name, p.description, p.brand, pi.product_item_id, pi.price, pi.product_image, " +
+                "promo.promotion_id, promo.discount_rate, promo.start_date, promo.end_date " +
+                "FROM product p " +
+                "JOIN product_item pi ON p.product_id = pi.product_id " +
+                "JOIN promotion promo ON pi.product_item_id = promo.product_item_id " +
+                "WHERE promo.start_date <= ? AND promo.end_date >= ? " +
+                "ORDER BY promo.discount_rate DESC " +
+                "LIMIT ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setDate(1, currentDate);
+            stmt.setDate(2, currentDate);
+            stmt.setInt(3, limit);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Product product = new Product();
+                product.setId(rs.getInt("product_id"));
+                product.setName(rs.getString("name"));
+                product.setDescription(rs.getString("description"));
+                product.setBrand(rs.getString("brand"));
+                product.setPrice(rs.getDouble("price"));
+                product.setImageUrl(rs.getString("product_image"));
+
+                // Add promotion
+                double discountRate = rs.getDouble("discount_rate");
+                Date startDate = rs.getDate("start_date");
+                Date endDate = rs.getDate("end_date");
+
+                if (startDate != null && endDate != null) {
+                    Promotion promo = new Promotion(
+                            rs.getInt("promotion_id"),
+                            null,  // name not needed here
+                            null,  // description not needed here
+                            discountRate,
+                            startDate.toLocalDate(),
+                            endDate.toLocalDate()
+                    );
+                    product.setPromotion(promo);
+                }
+
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return products;
+    }
 }

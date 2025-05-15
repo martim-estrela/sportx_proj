@@ -1,6 +1,6 @@
-
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +16,7 @@
 <body>
 <header>
     <div>
-        <a href="${pageContext.request.contextPath}/index.jsp"><strong>SPORTX</strong></a>
+        <a href="${pageContext.request.contextPath}/HomePageServlet"><strong>SPORTX</strong></a>
     </div>
     <div>
         <a href="${pageContext.request.contextPath}/SearchBrowseServlet">Products</a>
@@ -57,68 +57,93 @@
 <!-- Popup Search  -->
 <div id="searchModal" class="modal">
     <div class="modal-content">
-        <input type="text" id="searchInput" placeholder="Search...">
+        <form action="${pageContext.request.contextPath}/SearchBrowseServlet" method="get">
+            <input type="text" id="searchInput" name="search" placeholder="Search...">
+            <button type="submit" style="display: none;">Search</button>
+        </form>
     </div>
 </div>
 
 <div class="hero-section">
     <h1>Hiking Gear:</h1>
     <p>Explore our brand new selection!</p>
-    <button>Explore</button>
+    <a href="${pageContext.request.contextPath}/SearchBrowseServlet?category=Footwear&sub-category=Hiking%20Shoes">
+        <button>Explore</button>
+    </a>
 </div>
 
 <main>
     <section class="product-section">
         <h2>Hiking shoes</h2>
-        <a href="${pageContext.request.contextPath}/SearchBrowse.jsp" class="view-all">View all products</a>
+        <a href="${pageContext.request.contextPath}/SearchBrowseServlet?category=Footwear&sub-category=Hiking%20Shoes" class="view-all">View all products</a>
         <div class="product-grid">
-            <a href="${pageContext.request.contextPath}/ProductPage.jsp?productId=1" class="product-card">
-                <img src="${pageContext.request.contextPath}/img/MerrelMoab3.jpg" alt="Merrel MOAB 3">
-                <p class="Top-Left-text">MERREL MOAB 3</p>
-                <p class="Top-Left-text2">149,00€</p>
-            </a>
-            <a href="${pageContext.request.contextPath}/ProductPage.jsp?productId=5" class="product-card">
-                <img src="${pageContext.request.contextPath}/img/SalomonXUltra4.jpg" alt="Salomon X Ultra 4">
-                <p class="Top-Left-text">SALOMON X ULTRA 4</p>
-                <p class="Top-Left-text2">175,00€</p>
-            </a>
-            <a href="${pageContext.request.contextPath}/ProductPage.jsp?productId=1" class="product-card">
-                <img src="${pageContext.request.contextPath}/img/DannerTrail2650.jpg" alt="Danner Trail 2650">
-                <p class="Top-Left-text">DANNER TRAIL 2650</p>
-                <p class="Top-Left-text2">169,00€</p>
-            </a>
-            <a href="${pageContext.request.contextPath}/ProductPage.jsp?productId=6" class="product-card">
-                <img src="${pageContext.request.contextPath}/img/TimberlandMtMaddsen.jpg" alt="Timberland Mt. Maddsen">
-                <p class="Top-Left-text">TIMBERLAND MT. MADDSEN</p>
-                <p class="Top-Left-text2">120,00€</p>
-            </a>
+            <!-- Dynamic display of hiking shoes from database -->
+            <c:choose>
+                <c:when test="${not empty hikingShoes}">
+                    <c:forEach var="product" items="${hikingShoes}">
+                        <a href="${pageContext.request.contextPath}/ProductPage.jsp?productId=${product.id}" class="product-card">
+                            <img src="${pageContext.request.contextPath}${product.imageUrl}" alt="${product.name}">
+                            <p class="Top-Left-text">${product.name}</p>
+                            <p class="Top-Left-text2">
+                                <c:choose>
+                                    <c:when test="${product.hasActivePromotion()}">
+                                        <del><fmt:formatNumber value="${product.price}" type="currency" currencySymbol="€" maxFractionDigits="2" /></del>
+                                        <fmt:formatNumber value="${product.getDiscountedPrice()}" type="currency" currencySymbol="€" maxFractionDigits="2" />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <fmt:formatNumber value="${product.price}" type="currency" currencySymbol="€" maxFractionDigits="2" />
+                                    </c:otherwise>
+                                </c:choose>
+                            </p>
+                        </a>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <!-- Fallback static content if no hiking shoes are found -->
+                    <a href="${pageContext.request.contextPath}/ProductPage.jsp?productId=1" class="product-card">
+                        <img src="${pageContext.request.contextPath}/img/MerrelMoab3.jpg" alt="Merrel MOAB 3">
+                        <p class="Top-Left-text">MERREL MOAB 3</p>
+                        <p class="Top-Left-text2">149,00€</p>
+                    </a>
+                    <a href="${pageContext.request.contextPath}/ProductPage.jsp?productId=5" class="product-card">
+                        <img src="${pageContext.request.contextPath}/img/SalomonXUltra4.jpg" alt="Salomon X Ultra 4">
+                        <p class="Top-Left-text">SALOMON X ULTRA 4</p>
+                        <p class="Top-Left-text2">175,00€</p>
+                    </a>
+                    <a href="${pageContext.request.contextPath}/ProductPage.jsp?productId=1" class="product-card">
+                        <img src="${pageContext.request.contextPath}/img/DannerTrail2650.jpg" alt="Danner Trail 2650">
+                        <p class="Top-Left-text">DANNER TRAIL 2650</p>
+                        <p class="Top-Left-text2">169,00€</p>
+                    </a>
+                    <a href="${pageContext.request.contextPath}/ProductPage.jsp?productId=6" class="product-card">
+                        <img src="${pageContext.request.contextPath}/img/TimberlandMtMaddsen.jpg" alt="Timberland Mt. Maddsen">
+                        <p class="Top-Left-text">TIMBERLAND MT. MADDSEN</p>
+                        <p class="Top-Left-text2">120,00€</p>
+                    </a>
+                </c:otherwise>
+            </c:choose>
         </div>
     </section>
 
     <section class="product-section">
         <h2>On Sale</h2>
-        <a href="${pageContext.request.contextPath}/SearchBrowse.jsp" class="view-all">View all</a>
+        <a href="${pageContext.request.contextPath}/SearchBrowseServlet" class="view-all">View all</a>
         <div class="product-grid">
-            <a href="${pageContext.request.contextPath}/ProductPage.jsp?productId=8" class="product-card">
-                <img src="${pageContext.request.contextPath}/img/QuechuaNH50.jpg" alt="Quechua NH50">
-                <p class="Top-Left-text">QUECHUA NH50</p>
-                <p class="Top-Left-text2"><del>18,00€</del> 9,00€</p>
-            </a>
-            <a href="${pageContext.request.contextPath}/ProductPage.jsp?productId=3" class="product-card">
-                <img src="${pageContext.request.contextPath}/img/KipstaTraximEdge.jpg" alt="Kipsta Traxum Edge">
-                <p class="Top-Left-text">KIPSTA TRAXUM EDGE</p>
-                <p class="Top-Left-text2"><del>69,00€</del> 39,00€</p>
-            </a>
-            <a href="${pageContext.request.contextPath}/ProductPage.jsp?productId=7" class="product-card">
-                <img src="${pageContext.request.contextPath}/img/Riverside500.jpg" alt="Riverside 500">
-                <p class="Top-Left-text">RIVERSIDE 500</p>
-                <p class="Top-Left-text2"><del>329,00€</del> 229,00€</p>
-            </a>
-            <a href="${pageContext.request.contextPath}/ProductPage.jsp" class="product-card">
-                <img src="${pageContext.request.contextPath}/img/Judo.jpg" alt="Adidas Judo">
-                <p class="Top-Left-text">ADIDAS JUDO</p>
-                <p class="Top-Left-text2"><del>154,00€</del> 154,00€</p>
-            </a>
+            <!-- Dynamic display of products with active promotions -->
+            <c:choose>
+                <c:when test="${not empty promotionProducts}">
+                    <c:forEach var="product" items="${promotionProducts}">
+                        <a href="${pageContext.request.contextPath}/ProductPage.jsp?productId=${product.id}" class="product-card">
+                            <img src="${pageContext.request.contextPath}${product.imageUrl}" alt="${product.name}">
+                            <p class="Top-Left-text">${product.name}</p>
+                            <p class="Top-Left-text2">
+                                <del><fmt:formatNumber value="${product.price}" type="currency" currencySymbol="€" maxFractionDigits="2" /></del>
+                                <fmt:formatNumber value="${product.getDiscountedPrice()}" type="currency" currencySymbol="€" maxFractionDigits="2" />
+                            </p>
+                        </a>
+                    </c:forEach>
+                </c:when>
+            </c:choose>
         </div>
     </section>
 </main>

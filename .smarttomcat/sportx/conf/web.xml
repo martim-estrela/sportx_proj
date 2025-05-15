@@ -135,6 +135,15 @@
         </taglib>
     </jsp-config>
 
+    <servlet>
+        <servlet-name>HomePageServlet</servlet-name>
+        <servlet-class>org.sportx.sportx.servlet.HomePageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HomePageServlet</servlet-name>
+        <url-pattern>/HomePageServlet</url-pattern>
+    </servlet-mapping>
+
 
   <!-- The JSP page compiler and execution servlet, which is the mechanism  -->
   <!-- used by Tomcat to support JSP pages.  Traditionally, this servlet    -->
