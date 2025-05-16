@@ -25,7 +25,7 @@
 <body>
 <header>
     <div>
-        <a href="${pageContext.request.contextPath}/index.jsp"><strong>SPORTX</strong></a>
+        <a href="${pageContext.request.contextPath}/HomePageServlet"><strong>SPORTX</strong></a>
     </div>
     <div>
         <a href="#" id="profileButton"><img src="${pageContext.request.contextPath}/img/account_circle.jpg" alt="Profile"></a>

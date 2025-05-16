@@ -68,10 +68,10 @@
 <body>
 <header>
     <div>
-        <a href="${pageContext.request.contextPath}/index.jsp"><strong>SPORTX</strong></a>
+        <a href="${pageContext.request.contextPath}/HomePageServlet"><strong>SPORTX</strong></a>
     </div>
     <div>
-        <a href="${pageContext.request.contextPath}/SearchBrowse.jsp">Products</a>
+        <a href="${pageContext.request.contextPath}/SearchBrowseServlet">Products</a>
     </div>
     <div>
         <a href="${pageContext.request.contextPath}/ShoppingCart_Page.jsp"><img src="${pageContext.request.contextPath}/img/shopping-cart.jpg" alt="Cart"></a>
@@ -264,11 +264,8 @@
 
         if (matched) {
             if (matched.discountRate > 0) {
-                // Mostra apenas o preço com desconto e a porcentagem
-                const discountedPrice = matched.discountedPrice.toLocaleString('pt-PT', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-                    priceSpan.innerHTML = `<span id="discountedPrice"">${discountedPrice}€ (${matched.discountRate}% OFF)</span>`;
+                priceSpan.textContent = matched.discountedPrice.toLocaleString('pt-PT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' (' + matched.discountRate + '% OFF)';
             } else {
-                // Mostra o preço normal quando não há desconto
                 priceSpan.textContent = matched.price.toLocaleString('pt-PT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '€';
             }
             stockSpan.textContent = matched.stock;
