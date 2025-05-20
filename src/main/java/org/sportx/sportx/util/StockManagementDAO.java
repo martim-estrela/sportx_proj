@@ -21,12 +21,12 @@ public class StockManagementDAO {
 
         String query = "UPDATE product_item pi" +
         "SET pi.qty_in_stock = ? ,pi.price = ?" +
-                "WHERE pi.product_id = ?";
+                "WHERE pi.product_item_id = ?";
 
         try (PreparedStatement stmt = conn.prepareStatement(query);) {
             stmt.setInt(1, product.getStock());
-            stmt.setInt(2, product.getProductItemId());
-
+            stmt.setDouble(2, product.getPrice());
+            stmt.setInt(3, product.getProductItemId());
             stmt.executeUpdate();
         }
     }

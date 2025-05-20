@@ -41,7 +41,7 @@ public class StockManagementServlet extends HttpServlet {
                         double price = Double.parseDouble(request.getParameter("price"));
 
                         ProductDTO DTO = new ProductDTO();
-                        DTO.setProductId(product_item_Id);
+                        DTO.setProductItemId(product_item_Id);
                         DTO.setStock(stock);
                         DTO.setPrice(price);
                         dao.updateStock(DTO);

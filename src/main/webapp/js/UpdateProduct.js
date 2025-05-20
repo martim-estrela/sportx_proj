@@ -1,14 +1,13 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Elementos do modal de edição
     const editModal = document.getElementById("editProductModal");
     const editCloseButton = document.querySelector(".edit-close");
     const cancelEditButton = document.getElementById("cancelEditProduct");
     const editForm = document.getElementById("editProductForm");
 
-    // Selecionar todos os botões de edição
+    // Certificar-se de que os botões de edição estão disponíveis no DOM
     const editButtons = document.querySelectorAll(".btn-edit.edit-product");
 
-// Adicionar evento a cada botão de edição
+    // Adicionar evento a cada botão de edição
     editButtons.forEach(button => {
         button.addEventListener("click", function(e) {
             e.preventDefault();
@@ -16,32 +15,49 @@ document.addEventListener("DOMContentLoaded", function() {
 
             // Obter o ID do botão clicado
             const productId = this.getAttribute('data-productid');
+
+            if (!productId) {
+                console.error("Produto ID não encontrado.");
+                return;
+            }
+
+            // Preencher o ID no formulário de edição
             document.getElementById("editProductId").value = productId;
 
             const productRow = this.closest(".row1");
 
-            // Preencher o formulário
-            document.getElementById("editStock").value = productRow.querySelector(".product-stock").textContent;
-            document.getElementById("editPrice").value = productRow.querySelector(".product-price").textContent;
-            editModal.style.display = "flex";
+            if (productRow) {
+                // Preencher os campos do formulário com os dados do produto
+                const stock = productRow.querySelector(".product-stock").textContent;
+                const price = productRow.querySelector(".product-price").textContent;
+
+                if (stock && price) {
+                    document.getElementById("editStock").value = stock;
+                    document.getElementById("editPrice").value = price;
+                }
+
+                // Mostrar o modal
+                editModal.style.display = "flex";
+            } else {
+                console.error("Linha do produto não encontrada.");
+            }
         });
     });
 
-    // Fechar o modal (X) - Modificado para garantir funcionamento
+    // Fechar o modal (X)
     if (editCloseButton) {
         editCloseButton.onclick = function() {
-            console.log("Botão fechar clicado");
             editModal.style.display = "none";
         };
     }
 
-    // Fechar o modal (botão Cancelar) - Modificado para garantir funcionamento
+    // Fechar o modal (Cancel)
     if (cancelEditButton) {
         cancelEditButton.onclick = function() {
-            console.log("Botão cancelar clicado");
             editModal.style.display = "none";
         };
     }
+
     // Fechar o modal ao clicar fora
     window.addEventListener("click", function(event) {
         if (event.target === editModal) {
@@ -49,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-// Processar submissão
+    // Processar submissão
     if (editForm) {
         editForm.addEventListener("submit", async function(e) {
             e.preventDefault();
@@ -57,10 +73,14 @@ document.addEventListener("DOMContentLoaded", function() {
             let formValido = true;
             let mensagensErro = [];
 
+            // Validação de campos
+            if (!document.getElementById("editStock").value || !document.getElementById("editPrice").value) {
+                mensagensErro.push("Preencha todos os campos.");
+                formValido = false;
+            }
 
-            // Exibir erros, se houver
-            let errorDiv = document.getElementById('edit-form-errors');
             if (!formValido) {
+                let errorDiv = document.getElementById('edit-form-errors');
                 if (!errorDiv) {
                     errorDiv = document.createElement('div');
                     errorDiv.id = 'edit-form-errors';
@@ -72,11 +92,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 return;
             }
 
-            if (errorDiv) {
-                errorDiv.innerHTML = '';
-            }
-
-            // Recolher os dados do formulário
             const formData = new FormData(editForm);
             const data = new URLSearchParams();
             for (const [key, value] of formData.entries()) {
@@ -86,15 +101,13 @@ document.addEventListener("DOMContentLoaded", function() {
             try {
                 const response = await fetch(`${contextPath}/manageStock`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: data
                 });
 
                 if (response.ok) {
                     editModal.style.display = "none";
-                    location.reload(); // Recarrega a página após atualização bem-sucedida
+                    location.reload(); // Recarrega a página após atualização
                 } else {
                     const msg = await response.text();
                     throw new Error(msg);

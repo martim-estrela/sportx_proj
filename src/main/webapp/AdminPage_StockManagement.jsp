@@ -128,12 +128,13 @@
             <div class="row1">
                 <div class="column-img-top"><label>Image</label></div>
                 <div class="column-description"><label>ID</label></div>
-                <div class="column-description1"><label>Name</label></div>
-                <div class="column-description2"><label>Brand</label></div>
-                <div class="column-description3"><label>Color</label></div>
-                <div class="column-description4"><label>Size</label></div>
-                <div class="column-description5"><label>Stock</label></div>
-                <div class="column-description6"><label>Price</label></div>
+                <div class="column-description1"><label>ID Item</label></div>
+                <div class="column-description2"><label>Name</label></div>
+                <div class="column-description3"><label>Brand</label></div>
+                <div class="column-description4"><label>Color</label></div>
+                <div class="column-description5"><label>Size</label></div>
+                <div class="column-description6"><label>Stock</label></div>
+                <div class="column-description7"><label>Price</label></div>
                 <div class="column-edit-icon-top"><label>Edit</label></div>
                 <div class="column-delete-icon-top"><label>Delete</label></div>
             </div>
@@ -145,24 +146,27 @@
                         <img class="product-img" src="${product.image}" style="width: 104px; height: 104px;" alt="">
                     </div>
                     <div class="column-description">
-                        <label class="product-id">${product.productId}</label><br><br>
+                        <label class="product-id">${product.productId}</label>
                     </div>
                     <div class="column-description1">
-                        <label class="product-name">${product.name}</label><br><br>
+                        <label class="productItem-id">${product.productItemId}</label>
                     </div>
                     <div class="column-description2">
-                        <label class="product-brand">${product.brand}</label>
+                        <label class="product-name">${product.name}</label>
                     </div>
                     <div class="column-description3">
-                        <label class="product-color">${product.color}</label>
+                        <label class="product-brand">${product.brand}</label>
                     </div>
                     <div class="column-description4">
-                        <label class="product-size">${product.size}</label>
+                        <label class="product-color">${product.color}</label>
                     </div>
                     <div class="column-description5">
-                        <label class="product-stock">${product.stock}</label>
+                        <label class="product-size">${product.size}</label>
                     </div>
                     <div class="column-description6">
+                        <label class="product-stock">${product.stock}</label>
+                    </div>
+                    <div class="column-description7">
                         <label class="product-price">${product.price}€</label>
                     </div>
                     <div class="column-edit-icon">
