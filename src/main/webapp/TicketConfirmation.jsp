@@ -313,7 +313,7 @@
 
 <header>
     <div>
-        <a href="${pageContext.request.contextPath}/index.jsp"><strong>SPORTX</strong></a>
+        <a href="${pageContext.request.contextPath}/HomePageServlet"><strong>SPORTX</strong></a>
     </div>
     <div>
         <a href="${pageContext.request.contextPath}/SearchBrowseServlet">Products</a>

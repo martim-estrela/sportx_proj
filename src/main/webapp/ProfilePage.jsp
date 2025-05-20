@@ -16,10 +16,10 @@
 <body>
 <header>
     <div>
-        <a href="${pageContext.request.contextPath}/index.jsp"><strong>SPORTX</strong></a>
+        <a href="${pageContext.request.contextPath}/HomePageServlet"><strong>SPORTX</strong></a>
     </div>
     <div>
-        <a href="${pageContext.request.contextPath}/SearchBrowse.jsp">Products</a>
+        <a href="${pageContext.request.contextPath}/SearchBrowseServlet">Products</a>
     </div>
     <div>
         <a href="ShoppingCart_Page.jsp"><img src="${pageContext.request.contextPath}/img/shopping-cart.jpg"></a>
