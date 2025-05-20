@@ -235,17 +235,17 @@
             <span class="product-modal-close edit-close">&times;</span>
             <h2 class="edit-product-title">Update Product</h2>
             <form id="editProductForm" method="post" action="${pageContext.request.contextPath}/manageStock">
-                <input type="hidden" name="action" value="updateProduct">
-                <input type="hidden" id="editProductId" name="productId" value="">
+                <input type="hidden" name="action" value="UpdateProduct">
+                <input type="hidden" id="editProductId" name="product_item_id" value="">
 
                 <div class="product-form-group">
                     <label for="editStock">Stock:</label>
-                    <input type="number" id="stock" name="stock">
+                    <input type="number" id="editStock" name="stock">
                 </div>
 
                 <div class="product-form-group">
                     <label for="editPrice">Price:</label>
-                    <input type="number" id="price" name="price">
+                    <input type="number" id="editPrice" name="price">
                 </div>
 
                 <div class="product-form-buttons">

@@ -34,11 +34,14 @@ public class StockManagementServlet extends HttpServlet {
             }
 
             switch (action) {
-                case "UpdateStock":
+                case "UpdateProduct":
                     try {
                         int product_item_Id = Integer.parseInt(request.getParameter("product_item_id"));
                         int stock = Integer.parseInt(request.getParameter("stock"));
                         double price = Double.parseDouble(request.getParameter("price"));
+                        System.out.println("product_item_id: " + product_item_Id);
+                        System.out.println("stock: " + stock);
+                        System.out.println("price: " + price);
 
                         ProductDTO DTO = new ProductDTO();
                         DTO.setProductItemId(product_item_Id);
@@ -53,7 +56,11 @@ public class StockManagementServlet extends HttpServlet {
                 case "DeleteProduct":
                     try {
                         int product_item_Id = Integer.parseInt(request.getParameter("product_item_id"));
+
                         dao.deleteProduct(product_item_Id);
+
+
+                        response.setStatus(HttpServletResponse.SC_OK);
                     } catch (NumberFormatException e) {
                         request.setAttribute("error", "Invalid product ID for deletion.");
                     }

@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const deleteButtons = document.querySelectorAll('.delete-product');
-    console.log("Delete buttons found:", deleteButtons.length);
+
     const confirmDeletePopup = document.getElementById('confirmDeletePopup');
     const errorPopup = document.getElementById('errorPopup');
     const confirmYesBtn = document.getElementById('confirmYesBtn');
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: `action=deleteProduct&productItemId=${encodeURIComponent(productItemId)}`
+            body: `action=DeleteProduct&product_item_id=${encodeURIComponent(productItemId)}`
         })
             .then(response => {
                 if (response.ok) {

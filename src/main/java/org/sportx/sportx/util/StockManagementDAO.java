@@ -19,9 +19,10 @@ public class StockManagementDAO {
     public void updateStock(ProductDTO product)
             throws SQLException {
 
-        String query = "UPDATE product_item pi" +
-        "SET pi.qty_in_stock = ? ,pi.price = ?" +
+        String query = "UPDATE product_item pi " +
+                "SET pi.qty_in_stock = ?, pi.price = ? " +
                 "WHERE pi.product_item_id = ?";
+
 
         try (PreparedStatement stmt = conn.prepareStatement(query);) {
             stmt.setInt(1, product.getStock());

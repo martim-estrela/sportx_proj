@@ -30,10 +30,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 // Preencher os campos do formulário com os dados do produto
                 const stock = productRow.querySelector(".product-stock").textContent;
                 const price = productRow.querySelector(".product-price").textContent;
+                const cleanPrice = price.replace(/[^\d.,-]/g, '').replace(',', '.');
 
                 if (stock && price) {
                     document.getElementById("editStock").value = stock;
-                    document.getElementById("editPrice").value = price;
+                    document.getElementById("editPrice").value = cleanPrice;
                 }
 
                 // Mostrar o modal
