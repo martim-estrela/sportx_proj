@@ -46,16 +46,20 @@ public class StockManagementDAO {
         }
     }
     //Adicionar produto na DB
-    public boolean addProduct(Product product, ProductItem productItem, String subCategory) throws SQLException {
+    public boolean addProduct(Product product, ProductItem productItem, String subCategoryName) throws SQLException {
         int subCategoryId = -1;
+        subCategoryName = subCategoryName.trim();
 
-        String query2 = "SELECT sub_category_id FROM product_category_child" +
-                "WHERE value = ?";
+
+        String query2 = "SELECT sub_category_id FROM product_category_child " +
+                "WHERE sub_category_name = ?";
+
         try (PreparedStatement stmt = conn.prepareStatement(query2);) {
-            stmt.setString(1, subCategory);
+            stmt.setString(1, subCategoryName);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 subCategoryId = rs.getInt("sub_category_id");
+                System.out.println(subCategoryId);
             }
         }
         catch (SQLException ex) {
@@ -65,30 +69,43 @@ public class StockManagementDAO {
         product.setSub_category_id(subCategoryId);
 
 
-        String query =  "INSERT INTO product (brand, name, description, sub_category_id) VALUES (?, ?, ?, ?)";
+        int generatedProductId = -1;
 
-        try (PreparedStatement stmt = conn.prepareStatement(query);) {
+        String insertProductSQL = "INSERT INTO product (brand, name, description, sub_category_id) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement stmt = conn.prepareStatement(insertProductSQL, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, product.getBrand());
             stmt.setString(2, product.getName());
             stmt.setString(3, product.getDescription());
             stmt.setInt(4, product.getSub_category_id());
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
+            stmt.executeUpdate();
+
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                generatedProductId = generatedKeys.getInt(1);
+            } else {
+                throw new SQLException("No product ID returned.");
+            }
         }
 
-        String query1 = "INSERT INTO product_item (qty_in_stock, SKU, price, product_image, product_id) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = conn.prepareStatement(query1);) {
+        String insertItemSQL = "INSERT INTO product_item (qty_in_stock, SKU, price, product_image, product_id) VALUES (?, ?, ?, ?, ?)";
+        int generatedProductItemId = -1;
+        try (PreparedStatement stmt = conn.prepareStatement(insertItemSQL, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, productItem.getQtyInStock());
             stmt.setString(2, productItem.getSKU());
             stmt.setDouble(3, productItem.getPrice());
             stmt.setString(4, productItem.getImageUrl());
-            stmt.setInt(4, productItem.getProductItemId());
+            stmt.setInt(5, generatedProductId);
+            stmt.executeUpdate();
 
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                generatedProductItemId = generatedKeys.getInt(1);
+                productItem.setProductItemId(generatedProductItemId); // Atualiza o DTO
+            } else {
+                throw new SQLException("No product item ID returned.");
+            }
         }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+
         return false;
 
     }
@@ -97,7 +114,7 @@ public class StockManagementDAO {
     public void linkColorWithProduct(ProductItem productItem, String color) throws SQLException {
         int variationOptionId = -1;
 
-        String query1 = "SELECT variation_option_id FROM variation_option" +
+        String query1 = "SELECT variation_option_id FROM variation_option " +
                 "WHERE value = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query1);) {
             stmt.setString(1, color);
@@ -127,7 +144,7 @@ public class StockManagementDAO {
     public void linkSizeWithProduct(ProductItem productItem, String size) throws SQLException {
         int variationOptionId = -1;
 
-        String query1 = "SELECT variation_option_id FROM variation_option" +
+        String query1 = "SELECT variation_option_id FROM variation_option " +
                 "WHERE value = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query1);) {
             stmt.setString(1, size);

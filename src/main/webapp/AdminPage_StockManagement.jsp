@@ -300,7 +300,7 @@
             <span class="product-modal-close">&times;</span>
             <h2 class="add-product-title">Add new product</h2>
             <form id="addProductForm" method="post" action="${pageContext.request.contextPath}/manageStock">
-                <input type="hidden" name="action" value="addProduct">
+                <input type="hidden" name="action" value="AddProduct">
                 <div class="product-form-row">
                     <div class="product-form-group">
                         <label for="img">Image:</label>

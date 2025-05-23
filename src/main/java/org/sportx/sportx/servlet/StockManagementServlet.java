@@ -69,7 +69,7 @@ public class StockManagementServlet extends HttpServlet {
                 case "AddProduct":
                     try {
                         // Check for required fields
-                        String[] requiredParams = {"product_id", "img", "name", "brand", "description", "color", "size", "sub_category", "product_item_id", "stock", "price"};
+                        String[] requiredParams = { "img", "name", "brand", "description", "color", "size", "sub-category", "stock", "price"};
                         for (String param : requiredParams) {
                             if (request.getParameter(param) == null || request.getParameter(param).trim().isEmpty()) {
                                 request.setAttribute("error", "Missing required parameter: " + param);
@@ -78,30 +78,30 @@ public class StockManagementServlet extends HttpServlet {
                             }
                         }
 
-                        int product_id = Integer.parseInt(request.getParameter("product_id"));
                         String product_img = request.getParameter("img");
                         String product_name = request.getParameter("name");
                         String product_brand = request.getParameter("brand");
                         String product_description = request.getParameter("description");
                         String color = request.getParameter("color");
                         String size = request.getParameter("size");
-                        String sub_category = request.getParameter("sub_category");
-                        int product_item_Id = Integer.parseInt(request.getParameter("product_item_id"));
+                        String sub_category = request.getParameter("sub-category");
+
                         int stock = Integer.parseInt(request.getParameter("stock"));
                         double price = Double.parseDouble(request.getParameter("price"));
 
                         Product product = new Product();
-                        product.setId(product_id);
+
                         product.setBrand(product_brand);
                         product.setName(product_name);
                         product.setDescription(product_description);
 
                         ProductItem productItem = new ProductItem();
-                        productItem.setProductItemId(product_item_Id);
-                        productItem.setProductId(product_id);
+
                         productItem.setQtyInStock(stock);
                         productItem.setImageUrl(product_img);
                         productItem.setPrice(price);
+
+                        System.out.println(sub_category);
 
                         dao.addProduct(product, productItem, sub_category);
                         dao.linkColorWithProduct(productItem, color);
