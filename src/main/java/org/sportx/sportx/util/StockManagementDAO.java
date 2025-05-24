@@ -33,16 +33,41 @@ public class StockManagementDAO {
     }
 
     //Eliminar produto da BD
-    public void deleteProduct(int productItemId)
-            throws SQLException {
+    public void deleteProduct(int productItemId) throws SQLException {
+        // Guardar o estado original do auto-commit
+        boolean autoCommitOriginal = conn.getAutoCommit();
 
-        String query = "DELETE FROM product_item WHERE product_item_id = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(query);) {
-            stmt.setInt(1, productItemId);
-            stmt.executeUpdate();
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
+        try {
+            conn.setAutoCommit(false);
+
+            // 1. Primeiro eliminar as variações
+            String sqlVariacoes = "DELETE FROM product_item_variation_option WHERE product_item_id = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sqlVariacoes)) {
+                stmt.setInt(1, productItemId);
+                stmt.executeUpdate();
+            }
+
+            // 2. Depois eliminar o produto
+            String sqlProduto = "DELETE FROM product_item WHERE product_item_id = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sqlProduto)) {
+                stmt.setInt(1, productItemId);
+                int linhasAfetadas = stmt.executeUpdate();
+
+                if (linhasAfetadas == 0) {
+                    throw new SQLException("Falha ao deletar - produto não encontrado");
+                }
+            }
+
+            // Confirmar a transação se tudo ocorrer bem
+            conn.commit();
+
+        } catch (SQLException ex) {
+            // Reverter a transação em caso de erro
+            conn.rollback();
+            throw ex; // Relançar a exceção para tratamento superior
+        } finally {
+            // Restaurar o estado original do auto-commit
+            conn.setAutoCommit(autoCommitOriginal);
         }
     }
     //Adicionar produto na DB
