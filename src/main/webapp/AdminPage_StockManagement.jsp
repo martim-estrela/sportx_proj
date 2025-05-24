@@ -143,7 +143,7 @@
             <c:forEach var="product" items="${filteredProducts}">
                 <div class="row1">
                     <div class="column-img">
-                        <img class="product-img" src="${product.image}" style="width: 104px; height: 104px;" alt="">
+                        <img class="product-img" src="${pageContext.request.contextPath}${product.image}" style="width: 104px; height: 104px;" alt="">
                     </div>
                     <div class="column-description">
                         <label class="product-id">${product.productId}</label>
