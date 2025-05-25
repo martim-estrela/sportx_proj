@@ -59,7 +59,6 @@
     </div>
 </div>
 
-
 <%-- Calculate correct total --%>
 <c:set var="calculatedSubtotal" value="0" />
 <c:forEach var="item" items="${sessionScope.cart}">
@@ -118,7 +117,6 @@
                 </div>
             </div>
 
-
             <div class="personal-info">
                 <h3 style="text-align: left; background-color: #D9D9D9;">Payment Information</h3>
                 <div class="line"></div>
@@ -140,37 +138,36 @@
                     <div class="Pinfo-item">
                         <label for="exp-date">EXP Date</label><br>
                         <input type="text" name="exp-date" id="exp-date">
-
                     </div>
                     <div class="Pinfo-item">
                         <label for="cvc">CVC</label><br>
                         <input type="text" name="cvc" id="cvc">
                     </div>
-
                 </div>
             </div>
         </div>
+
         <div class="cart-totals">
             <h3 style="text-align: center; background-color: #D9D9D9;">Cart Totals</h3>
             <div class="totals-item">
                 <span>Subtotal:</span>
                 <span>
-                        <fmt:formatNumber value="${calculatedSubtotal}" type="currency" currencySymbol="€" maxFractionDigits="2" />
-                    </span>
+                    <fmt:formatNumber value="${calculatedSubtotal}" type="currency" currencySymbol="€" maxFractionDigits="2" />
+                </span>
             </div>
             <div class="line"></div>
             <div class="totals-item">
                 <span>Shipping:</span>
                 <span>
-                        <fmt:formatNumber value="${shippingCost}" type="currency" currencySymbol="€" maxFractionDigits="2" />
-                    </span>
+                    <fmt:formatNumber value="${shippingCost}" type="currency" currencySymbol="€" maxFractionDigits="2" />
+                </span>
             </div>
             <div class="line"></div>
             <div class="totals-item">
                 <span><strong style="background-color: #D9D9D9;">Total:</strong></span>
                 <span><strong style="background-color: #D9D9D9;">
-                        <fmt:formatNumber value="${calculatedTotal}" type="currency" currencySymbol="€" maxFractionDigits="2" />
-                    </strong></span>
+                    <fmt:formatNumber value="${calculatedTotal}" type="currency" currencySymbol="€" maxFractionDigits="2" />
+                </strong></span>
             </div>
             <form action="${pageContext.request.contextPath}/PlaceOrderServlet" method="post">
                 <input type="hidden" name="subtotal" value="${calculatedSubtotal}">
@@ -181,6 +178,7 @@
         </div>
     </div>
 </main>
+
 <footer>
     <section class="support">
         <h2>Support</h2>
@@ -198,6 +196,7 @@
         </form>
     </section>
 </footer>
+
 <script src="${pageContext.request.contextPath}/js/PopupSearch.js"></script>
 <script src="${pageContext.request.contextPath}/js/PopupProfile.js"></script>
 </body>

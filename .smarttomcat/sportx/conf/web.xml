@@ -475,6 +475,99 @@
         <url-pattern>*.jspx</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>UserManagementServlet</servlet-name>
+        <servlet-class>org.sportx.sportx.servlet.UserManagementServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UserManagementServlet</servlet-name>
+        <url-pattern>/manageUser</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>org.sportx.sportx.servlet.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/LogoutServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UserPdfGeneratorServlet</servlet-name>
+        <servlet-class>org.sportx.sportx.servlet.UserPdfGeneratorServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UserPdfGeneratorServlet</servlet-name>
+        <url-pattern>/generateUserPdf</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StockManagementServlet</servlet-name>
+        <servlet-class>org.sportx.sportx.servlet.StockManagementServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>StockManagementServlet</servlet-name>
+        <url-pattern>/manageStock</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ProductPdfGeneratorServlet</servlet-name>
+        <servlet-class>org.sportx.sportx.servlet.ProductPdfGeneratorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProductPdfGeneratorServlet</servlet-name>
+        <url-pattern>/ProductPdfGenerator</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UpdateCartServlet</servlet-name>
+        <servlet-class>org.sportx.sportx.servlet.UpdateCartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateCartServlet</servlet-name>
+        <url-pattern>/UpdateCartServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>AddToCartServlet</servlet-name>
+        <servlet-class>org.sportx.sportx.servlet.AddToCartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddToCartServlet</servlet-name>
+        <url-pattern>/AddToCartServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RemoveFromCartServlet</servlet-name>
+        <servlet-class>org.sportx.sportx.servlet.RemoveFromCartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RemoveFromCartServlet</servlet-name>
+        <url-pattern>/RemoveFromCartServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UpdateShippingMethodServlet</servlet-name>
+        <servlet-class>org.sportx.sportx.servlet.UpdateShippingMethodServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UpdateShippingMethodServlet</servlet-name>
+        <url-pattern>/UpdateShippingMethodServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PlaceOrderServlet</servlet-name>
+        <servlet-class>org.sportx.sportx.servlet.PlaceOrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PlaceOrderServlet</servlet-name>
+        <url-pattern>/PlaceOrderServlet</url-pattern>
+    </servlet-mapping>
+
     <!-- The mapping for the SSI servlet -->
 <!--
     <servlet-mapping>

@@ -1,0 +1,193 @@
+/* Core styles */
+body {
+    background-color: #D1D1D1;
+    font-family: 'Nunito Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header styles */
+header {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    width: auto;
+    background-color: #D1D1D1;
+}
+
+header div {
+    display: flex;
+    gap: 40px;
+    background-color: #D1D1D1;
+}
+
+header strong {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    color: #000;
+    font-family: "Passion One";
+    font-size: 30px;
+    background-color: #D1D1D1;
+}
+
+header a {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    margin: 0 10px;
+    background-color: #D1D1D1;
+}
+
+header a:hover {
+    color: #218A38;
+}
+
+/* Success container */
+.success-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 50px auto;
+    max-width: 600px;
+    padding: 40px;
+    text-align: center;
+}
+
+.success-icon {
+    color: #218A38;
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+
+.success-container h1 {
+    color: #333;
+    font-size: 28px;
+    margin-bottom: 20px;
+    background-color: white;
+}
+
+.success-container p {
+    color: #666;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    background-color: white;
+}
+
+.order-details {
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    margin: 20px 0;
+    padding: 20px;
+    text-align: left;
+}
+
+.order-details p {
+    background-color: #f9f9f9;
+    margin: 10px 0;
+}
+
+.button {
+    background-color: #218A38;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px;
+    padding: 12px 24px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #186a2a;
+}
+
+.button.secondary {
+    background-color: #333;
+}
+
+.button.secondary:hover {
+    background-color: #222;
+}
+
+/* Footer */
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    margin-top: auto;
+    background-color: #D1D1D1;
+}
+
+.support h2 {
+    font-size: 17px;
+    margin-bottom: 10px;
+    background-color: #D1D1D1;
+}
+
+.support ul {
+    list-style-type: none;
+    padding-left: 0;
+    background-color: #D1D1D1;
+}
+
+.support ul li {
+    margin: 10px 0;
+    background-color: #D1D1D1;
+}
+
+.support ul li a {
+    text-decoration: none;
+    color: #000000;
+    font-size: 14px;
+    background-color: #D1D1D1;
+}
+
+.support ul li a:hover {
+    text-decoration: underline;
+}
+
+.subscribe h2 {
+    font-size: 17px;
+    margin-bottom: 10px;
+    background-color: #D1D1D1;
+}
+
+.subscribe form {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    background-color: #D1D1D1;
+}
+
+.subscribe input {
+    background-color: #D1D1D1;
+    margin-bottom: 30px;
+    font-size: 15px;
+    border: 0.1px solid #cccccc;
+}
+
+.subscribe input:focus {
+    outline: none;
+}
+
+.subscribe button {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    color: #D1D1D1;
+    background: #222325;
+    border: none;
+    cursor: pointer;
+}
+
