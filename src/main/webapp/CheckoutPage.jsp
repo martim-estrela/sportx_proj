@@ -68,115 +68,121 @@
 <c:set var="calculatedTotal" value="${calculatedSubtotal + shippingCost}" />
 
 <main>
-    <div class="container">
-        <div class="left-column">
-            <div class="personal-info1">
-                <h3 style="text-align: left; background-color: #D9D9D9;">Personal Information</h3>
+    <form id="checkoutForm" action="${pageContext.request.contextPath}/PlaceOrderServlet" method="post" novalidate>
+        <div class="container">
+            <div class="left-column">
+                <div class="personal-info1">
+                    <h3 style="text-align: left; background-color: #D9D9D9;">Personal Information</h3>
+                    <div class="line"></div>
+                    <div class="Pinfo-item">
+                        <label for="your-name">Your Name *</label><br>
+                        <input type="text" name="your-name" id="your-name" value="${sessionScope.user.name}" required minlength="2" maxlength="50">
+                    </div>
+                    <div class="row">
+                        <div class="Pinfo-item">
+                            <label for="email">Email *</label><br>
+                            <input type="email" name="email" id="email" value="${sessionScope.user.email}" required>
+                        </div>
+                        <div class="Pinfo-item">
+                            <label for="phone-number">Phone Number *</label><br>
+                            <input type="tel" name="phone-number" id="phone-number" value="${sessionScope.user.phoneNumber}" required pattern="[0-9]{9}" title="Please enter exactly 9 digits" maxlength="9">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="personal-info">
+                    <h3 style="text-align: left; background-color: #D9D9D9;">Shipping Address</h3>
+                    <div class="line"></div>
+                    <!-- Linha 1: Address e Postal Code -->
+                    <div class="row">
+                        <div class="Pinfo-item">
+                            <label for="address">Address *</label>
+                            <input type="text" name="address" id="address" value="${sessionScope.userAddress.street}" required minlength="5" maxlength="100">
+                        </div>
+                        <div class="Pinfo-item">
+                            <label for="postal-code">Postal Code *</label>
+                            <input type="text" name="postal-code" id="postal-code" value="${sessionScope.userAddress.postalCode}" required pattern="[A-Za-z0-9\s\-]{3,10}" title="Please enter a valid postal code">
+                        </div>
+                    </div>
+
+                    <!-- Linha 2: City e Country -->
+                    <div class="row">
+                        <div class="Pinfo-item">
+                            <label for="city">City *</label>
+                            <input type="text" name="city" id="city" value="${sessionScope.userAddress.city}" required minlength="2" maxlength="50">
+                        </div>
+                        <div class="Pinfo-item">
+                            <label for="country">Country *</label>
+                            <input type="text" name="country" id="country" value="${sessionScope.userAddress.country}" required minlength="2" maxlength="50">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="personal-info">
+                    <h3 style="text-align: left; background-color: #D9D9D9;">Payment Information</h3>
+                    <div class="line"></div>
+                    <div class="radio-input">
+                        <input type="radio" name="payment-method" id="cash-on-delivery" value="cash">
+                        <label for="cash-on-delivery">Cash On Delivery</label>
+                        <input type="radio" name="payment-method" id="credit-or-debit" value="card" checked>
+                        <label for="credit-or-debit">Credit Or Debit</label>
+                    </div>
+
+                    <div id="card-fields">
+                        <div class="Pinfo-item">
+                            <label for="cardeHolder-name">CardHolder Name *</label><br>
+                            <input type="text" name="cardeHolder-name" id="cardeHolder-name" required minlength="2" maxlength="50">
+                        </div>
+                        <div class="Pinfo-item">
+                            <label for="card-number">Card Number *</label><br>
+                            <input type="text" name="card-number" id="card-number" required pattern="[0-9\s]{13,19}" title="Please enter a valid card number (13-19 digits)" maxlength="19">
+                        </div>
+                        <div class="row1">
+                            <div class="Pinfo-item">
+                                <label for="exp-date">EXP Date (MM/YY) *</label><br>
+                                <input type="text" name="exp-date" id="exp-date" required pattern="(0[1-9]|1[0-2])\/([0-9]{2})" title="Please enter expiry date in MM/YY format" maxlength="5" placeholder="MM/YY">
+                            </div>
+                            <div class="Pinfo-item">
+                                <label for="cvc">CVC *</label><br>
+                                <input type="text" name="cvc" id="cvc" required pattern="[0-9]{3,4}" title="Please enter a valid CVC (3-4 digits)" maxlength="4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cart-totals">
+                <h3 style="text-align: center; background-color: #D9D9D9;">Cart Totals</h3>
+                <div class="totals-item">
+                    <span>Subtotal:</span>
+                    <span>
+                        <fmt:formatNumber value="${calculatedSubtotal}" type="currency" currencySymbol="€" maxFractionDigits="2" />
+                    </span>
+                </div>
                 <div class="line"></div>
-                <div class="Pinfo-item">
-                    <label for="your-name">Your Name</label><br>
-                    <input type="text" name="your-name" id="your-name" value="${sessionScope.user.name}">
+                <div class="totals-item">
+                    <span>Shipping:</span>
+                    <span>
+                        <fmt:formatNumber value="${shippingCost}" type="currency" currencySymbol="€" maxFractionDigits="2" />
+                    </span>
                 </div>
-                <div class="row">
-                    <div class="Pinfo-item">
-                        <label for="email">Email</label><br>
-                        <input type="text" name="email" id="email" value="${sessionScope.user.email}">
-                    </div>
-                    <div class="Pinfo-item">
-                        <label for="phone-number">Phone Number</label><br>
-                        <input type="text" name="phone-number" id="phone-number" value="${sessionScope.user.phoneNumber}">
-                    </div>
-                </div>
-            </div>
-
-            <div class="personal-info">
-                <h3 style="text-align: left; background-color: #D9D9D9;">Shipping Address</h3>
                 <div class="line"></div>
-                <!-- Linha 1: Address e Postal Code -->
-                <div class="row">
-                    <div class="Pinfo-item">
-                        <label for="address">Address</label>
-                        <input type="text" name="address" id="address" value="${sessionScope.userAddress.street}">
-                    </div>
-                    <div class="Pinfo-item">
-                        <label for="postal-code">Postal Code</label>
-                        <input type="text" name="postal-code" id="postal-code" value="${sessionScope.userAddress.postalCode}">
-                    </div>
+                <div class="totals-item">
+                    <span><strong style="background-color: #D9D9D9;">Total:</strong></span>
+                    <span><strong style="background-color: #D9D9D9;">
+                        <fmt:formatNumber value="${calculatedTotal}" type="currency" currencySymbol="€" maxFractionDigits="2" />
+                    </strong></span>
                 </div>
 
-                <!-- Linha 2: City e Country -->
-                <div class="row">
-                    <div class="Pinfo-item">
-                        <label for="city">City</label>
-                        <input type="text" name="city" id="city" value="${sessionScope.userAddress.city}">
-                    </div>
-                    <div class="Pinfo-item">
-                        <label for="country">Country</label>
-                        <input type="text" name="country" id="country" value="${sessionScope.userAddress.country}">
-                    </div>
-                </div>
-            </div>
-
-            <div class="personal-info">
-                <h3 style="text-align: left; background-color: #D9D9D9;">Payment Information</h3>
-                <div class="line"></div>
-                <div class="radio-input">
-                    <input type="radio" name="payment-method" id="cash-on-delivery" value="cash">
-                    <label for="cash-on-delivery">Cash On Delivery</label>
-                    <input type="radio" name="payment-method" id="credit-or-debit" value="card" checked>
-                    <label for="credit-or-debit">Credit Or Debit</label>
-                </div>
-                <div class="Pinfo-item">
-                    <label for="cardeHolder-name">CardHolder Name</label><br>
-                    <input type="text" name="cardeHolder-name" id="cardeHolder-name">
-                </div>
-                <div class="Pinfo-item">
-                    <label for="card-number">Card Number</label><br>
-                    <input type="text" name="card-number" id="card-number">
-                </div>
-                <div class="row1">
-                    <div class="Pinfo-item">
-                        <label for="exp-date">EXP Date</label><br>
-                        <input type="text" name="exp-date" id="exp-date">
-                    </div>
-                    <div class="Pinfo-item">
-                        <label for="cvc">CVC</label><br>
-                        <input type="text" name="cvc" id="cvc">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="cart-totals">
-            <h3 style="text-align: center; background-color: #D9D9D9;">Cart Totals</h3>
-            <div class="totals-item">
-                <span>Subtotal:</span>
-                <span>
-                    <fmt:formatNumber value="${calculatedSubtotal}" type="currency" currencySymbol="€" maxFractionDigits="2" />
-                </span>
-            </div>
-            <div class="line"></div>
-            <div class="totals-item">
-                <span>Shipping:</span>
-                <span>
-                    <fmt:formatNumber value="${shippingCost}" type="currency" currencySymbol="€" maxFractionDigits="2" />
-                </span>
-            </div>
-            <div class="line"></div>
-            <div class="totals-item">
-                <span><strong style="background-color: #D9D9D9;">Total:</strong></span>
-                <span><strong style="background-color: #D9D9D9;">
-                    <fmt:formatNumber value="${calculatedTotal}" type="currency" currencySymbol="€" maxFractionDigits="2" />
-                </strong></span>
-            </div>
-            <form action="${pageContext.request.contextPath}/PlaceOrderServlet" method="post">
+                <!-- Hidden inputs for order totals -->
                 <input type="hidden" name="subtotal" value="${calculatedSubtotal}">
                 <input type="hidden" name="shipping" value="${shippingCost}">
                 <input type="hidden" name="total" value="${calculatedTotal}">
+
                 <button type="submit" class="checkout-btn">Complete Order</button>
-            </form>
+            </div>
         </div>
-    </div>
+    </form>
 </main>
 
 <footer>
@@ -199,6 +205,7 @@
 
 <script src="${pageContext.request.contextPath}/js/PopupSearch.js"></script>
 <script src="${pageContext.request.contextPath}/js/PopupProfile.js"></script>
+<script src="${pageContext.request.contextPath}/js/CheckoutValidation.js"></script>
 </body>
 
 </html>

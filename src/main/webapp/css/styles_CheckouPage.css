@@ -1,6 +1,49 @@
-* {
-    background: #D1D1D1;
+/* Required field indicator */
+label {
+    font-weight: 500;
 }
+
+/* Card fields visibility */
+#card-fields {
+    display: block;
+}
+
+#card-fields.hidden {
+    display: none;
+}
+
+/* Input focus styles */
+input:focus {
+    border: 2px solid #4CAF50 !important;
+    outline: none;
+}
+
+/* Valid input styling */
+input:valid:not(:placeholder-shown) {
+    border: 1px solid #28a745;
+}
+
+/* Payment method radio buttons */
+.radio-input {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    background-color: #D9D9D9;
+    margin-bottom: 15px;
+}
+
+.radio-input input[type="radio"] {
+    margin-right: 8px;
+    background-color: #D9D9D9;
+}
+
+.radio-input label {
+    cursor: pointer;
+    padding: 5px 0;
+    background-color: #D9D9D9;
+}* {
+     background: #D1D1D1;
+ }
 
 /* Estilos gerais do corpo */
 body {
@@ -9,62 +52,10 @@ body {
     padding: 0;
 }
 
-/* Styles for the modal overlay */
-.modal-overlay {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
-}
-
-/* Modal content */
-.modal-content {
-    position: relative;
-    background-color: #D1D1D1;
-    margin: 15% auto;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    max-width: 500px;
-    text-align: center;
-}
-
-/* Error message styles */
-.error-message {
-    color: #d9534f;
-    font-weight: bold;
-    margin-bottom: 20px;
-    background-color: #D1D1D1;
-}
-
-/* Button styles */
-.modal-btn {
-    background-color: #000;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 10px 5px;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-.modal-btn:hover {
-    background-color: #218A38;
-}
-
 /* Form validation styling */
 .input-error {
-    border: 1px solid #d9534f !important;
+    border: 2px solid #d9534f !important;
+    background-color: #fff5f5 !important;
 }
 
 .error-text {
@@ -72,6 +63,8 @@ body {
     font-size: 12px;
     margin-top: 5px;
     display: none;
+    background-color: #D9D9D9;
+    font-weight: 500;
 }
 
 /*--------------------------------------------------------------------HEADER-------------------------------------------------------------------------------*/
@@ -161,38 +154,6 @@ header a:hover {
     color: #218A38;
 }
 
-/* Popup Styles profile */
-.popup {
-    display: none;
-    /* Inicialmente oculto */
-    position: absolute;
-    top: 50px;
-    right: 20px;
-    border: 2px solid #4CAF50;
-    /* Aqui estamos adicionando uma borda verde */
-    border-radius: 8px;
-    /* Bordas arredondadas */
-    padding: 15px;
-    width: 200px;
-    z-index: 1000;
-}
-
-.popup-content {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.popup-content a {
-    text-decoration: none;
-    color: black;
-    font-size: 16px;
-}
-
-.popup-content a:hover {
-    color: #218A38;
-}
-
 /* Popup Styles search */
 /* Modal styles */
 .modal {
@@ -209,7 +170,7 @@ header a:hover {
     padding-top: -200px;
 }
 
-.modal-content {
+.modal .modal-content {
     background-color: transparent;
     margin: -1.5% 35%;
     padding: 20px;
@@ -240,14 +201,10 @@ input[type="text"] {
 }
 
 .left-column {
-
     display: flex;
     flex-direction: column;
-
     /* Empilha as 3 divs verticalmente */
 }
-
-
 
 .cart-totals {
     align-self: flex-start;
@@ -265,7 +222,6 @@ input[type="text"] {
 
 .cart-totals span {
     background-color: #D9D9D9;
-
 }
 
 .totals-item {
@@ -294,10 +250,17 @@ input[type="text"] {
     cursor: pointer;
     font-size: 16px;
     margin-top: 20px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
 }
 
 .checkout-btn:hover {
     background-color: #45a049;
+}
+
+.checkout-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
 }
 
 .personal-info1 {
@@ -309,8 +272,11 @@ input[type="text"] {
     /* Fundo branco */
     border: 1px solid #ccc;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 50px 0 0 5%;
+}
 
-    margin: 50px 0 0 5%
+.personal-info1 h3 {
+    background-color: #D9D9D9;
 }
 
 .personal-info {
@@ -322,16 +288,17 @@ input[type="text"] {
     /* Fundo branco */
     border: 1px solid #ccc;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
-    margin: 25px 0 0 5%
+    margin: 25px 0 0 5%;
 }
 
+.personal-info h3 {
+    background-color: #D9D9D9;
+}
 
 .row {
     display: flex;
     gap: 10px;
     /* Espaço entre os campos */
-
     background-color: #D9D9D9;
 }
 
@@ -339,34 +306,27 @@ input[type="text"] {
     display: flex;
     gap: 10px;
     /* Espaço entre os campos */
-
     background-color: #D9D9D9;
 }
 
 .Pinfo-item input {
     background-color: #ffffff;
-    border: #ffffff;
+    border: 1px solid #ccc;
     width: 96%;
     padding: 2%;
-
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
 }
 
 .Pinfo-item {
     background-color: #D9D9D9;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .Pinfo-item label {
     background-color: #D9D9D9;
-}
-
-.radio-input {
-    background-color: #D9D9D9;
-    margin-bottom: 10px;
-}
-
-.radio-input label {
-    background-color: #D9D9D9;
+    display: block;
+    margin-bottom: 5px;
 }
 
 .row .Pinfo-item {
@@ -382,8 +342,6 @@ input[type="text"] {
     padding-bottom: 7.3%;
     padding-top: 7.3%;
 }
-
-
 
 /*--------------------------------------------------------------------FOOTER-------------------------------------------------------------------------------*/
 
@@ -443,7 +401,6 @@ footer {
     flex-direction: column;
     align-items: left;
 }
-
 
 .subscribe input {
     background-color: #D1D1D1;
