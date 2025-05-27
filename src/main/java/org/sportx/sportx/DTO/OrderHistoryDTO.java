@@ -1,11 +1,11 @@
 package org.sportx.sportx.DTO;
 
-import java.time.LocalDate;
+import java.util.Date; // Changed from java.time.LocalDate
 import java.util.List;
 
 public class OrderHistoryDTO {
     private int orderId;
-    private LocalDate orderDate;
+    private Date orderDate; // Changed from LocalDate to Date
     private double orderTotal;
     private String orderStatus;
     private String shippingMethod;
@@ -18,7 +18,7 @@ public class OrderHistoryDTO {
     public OrderHistoryDTO() {
     }
 
-    public OrderHistoryDTO(int orderId, LocalDate orderDate, double orderTotal,
+    public OrderHistoryDTO(int orderId, Date orderDate, double orderTotal,
                            String orderStatus, String shippingMethod, String shippingAddress,
                            String firstProductImage, int totalItems) {
         this.orderId = orderId;
@@ -40,11 +40,11 @@ public class OrderHistoryDTO {
         this.orderId = orderId;
     }
 
-    public LocalDate getOrderDate() {
+    public Date getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(LocalDate orderDate) {
+    public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
     }
 

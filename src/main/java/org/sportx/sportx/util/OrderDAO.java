@@ -54,7 +54,8 @@ public class OrderDAO {
             while (rs.next()) {
                 OrderHistoryDTO order = new OrderHistoryDTO(
                         rs.getInt("order_id"),
-                        rs.getDate("order_date").toLocalDate(),
+                        // Convert java.sql.Date to java.util.Date
+                        new java.util.Date(rs.getDate("order_date").getTime()),
                         rs.getDouble("order_total"),
                         rs.getString("order_status"),
                         rs.getString("shipping_method"),
@@ -168,7 +169,8 @@ public class OrderDAO {
             if (rs.next()) {
                 order = new OrderHistoryDTO(
                         rs.getInt("order_id"),
-                        rs.getDate("order_date").toLocalDate(),
+                        // Convert java.sql.Date to java.util.Date
+                        new java.util.Date(rs.getDate("order_date").getTime()),
                         rs.getDouble("order_total"),
                         rs.getString("order_status"),
                         rs.getString("shipping_method"),
