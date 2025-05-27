@@ -89,7 +89,7 @@
             </c:when>
             <c:otherwise>
                 <a href="${pageContext.request.contextPath}/ProfilePage.jsp">Profile</a>
-                <a href="${pageContext.request.contextPath}/Orderhistory.jsp">Order History</a>
+                <a href="${pageContext.request.contextPath}/OrderHistoryServlet">Order History</a>
                 <c:if test="${sessionScope.user.userType == 'admin'}">
                     <a href="${pageContext.request.contextPath}/AdminPage_StockManagement.jsp">Stock Management</a>
                     <a href="${pageContext.request.contextPath}/AdminPage_UserManagement.jsp">User Management</a>

@@ -44,7 +44,7 @@
         <!-- Exibe Profile, Order History e opções de admin se o utilizador estiver logado -->
         <c:if test="${not empty sessionScope.user}">
             <a href="${pageContext.request.contextPath}/ProfilePage.jsp">Profile</a>
-            <a href="${pageContext.request.contextPath}/Orderhistory.jsp">Order History</a>
+            <a href="${pageContext.request.contextPath}/OrderHistoryServlet">Order History</a>
 
             <!-- Exibe as opções de admin se o utilizador for admin -->
             <c:if test="${sessionScope.user.userType == 'admin'}">
