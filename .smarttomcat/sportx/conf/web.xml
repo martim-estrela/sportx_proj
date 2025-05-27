@@ -568,6 +568,25 @@
         <url-pattern>/PlaceOrderServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>OrderHistoryServlet</servlet-name>
+        <servlet-class>org.sportx.sportx.servlet.OrderHistoryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OrderHistoryServlet</servlet-name>
+        <url-pattern>/OrderHistoryServlet</url-pattern>
+    </servlet-mapping>
+
+    <!-- Order Details Servlet -->
+    <servlet>
+        <servlet-name>OrderDetailsServlet</servlet-name>
+        <servlet-class>org.sportx.sportx.servlet.OrderDetailsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OrderDetailsServlet</servlet-name>
+        <url-pattern>/OrderDetailsServlet</url-pattern>
+    </servlet-mapping>
+
     <!-- The mapping for the SSI servlet -->
 <!--
     <servlet-mapping>

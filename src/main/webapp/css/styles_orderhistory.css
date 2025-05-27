@@ -92,35 +92,6 @@ header a:hover {
     color: #218A38;
 }
 
-/* Popup Styles profile */
-.popup {
-    display: none; /* Inicialmente oculto */
-    position: absolute;
-    top: 50px;
-    right: 20px;
-    border: 2px solid #4CAF50; /* Aqui estamos adicionando uma borda verde */
-    border-radius: 8px; /* Bordas arredondadas */
-    padding: 15px;
-    width: 200px;
-    z-index: 1000;
-}
-
-.popup-content {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.popup-content a {
-    text-decoration: none;
-    color: black;
-    font-size: 16px;
-}
-
-.popup-content a:hover {
-    color: #218A38;
-}
-
 /* Popup Styles search */
 /* Modal styles */
 .modal {
@@ -133,7 +104,7 @@ header a:hover {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: transparent; 
+    background-color: transparent;
     padding-top: -200px;
 }
 
@@ -141,8 +112,8 @@ header a:hover {
     background-color: transparent;
     margin: -1.5% 36%;
     padding: 20px;
-    width: 80%; 
-    max-width: 400px; 
+    width: 80%;
+    max-width: 400px;
 }
 
 .close:hover,
@@ -157,6 +128,7 @@ input[type="text"] {
     padding: 10px;
     margin: 20px 0;
 }
+
 /*----------------------------------------------------------------------------- PRINCIPAL------------------------------------------------------------------------- */
 /* Order History Section */
 .order-history {
@@ -191,28 +163,74 @@ input[type="text"] {
     background-color: #fff; /* Fundo branco */
     padding: 20px;
     margin-bottom: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+    position: relative;
+}
+
+.order-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.order-card.expanded {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .order-header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     font-size: 16px;
     margin-bottom: 20px;
+}
+
+.order-header h3 {
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #fff;
+}
+
+.order-header .order-date {
+    color: #666;
+    background-color: #fff;
 }
 
 .order-details {
     display: flex;
     gap: 20px;
+    align-items: center;
 }
 
 .order-info {
     display: flex;
     gap: 20px;
+    align-items: center;
+    flex: 1;
 }
 
 .order-info img {
-    max-width: 100px;
+    max-width: 80px;
+    max-height: 80px;
     border-radius: 8px;
+    object-fit: cover;
+}
+
+.product-info {
+    background-color: #fff;
+}
+
+.product-info h4 {
+    font-size: 16px;
+    margin-bottom: 5px;
+    background-color: #fff;
+}
+
+.product-info p {
+    color: #666;
+    font-size: 14px;
+    margin: 2px 0;
+    background-color: #fff;
 }
 
 /* Ajuste do resumo do pedido */
@@ -220,7 +238,7 @@ input[type="text"] {
     display: flex;
     justify-content: space-between;
     gap: 20px;
-    width: 100%;
+    width: 300px;
     padding-top: 10px;
 }
 
@@ -228,10 +246,181 @@ input[type="text"] {
     text-align: center;
     margin-bottom: 10px;
     padding: 10px;
+    background-color: #fff;
+}
+
+.order-summary-item strong {
+    background-color: #fff;
+}
+
+.order-summary-item p {
+    background-color: #fff;
+    margin: 5px 0;
 }
 
 .order-summary a {
     color: #000000;
+    background-color: #fff;
+}
+
+/* Expanded Order Details */
+.order-items {
+    display: none;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    background-color: #fff;
+}
+
+.order-card.expanded .order-items {
+    display: block;
+}
+
+.order-items h4 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #333;
+    background-color: #fff;
+}
+
+.order-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    background-color: #fff;
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+
+.order-item img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.item-details {
+    flex: 1;
+    background-color: #fff;
+}
+
+.item-details h5 {
+    font-size: 16px;
+    margin-bottom: 5px;
+    background-color: #fff;
+}
+
+.item-details p {
+    font-size: 14px;
+    color: #666;
+    margin: 2px 0;
+    background-color: #fff;
+}
+
+.item-price {
+    text-align: right;
+    background-color: #fff;
+}
+
+.item-price .price {
+    font-weight: bold;
+    font-size: 16px;
+    background-color: #fff;
+}
+
+.item-price .quantity {
+    font-size: 14px;
+    color: #666;
+    background-color: #fff;
+}
+
+/* Status badges */
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.status-pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-processing {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.status-shipped {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-delivered {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-cancelled {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Expand/Collapse indicator */
+.expand-indicator {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #666;
+    transition: transform 0.3s ease;
+}
+
+.order-card.expanded .expand-indicator {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* Empty state */
+.empty-orders {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.empty-orders h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+    background-color: #fff;
+}
+
+.empty-orders p {
+    color: #666;
+    margin-bottom: 20px;
+    background-color: #fff;
+}
+
+.empty-orders a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #218A38;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.empty-orders a:hover {
+    background-color: #1a6b2d;
 }
 
 /* Pagination */
@@ -254,16 +443,39 @@ input[type="text"] {
 /* Estilo do número ativo com borda */
 .pagination a.active {
     padding: 5px 8px;
-    border: 2px solid #000000; 
-    border-radius: 5px; 
-    background-color: #D1D1D1; 
+    border: 2px solid #000000;
+    border-radius: 5px;
+    background-color: #D1D1D1;
     font-weight: bold;
-    color: #000000; 
+    color: #000000;
 }
 
 .pagination span {
     font-size: 16px;
 }
+
+/* Loading state */
+.loading {
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #218A38;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 /*--------------------------------------------------------------------Rodapé-------------------------------------------------------------------------------*/
 footer {
     display: flex;
@@ -321,7 +533,6 @@ footer {
     flex-direction: column;
     align-items: left;
 }
-
 
 .subscribe input {
     margin-bottom: 30px;
