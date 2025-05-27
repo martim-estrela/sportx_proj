@@ -68,24 +68,24 @@
 <c:set var="calculatedTotal" value="${calculatedSubtotal + shippingCost}" />
 
 <main>
-    <form id="checkoutForm" action="${pageContext.request.contextPath}/PlaceOrderServlet" method="post" novalidate>
+    <form id="checkoutForm" action="${pageContext.request.contextPath}/PlaceOrderServlet" method="post">
         <div class="container">
             <div class="left-column">
                 <div class="personal-info1">
                     <h3 style="text-align: left; background-color: #D9D9D9;">Personal Information</h3>
                     <div class="line"></div>
                     <div class="Pinfo-item">
-                        <label for="your-name">Your Name *</label><br>
-                        <input type="text" name="your-name" id="your-name" value="${sessionScope.user.name}" required minlength="2" maxlength="50">
+                        <label for="your-name">Your Name</label><br>
+                        <input type="text" name="your-name" id="your-name" value="${sessionScope.user.name}" required>
                     </div>
                     <div class="row">
                         <div class="Pinfo-item">
-                            <label for="email">Email *</label><br>
+                            <label for="email">Email</label><br>
                             <input type="email" name="email" id="email" value="${sessionScope.user.email}" required>
                         </div>
                         <div class="Pinfo-item">
-                            <label for="phone-number">Phone Number *</label><br>
-                            <input type="tel" name="phone-number" id="phone-number" value="${sessionScope.user.phoneNumber}" required pattern="[0-9]{9}" title="Please enter exactly 9 digits" maxlength="9">
+                            <label for="phone-number">Phone Number</label><br>
+                            <input type="tel" name="phone-number" id="phone-number" value="${sessionScope.user.phoneNumber}" required>
                         </div>
                     </div>
                 </div>
@@ -96,24 +96,24 @@
                     <!-- Linha 1: Address e Postal Code -->
                     <div class="row">
                         <div class="Pinfo-item">
-                            <label for="address">Address *</label>
-                            <input type="text" name="address" id="address" value="${sessionScope.userAddress.street}" required minlength="5" maxlength="100">
+                            <label for="address">Address</label>
+                            <input type="text" name="address" id="address" value="${sessionScope.userAddress.street}" required>
                         </div>
                         <div class="Pinfo-item">
-                            <label for="postal-code">Postal Code *</label>
-                            <input type="text" name="postal-code" id="postal-code" value="${sessionScope.userAddress.postalCode}" required pattern="[A-Za-z0-9\s\-]{3,10}" title="Please enter a valid postal code">
+                            <label for="postal-code">Postal Code</label>
+                            <input type="text" name="postal-code" id="postal-code" value="${sessionScope.userAddress.postalCode}" required>
                         </div>
                     </div>
 
                     <!-- Linha 2: City e Country -->
                     <div class="row">
                         <div class="Pinfo-item">
-                            <label for="city">City *</label>
-                            <input type="text" name="city" id="city" value="${sessionScope.userAddress.city}" required minlength="2" maxlength="50">
+                            <label for="city">City</label>
+                            <input type="text" name="city" id="city" value="${sessionScope.userAddress.city}" required>
                         </div>
                         <div class="Pinfo-item">
-                            <label for="country">Country *</label>
-                            <input type="text" name="country" id="country" value="${sessionScope.userAddress.country}" required minlength="2" maxlength="50">
+                            <label for="country">Country</label>
+                            <input type="text" name="country" id="country" value="${sessionScope.userAddress.country}" required>
                         </div>
                     </div>
                 </div>
@@ -121,31 +121,51 @@
                 <div class="personal-info">
                     <h3 style="text-align: left; background-color: #D9D9D9;">Payment Information</h3>
                     <div class="line"></div>
-                    <div class="radio-input">
-                        <input type="radio" name="payment-method" id="cash-on-delivery" value="cash">
-                        <label for="cash-on-delivery">Cash On Delivery</label>
-                        <input type="radio" name="payment-method" id="credit-or-debit" value="card" checked>
-                        <label for="credit-or-debit">Credit Or Debit</label>
+                    <div class="payment-methods">
+                        <div class="payment-option">
+                            <input type="radio" name="payment-method" id="credit-card" value="1" checked onchange="togglePaymentFields()">
+                            <label for="credit-card">Credit Card</label>
+                        </div>
+                        <div class="payment-option">
+                            <input type="radio" name="payment-method" id="debit-card" value="3" onchange="togglePaymentFields()">
+                            <label for="debit-card">Debit Card</label>
+                        </div>
+                        <div class="payment-option">
+                            <input type="radio" name="payment-method" id="paypal" value="2" onchange="togglePaymentFields()">
+                            <label for="paypal">PayPal</label>
+                        </div>
                     </div>
 
-                    <div id="card-fields">
+                    <!-- Card Payment Fields -->
+                    <div id="card-fields" class="payment-fields">
                         <div class="Pinfo-item">
-                            <label for="cardeHolder-name">CardHolder Name *</label><br>
-                            <input type="text" name="cardeHolder-name" id="cardeHolder-name" required minlength="2" maxlength="50">
+                            <label for="cardholder-name">Cardholder Name</label><br>
+                            <input type="text" name="cardholder-name" id="cardholder-name">
                         </div>
                         <div class="Pinfo-item">
-                            <label for="card-number">Card Number *</label><br>
-                            <input type="text" name="card-number" id="card-number" required pattern="[0-9\s]{13,19}" title="Please enter a valid card number (13-19 digits)" maxlength="19">
+                            <label for="card-number">Card Number</label><br>
+                            <input type="text" name="card-number" id="card-number" placeholder="1234 5678 9012 3456">
                         </div>
                         <div class="row1">
                             <div class="Pinfo-item">
-                                <label for="exp-date">EXP Date (MM/YY) *</label><br>
-                                <input type="text" name="exp-date" id="exp-date" required pattern="(0[1-9]|1[0-2])\/([0-9]{2})" title="Please enter expiry date in MM/YY format" maxlength="5" placeholder="MM/YY">
+                                <label for="exp-date">EXP Date</label><br>
+                                <input type="text" name="exp-date" id="exp-date" placeholder="MM/YY">
                             </div>
                             <div class="Pinfo-item">
-                                <label for="cvc">CVC *</label><br>
-                                <input type="text" name="cvc" id="cvc" required pattern="[0-9]{3,4}" title="Please enter a valid CVC (3-4 digits)" maxlength="4">
+                                <label for="cvc">CVC</label><br>
+                                <input type="text" name="cvc" id="cvc" placeholder="123">
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- PayPal Fields -->
+                    <div id="paypal-fields" class="payment-fields" style="display: none;">
+                        <div class="Pinfo-item">
+                            <label for="paypal-email">PayPal Email</label><br>
+                            <input type="email" name="paypal-email" id="paypal-email" placeholder="your@email.com">
+                        </div>
+                        <div class="paypal-info">
+                            <p>You will be redirected to PayPal to complete your payment.</p>
                         </div>
                     </div>
                 </div>
@@ -174,7 +194,7 @@
                     </strong></span>
                 </div>
 
-                <!-- Hidden inputs for order totals -->
+                <!-- Hidden fields for totals -->
                 <input type="hidden" name="subtotal" value="${calculatedSubtotal}">
                 <input type="hidden" name="shipping" value="${shippingCost}">
                 <input type="hidden" name="total" value="${calculatedTotal}">
