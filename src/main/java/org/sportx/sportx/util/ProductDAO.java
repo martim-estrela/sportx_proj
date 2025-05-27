@@ -437,14 +437,21 @@ public class ProductDAO {
     public List<Product> getProductsBySubcategory(int subcategoryId, int limit) {
         List<Product> products = new ArrayList<>();
 
-        // Query to get product + product_item with lower price for each product
-        String sql = "SELECT p.product_id, p.name, p.description, p.brand, pi.product_item_id, pi.price, pi.product_image, " +
-                "p.sub_category_id, promo.promotion_id, promo.discount_rate, promo.start_date, promo.end_date " +
+        // Query to get product + product_item with lowest price for each product
+        String sql = "SELECT p.product_id, p.name, p.description, p.brand, " +
+                "pi.product_item_id, pi.price, pi.product_image, " +
+                "p.sub_category_id, promo.promotion_id, promo.discount_rate, " +
+                "promo.start_date, promo.end_date " +
                 "FROM product p " +
-                "JOIN product_item pi ON pi.product_id = p.product_id " +
+                "JOIN product_item pi ON pi.product_item_id = ( " +
+                "    SELECT pi2.product_item_id " +
+                "    FROM product_item pi2 " +
+                "    WHERE pi2.product_id = p.product_id " +
+                "    ORDER BY pi2.price ASC, pi2.product_item_id ASC " +
+                "    LIMIT 1 " +
+                ") " +
                 "LEFT JOIN promotion promo ON promo.product_item_id = pi.product_item_id " +
                 "WHERE p.sub_category_id = ? " +
-                "GROUP BY p.product_id " +
                 "ORDER BY p.product_id " +
                 "LIMIT ?";
 

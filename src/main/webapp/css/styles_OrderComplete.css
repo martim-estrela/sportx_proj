@@ -191,3 +191,66 @@ footer {
     cursor: pointer;
 }
 
+/* Popup Styles */
+.popup {
+    display: none;
+    /* Inicialmente oculto */
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    border: 2px solid #4CAF50;
+    /* Aqui estamos adicionando uma borda verde */
+    border-radius: 8px;
+    /* Bordas arredondadas */
+    padding: 15px;
+    width: 200px;
+    z-index: 1000;
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.popup-content a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+}
+
+.popup-content a:hover {
+    color: #218A38;
+}
+
+/* Popup Styles profile */
+.popup {
+    display: none;
+    /* Inicialmente oculto */
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    border: 2px solid #4CAF50;
+    /* Aqui estamos adicionando uma borda verde */
+    border-radius: 8px;
+    /* Bordas arredondadas */
+    padding: 15px;
+    width: 200px;
+    z-index: 1000;
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.popup-content a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+}
+
+.popup-content a:hover {
+    color: #218A38;
+}
