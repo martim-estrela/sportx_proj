@@ -1,11 +1,11 @@
 package org.sportx.sportx.DTO;
 
-import java.util.Date; // Changed from java.time.LocalDate
+import java.util.Date;
 import java.util.List;
 
 public class OrderHistoryDTO {
     private int orderId;
-    private Date orderDate; // Changed from LocalDate to Date
+    private Date orderDate;
     private double orderTotal;
     private String orderStatus;
     private String shippingMethod;
@@ -14,10 +14,19 @@ public class OrderHistoryDTO {
     private int totalItems;
     private List<OrderItemDTO> orderItems;
 
-    // Constructor
+    // Default constructor
     public OrderHistoryDTO() {
     }
 
+    // Constructor for simple view (only essential fields)
+    public OrderHistoryDTO(int orderId, Date orderDate, double orderTotal, String orderStatus) {
+        this.orderId = orderId;
+        this.orderDate = orderDate;
+        this.orderTotal = orderTotal;
+        this.orderStatus = orderStatus;
+    }
+
+    // Full constructor (for backward compatibility)
     public OrderHistoryDTO(int orderId, Date orderDate, double orderTotal,
                            String orderStatus, String shippingMethod, String shippingAddress,
                            String firstProductImage, int totalItems) {

@@ -15,7 +15,7 @@ public class OrderDAO {
     }
 
     /**
-     * Get orders for a specific user with pagination
+     * Get orders for a specific user with pagination (simplified version)
      */
     public List<OrderHistoryDTO> getOrdersForUser(int userId, int page, int ordersPerPage) throws SQLException {
         List<OrderHistoryDTO> orders = new ArrayList<>();
@@ -24,23 +24,9 @@ public class OrderDAO {
                 "    ot.order_id, " +
                 "    ot.order_date, " +
                 "    ot.order_total, " +
-                "    os.status as order_status, " +
-                "    sm.name as shipping_method, " +
-                "    CONCAT(ai.street, ', ', ai.city, ', ', ai.country) as shipping_address, " +
-                "    (SELECT pi.product_image " +
-                "     FROM order_line ol " +
-                "     JOIN product_item pi ON ol.product_item_id = pi.product_item_id " +
-                "     WHERE ol.order_id = ot.order_id " +
-                "     ORDER BY ol.order_line_id ASC " +
-                "     LIMIT 1) as first_product_image, " +
-                "    (SELECT COUNT(*) " +
-                "     FROM order_line ol " +
-                "     WHERE ol.order_id = ot.order_id) as total_items " +
+                "    os.status as order_status " +
                 "FROM order_table ot " +
                 "JOIN order_status os ON ot.order_status_id = os.order_status_id " +
-                "JOIN shipping_method sm ON ot.shipping_id = sm.shipping_id " +
-                "JOIN user u ON ot.user_id = u.user_id " +
-                "JOIN address_info ai ON u.user_id = ai.user_id " +
                 "WHERE ot.user_id = ? " +
                 "ORDER BY ot.order_date DESC, ot.order_id DESC " +
                 "LIMIT ? OFFSET ?";
@@ -58,10 +44,10 @@ public class OrderDAO {
                         new java.util.Date(rs.getDate("order_date").getTime()),
                         rs.getDouble("order_total"),
                         rs.getString("order_status"),
-                        rs.getString("shipping_method"),
-                        rs.getString("shipping_address"),
-                        rs.getString("first_product_image"),
-                        rs.getInt("total_items")
+                        null, // shippingMethod - not needed for simple view
+                        null, // shippingAddress - not needed for simple view
+                        null, // firstProductImage - not needed for simple view
+                        0     // totalItems - not needed for simple view
                 );
                 orders.add(order);
             }
@@ -86,6 +72,60 @@ public class OrderDAO {
         }
 
         return 0;
+    }
+
+    /**
+     * Get order with its items by order ID (kept for OrderDetailsServlet compatibility)
+     */
+    public OrderHistoryDTO getOrderWithItems(int orderId) throws SQLException {
+        OrderHistoryDTO order = null;
+
+        String sql = "SELECT " +
+                "    ot.order_id, " +
+                "    ot.order_date, " +
+                "    ot.order_total, " +
+                "    os.status as order_status, " +
+                "    sm.name as shipping_method, " +
+                "    CONCAT(ai.street, ', ', ai.city, ', ', ai.country) as shipping_address, " +
+                "    (SELECT pi.product_image " +
+                "     FROM order_line ol " +
+                "     JOIN product_item pi ON ol.product_item_id = pi.product_item_id " +
+                "     WHERE ol.order_id = ot.order_id " +
+                "     ORDER BY ol.order_line_id ASC " +
+                "     LIMIT 1) as first_product_image, " +
+                "    (SELECT COUNT(*) " +
+                "     FROM order_line ol " +
+                "     WHERE ol.order_id = ot.order_id) as total_items " +
+                "FROM order_table ot " +
+                "JOIN order_status os ON ot.order_status_id = os.order_status_id " +
+                "JOIN shipping_method sm ON ot.shipping_id = sm.shipping_id " +
+                "JOIN user u ON ot.user_id = u.user_id " +
+                "JOIN address_info ai ON u.user_id = ai.user_id " +
+                "WHERE ot.order_id = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, orderId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                order = new OrderHistoryDTO(
+                        rs.getInt("order_id"),
+                        new java.util.Date(rs.getDate("order_date").getTime()),
+                        rs.getDouble("order_total"),
+                        rs.getString("order_status"),
+                        rs.getString("shipping_method"),
+                        rs.getString("shipping_address"),
+                        rs.getString("first_product_image"),
+                        rs.getInt("total_items")
+                );
+
+                // Get order items
+                List<OrderItemDTO> orderItems = getOrderItems(orderId);
+                order.setOrderItems(orderItems);
+            }
+        }
+
+        return order;
     }
 
     /**
@@ -131,60 +171,5 @@ public class OrderDAO {
         }
 
         return orderItems;
-    }
-
-    /**
-     * Get order with its items by order ID
-     */
-    public OrderHistoryDTO getOrderWithItems(int orderId) throws SQLException {
-        OrderHistoryDTO order = null;
-
-        String sql = "SELECT " +
-                "    ot.order_id, " +
-                "    ot.order_date, " +
-                "    ot.order_total, " +
-                "    os.status as order_status, " +
-                "    sm.name as shipping_method, " +
-                "    CONCAT(ai.street, ', ', ai.city, ', ', ai.country) as shipping_address, " +
-                "    (SELECT pi.product_image " +
-                "     FROM order_line ol " +
-                "     JOIN product_item pi ON ol.product_item_id = pi.product_item_id " +
-                "     WHERE ol.order_id = ot.order_id " +
-                "     ORDER BY ol.order_line_id ASC " +
-                "     LIMIT 1) as first_product_image, " +
-                "    (SELECT COUNT(*) " +
-                "     FROM order_line ol " +
-                "     WHERE ol.order_id = ot.order_id) as total_items " +
-                "FROM order_table ot " +
-                "JOIN order_status os ON ot.order_status_id = os.order_status_id " +
-                "JOIN shipping_method sm ON ot.shipping_id = sm.shipping_id " +
-                "JOIN user u ON ot.user_id = u.user_id " +
-                "JOIN address_info ai ON u.user_id = ai.user_id " +
-                "WHERE ot.order_id = ?";
-
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, orderId);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                order = new OrderHistoryDTO(
-                        rs.getInt("order_id"),
-                        // Convert java.sql.Date to java.util.Date
-                        new java.util.Date(rs.getDate("order_date").getTime()),
-                        rs.getDouble("order_total"),
-                        rs.getString("order_status"),
-                        rs.getString("shipping_method"),
-                        rs.getString("shipping_address"),
-                        rs.getString("first_product_image"),
-                        rs.getInt("total_items")
-                );
-
-                // Get order items
-                List<OrderItemDTO> orderItems = getOrderItems(orderId);
-                order.setOrderItems(orderItems);
-            }
-        }
-
-        return order;
     }
 }

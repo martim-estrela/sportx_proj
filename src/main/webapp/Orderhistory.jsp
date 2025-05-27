@@ -80,52 +80,35 @@
                 </div>
             </c:when>
             <c:otherwise>
-                <!-- Display Orders -->
-                <c:forEach var="order" items="${orders}">
-                    <div class="order-card" data-order-id="${order.orderId}">
-                        <div class="order-header">
-                            <h3>Order #${order.orderId}</h3>
-                            <div class="order-date">
-                                <fmt:formatDate value="${order.orderDate}" pattern="EEE, MMM dd, yyyy" />
-                            </div>
-                        </div>
-
-                        <div class="order-details">
-                            <div class="order-info">
-                                <c:choose>
-                                    <c:when test="${not empty order.firstProductImage}">
-                                        <img src="${pageContext.request.contextPath}${order.firstProductImage}" alt="Product Image">
-                                    </c:when>
-                                    <c:otherwise>
-                                        <img src="${pageContext.request.contextPath}/img/placeholder.jpg" alt="No Image">
-                                    </c:otherwise>
-                                </c:choose>
-
-                                <div class="product-info">
-                                    <h4>Order Details</h4>
-                                    <p><strong>Status:</strong> <span class="status-badge status-${order.orderStatus.toLowerCase()}">${order.orderStatus}</span></p>
-                                    <p><strong>Items:</strong> ${order.totalItems}</p>
-                                    <p><strong>Shipping:</strong> ${order.shippingMethod}</p>
-                                </div>
-                            </div>
-
-                            <div class="order-summary">
-                                <div class="order-summary-item">
-                                    <p><strong>Total</strong></p>
-                                    <p><fmt:formatNumber value="${order.orderTotal}" type="currency" currencySymbol="€"/></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Expandable order items section -->
-                        <div class="order-items">
-                            <!-- Items will be loaded via AJAX when expanded -->
-                        </div>
-
-                        <!-- Expand/Collapse indicator -->
-                        <div class="expand-indicator">▼</div>
-                    </div>
-                </c:forEach>
+                <!-- Orders Table -->
+                <div class="orders-table-container">
+                    <table class="orders-table">
+                        <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="order" items="${orders}">
+                            <tr>
+                                <td class="order-id">#${order.orderId}</td>
+                                <td class="order-date">
+                                    <fmt:formatDate value="${order.orderDate}" pattern="dd/MM/yyyy" />
+                                </td>
+                                <td class="order-status">
+                                    <span class="status-badge status-${order.orderStatus.toLowerCase()}">${order.orderStatus}</span>
+                                </td>
+                                <td class="order-total">
+                                    <fmt:formatNumber value="${order.orderTotal}" type="currency" currencySymbol="€"/>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
 
                 <!-- Pagination -->
                 <c:if test="${totalPages > 1}">
@@ -194,11 +177,7 @@
     </section>
 </footer>
 
-<script>
-    const contextPath = '${pageContext.request.contextPath}';
-</script>
 <script src="${pageContext.request.contextPath}/js/PopupSearch.js"></script>
 <script src="${pageContext.request.contextPath}/js/PopupProfile.js"></script>
-<script src="${pageContext.request.contextPath}/js/orderhistory.js"></script>
 </body>
 </html>
