@@ -114,7 +114,7 @@
                 <div class="column-description4">
                     <label class="user-status">${user.status}</label>
                 </div>
-                <div class="column-description4">
+                <div class="column-description5">
                     <label class="user-status">${user.registerDate}</label>
                 </div>
                 <div class="column-edit-icon">
