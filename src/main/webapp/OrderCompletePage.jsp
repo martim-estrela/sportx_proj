@@ -66,7 +66,7 @@
     <p>You will receive a confirmation email shortly with your order details.</p>
 
     <div class="buttons">
-      <a href="${pageContext.request.contextPath}/Orderhistory.jsp" class="button secondary">View Your Orders</a>
+      <a href="${pageContext.request.contextPath}/OrderHistoryServlet" class="button secondary">View Your Orders</a>
       <a href="${pageContext.request.contextPath}/HomePageServlet" class="button">Continue Shopping</a>
     </div>
   </div>
