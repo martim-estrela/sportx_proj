@@ -123,7 +123,7 @@ header a:hover {
     background-color: #d9d9d9;
     margin-bottom: 10px;
     max-height: 50px;
-    padding-left: 10px;
+
 
 }
 
@@ -134,8 +134,8 @@ header a:hover {
 }
 
 .column {
-    padding-top: 0.75%;
-    flex: 50%;
+
+    flex: 20%;
     background-color: #d9d9d9;
     text-align: center;
 }
@@ -146,10 +146,11 @@ header a:hover {
 
 
 .column-edit-icon {
-    padding-top: 0.75%;
-    flex: 30%;
+
+    flex: 20%;
     background-color: #d9d9d9;
     text-align: center;
+    align-content: center;
 
 }
 
@@ -158,10 +159,10 @@ header a:hover {
 }
 
 .column-description {
-    padding-top: 0.75%;
-    padding-left: 10px;
+    text-align: center;
     flex: 20%;
     background-color: #d9d9d9;
+    align-content: center;
 
 }
 
@@ -170,10 +171,10 @@ header a:hover {
 }
 
 .column-description1 {
-    padding-top: 0.75%;
-    padding-left: 10px;
-    flex: 40%;
+    text-align: center;
+    flex: 50%;
     background-color: #d9d9d9;
+    align-content: center;
 
 
 }
@@ -183,10 +184,10 @@ header a:hover {
 }
 
 .column-description2 {
-    padding-top: 0.75%;
-    padding-left: 10px;
-    flex: 40%;
+    text-align: center;
+    flex: 30%;
     background-color: #d9d9d9;
+    align-content: center;
 
 
 }
@@ -196,10 +197,10 @@ header a:hover {
 }
 
 .column-description3 {
-    padding-top: 0.75%;
-    padding-left: 10px;
-    flex: 40%;
+    text-align: center;
+    flex: 70%;
     background-color: #d9d9d9;
+    align-content: center;
 
 
 }
@@ -209,10 +210,10 @@ header a:hover {
 }
 
 .column-description4 {
-    padding-top: 0.75%;
-    padding-left: 10px;
-    flex: 40%;
+    text-align: center;
+    flex: 30%;
     background-color: #d9d9d9;
+    align-content: center;
 }
 
 .column-description4 label {
@@ -220,10 +221,10 @@ header a:hover {
 }
 
 .column-description5 {
-    padding-top: 0.75%;
-    padding-left: 10px;
+    text-align: center;
     flex: 40%;
     background-color: #d9d9d9;
+    align-content: center;
 }
 .column-description5 label {
     background-color: #d9d9d9;
@@ -233,7 +234,6 @@ header a:hover {
 button.btn-edit {
     border: #d9d9d9;
     background-color: #d9d9d9;
-    padding: 0%;
 }
 
 select.btn-update-status {
